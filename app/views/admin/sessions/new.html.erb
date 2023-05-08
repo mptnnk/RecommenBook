@@ -1,0 +1,42 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-8">
+      
+      <h2 class="page-title">管理者ログイン</h2>
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+        
+          <div class="form-group mt-4 ml-2">
+            <%= f.label:"メールアドレス", class:"col-lg-3 font-weight-bold" %>
+            <%= f.email_field :email, class:"col-lg-3", placeholder:"sample@example.com" %>
+          </div>
+          
+          <!--<div class="field">-->
+          <!--  <%= f.label :email %><br />-->
+          <!--  <%= f.email_field :email, autofocus: true, autocomplete: "email" %>-->
+          <!--</div>-->
+          
+          <div class="form-group ml-2">
+            <%= f.label:"パスワード", class:"col-lg-3 font-weight-bold" %>
+            <%= f.password_field:password, class:"col-lg-3" %>
+          </div>
+          
+          <!--<div class="field">-->
+          <!--  <%= f.label :password %><br />-->
+          <!--  <%= f.password_field :password, autocomplete: "current-password" %>-->
+          <!--</div>-->
+          
+          <!--<% if devise_mapping.rememberable? %>-->
+          <!--<div class="field">-->
+          <!--  <%= f.check_box :remember_me %>-->
+          <!--  <%= f.label :remember_me %>-->
+          <!--</div>-->
+          <!--<% end %>-->
+          
+          <div class="actions">
+            <%= f.submit "ログイン" %>
+          </div>
+        <% end %>
+        <!--admin/shared/linksのrenderを削除（routesでsign_upをパス生成していないため）-->
+    </div>
+  </div>
+</div>
