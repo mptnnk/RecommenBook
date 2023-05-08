@@ -1,7 +1,7 @@
 class Genre < ApplicationRecord
   
-  def self.all
-    RakutenWebService::Books::Genre
+  def self.genres
+   
   end
   
 end
