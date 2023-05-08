@@ -29,7 +29,7 @@ class Public::UsersController < ApplicationController
   private
   
   def user_params
-    params.require(:user).permit(:book_id, :name, :email, :is_deleted, :profile_image)
+    params.require(:user).permit(:book_id, :name, :email, :is_active, :profile_image)
   end
   
   def set_current_user
