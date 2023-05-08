@@ -8,9 +8,89 @@
 
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <script src="https://kit.fontawesome.com/a30ba0c1da.js" crossorigin="anonymous"></script>
   </head>
 
-  <body>
-    <%= yield %>
+  <body class="d-flex flex-column vh-100">
+    <header class="shadow-sm">
+      <nav class="navbar navbar-fixed-top navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+          <div class="navbar-brand">
+            <%= link_to root_path do %>
+              <%= image_tag 'logo.png', size: '200x100' %>
+            <% end %>
+          </div>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          
+          <% if user_signed_in? %>
+            <span class="ml-5">Hello, <%= current_user.name %> !</span>
+          <% end %>
+          
+          <div class="collapse navbar-collapse flex-column" id="navbarNavDropdown">
+            <ul class="navbar-nav ml-auto mb-2">
+              
+              <% if admin_signed_in? %>
+              <!--管理者ログインのとき。レビュー一覧、つぶやき一覧、会員一覧は後で作る-->
+                <li class="nav-link">
+                  <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, style:"color:gray", class:"border border-secondary rounded p-2" %>
+                </li>
+                
+              <% elsif user_signed_in? %>
+              <!--ユーザーログインのとき。本を探す、レビュー、つぶやきは後で作る-->
+                <li class="nav-link">
+                  <%= link_to "マイページ", mypage_path(current_user.name), style:"color:gray", class:"border border-secondary rounded p-2" %>
+                </li>
+                <li class="nav-link">
+                  <%= link_to "ログアウト", destroy_user_session_path, method: :delete, style:"color:gray", class:"border border-secondary rounded p-2" %>
+                </li>
+                
+              <% else %>
+              <!--どちらもログインしていないとき-->
+                <li class="nav-link">
+                  <%= link_to "About", about_path, style:"color:gray", class:"border border-secondary rounded p-2" %>
+                </li>
+                <li class="nav-link">
+                  <%= link_to "新規登録", new_user_registration_path, style:"color:gray", class:"border border-secondary rounded p-2" %>
+                </li>
+                <li class="nav-link">
+                  <%= link_to "ログイン", new_user_session_path, style:"color:gray", class:"border border-secondary rounded p-2" %>
+                </li>
+              <% end %>
+            </ul>
+            
+            <div class="search-form ml-auto mr-2">
+              <form class="form-inline">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+              </form>
+            </div>
+            
+          </div>
+          <!--navbar-collapse end-->
+        </div>
+        <!--container-fluid end-->
+      </nav>
+    </header>
+    
+    <main class="container mb-auto">
+      <div class="mt-3 text-success">
+        <p id="notice"><%= notice %></p>
+      </div>
+      <div class="mt-3 text-danger">
+        <p id="alert"><%= alert %></p>
+      </div>
+      <%= yield %>
+    </main>
+    <footer class="footer mt-3 p-3">
+      <div class="container-fluid text-center">
+        <span>ロゴ制作:<a href="https://www.designevo.com/jp/" title="無料オンラインロゴメーカー">DesignEvo</a></span>
+        <!--Rakuten Web Services Attribution Snippet FROM HERE-->
+        <a href="https://webservice.rakuten.co.jp/" target="_blank"><img src="https://webservice.rakuten.co.jp/img/credit/200709/credit_22121.gif" border="0" alt="Rakuten Web Service Center" title="Rakuten Web Service Center" width="221" height="21"/></a>
+        <!-- Rakuten Web Services Attribution Snippet TO HERE -->
+        <span class="text-right mt-3"><%= link_to "管理者ログイン", new_admin_session_path, style:"color:green", class:"border border-success rounded p-2" %></span>
+      </div>
+    </footer>
   </body>
 </html>

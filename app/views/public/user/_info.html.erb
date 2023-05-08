@@ -1,0 +1,17 @@
+<table class="table">
+  <tr><%= image_tag user.get_profile_image, size:'80x100' %></tr>
+  <tr>
+    <th>name</th>
+    <td><%= user.name %></td>
+  </tr>
+  <tr>
+    <th>email</th>
+    <td><%= user.email %></td>
+  </tr>
+  <!--emailはためしに表示させているだけ。あとで消す-->
+  <!--読んだ本、いちおし本、いいね履歴、コメント履歴、フォロー、フォロワー、好きなジャンルを後で追加-->
+</table>
+
+<div class="row">
+  <%= link_to "編集する", users_information_edit_path, class:"btn btn-outline-secondary btn-block"%>
+</div>
