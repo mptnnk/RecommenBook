@@ -1,4 +1,4 @@
-class Public::UserController < ApplicationController
+class Public::UsersController < ApplicationController
   before_action :authenticate_user!, only: [:edit, :update, :unsubscribe]
   before_action :set_current_user
   
