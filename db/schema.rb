@@ -53,6 +53,11 @@ ActiveRecord::Schema.define(version: 2023_05_08_053740) do
   end
 
   create_table "books", force: :cascade do |t|
+    t.string "title"
+    t.string "author"
+    t.string "url"
+    t.string "image_url"
+    t.string "item_caption"
     t.string "book_genre_id"
     t.string "isbn", null: false
     t.datetime "created_at", precision: 6, null: false
