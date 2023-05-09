@@ -1,11 +1,5 @@
 Rails.application.routes.draw do
   
-  namespace :public do
-    get 'reviews/new'
-    get 'reviews/index'
-    get 'reviews/show'
-    get 'reviews/edit'
-  end
   devise_for :admin, skip:[:registrations,:passwords], controllers:{
     sessions:'admin/sessions'
   }
@@ -36,8 +30,9 @@ Rails.application.routes.draw do
     # booksコントローラ
     get 'books/search' => "books#search"
     
-    resources :reviews
-    resources :books, only: [:show,]
+    resources :books, only: [:show] do
+      resources :reviews, only: [:new, :create]
+    end
   end
   
   # namespace :public do

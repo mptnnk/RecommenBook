@@ -1,4 +1,4 @@
-class Public::UserController < ApplicationController
+class Public::UsersController < ApplicationController
   before_action :authenticate_user!, only: [:edit, :update, :unsubscribe]
   before_action :set_current_user
   
@@ -29,7 +29,7 @@ class Public::UserController < ApplicationController
   private
   
   def user_params
-    params.require(:user).permit(:book_id, :name, :email, :is_deleted, :profile_image)
+    params.require(:user).permit(:book_id, :name, :email, :is_active, :profile_image)
   end
   
   def set_current_user

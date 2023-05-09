@@ -1,2 +1,19 @@
-<h1>Public::Reviews#new</h1>
-<p>Find me in app/views/public/reviews/new.html.erb</p>
+<div class="container">
+  <h4 class="page-title">レビュー投稿</h4>
+  <div class="row">
+    <%= render 'public/books/show', book: @book %>
+  </div>
+    
+  <div class="row">
+    <div class="col">
+      
+      <%= form_with model: @review, url: book_reviews_path(@book.isbn) do |review| %>
+        <%= review.hidden_field :isbn, value: @book_isbn %>
+        <%= review.label :content %>
+        <%= review.text_field :content %>
+        
+        <%= review.submit "投稿" %>
+      <% end %>
+    </div>
+  </div>
+</div>
