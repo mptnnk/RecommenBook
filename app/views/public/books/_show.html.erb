@@ -1,0 +1,26 @@
+    <div class="col-md-4">
+      <%= image_tag(book.large_image_url) %><br>
+      <%= link_to "商品の詳細ページへ（楽天ブックス）", book.item_url, class:"btn btn-primary mt-3" %>
+    </div>
+    
+    <div class="col-md-8">
+      <table class="table table-borderless">
+        <tr>
+          <th style="width: 20%">タイトル</th>
+          <td><%= book.title %></td>
+        <tr>
+          <th>著者</th>
+          <td>
+            <%= book.author %>
+          </td>
+        </tr>
+        <tr>
+          <th>本の概要</th>
+          <td><%= book.item_caption %></td>
+        </tr>
+        <tr>
+          <th>発売日</th>
+          <td><%= book.sales_date %></td>
+        </tr>
+      </table>
+    </div>

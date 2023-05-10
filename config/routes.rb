@@ -29,9 +29,11 @@ Rails.application.routes.draw do
     
     # booksコントローラ
     get 'books/search' => "books#search"
+    post 'books/favorite' => "books#add_favorite"
     
-    resources :reviews
-    resources :books, only: [:show,]
+    resources :books, only: [:show] do
+      resources :reviews, only: [:new, :create]
+    end
   end
   
   # namespace :public do
