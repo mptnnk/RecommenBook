@@ -29,6 +29,7 @@ Rails.application.routes.draw do
     
     # booksコントローラ
     get 'books/search' => "books#search"
+    post 'books/favorite' => "books#add_favorite"
     
     resources :books, only: [:show] do
       resources :reviews, only: [:new, :create]
