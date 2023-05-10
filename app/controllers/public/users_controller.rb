@@ -8,6 +8,7 @@ class Public::UsersController < ApplicationController
 
   def show
     @user = User.find_by(name: params[:id])
+    # @favorite_books = current_user.favorite_books
   end
 
   def edit
