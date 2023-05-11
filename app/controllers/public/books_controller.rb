@@ -11,16 +11,20 @@ class Public::BooksController < ApplicationController
         title: keyword,
       })
       p search_results
+      
     elsif genre_id.present?
       @books = RakutenWebService::Books::Book.search({
         books_genre_id: genre_id
       })
       p search_results
     elsif keyword.present?
-      @books = RakutenWebService::Books::Book.search({
-        title: keyword,
-        page: params[:page],
-      })
+      for num in 1..100 do
+        @books = RakutenWebService::Books::Book.search({
+          title: keyword,
+          page: num
+        }).page(params[:page])
+      end
+      
       p search_results
     end
 
@@ -54,7 +58,8 @@ class Public::BooksController < ApplicationController
   end
   
   def search_results
-    if @books.present? && @books.count > 0
+    # if @books.present? && @books.count > 0
+    if @books.present?
       flash.now[:notice]="検索結果を表示します"
     else
       flash.now[:alert]="該当する書籍はありません"

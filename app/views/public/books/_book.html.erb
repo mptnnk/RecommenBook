@@ -1,4 +1,5 @@
   <table class="table table-hover table-inverse">
+    
     <thead>
       <tr>
         <th>タイトル</th>
@@ -7,8 +8,9 @@
         <th></th>
       </tr>
     </thead>
+    
+    <% books.each do |book| %>
     <tbody>
-      <% books.each do |book| %>
       <tr>
         <td>
           <%= link_to book_path(book.isbn) do %>
@@ -22,9 +24,9 @@
             <%= image_tag(book['medium_image_url']) %>
           <% end %>
         </td>
-        
       </tr>
-      <% end %>
-      
     </tbody>
+    <% end %>
   </table>
+  
+  <%= paginate books, theme: 'twitter-bootstrap-4' %>
