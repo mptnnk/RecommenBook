@@ -4,23 +4,24 @@ class Public::BooksController < ApplicationController
     genre_id = params[:book_genre_id]
     keyword = params[:keyword]
     @books = []
-    
+
     if genre_id.present? && keyword.present?
       @books = RakutenWebService::Books::Book.search({
         books_genre_id: genre_id,
-        title: keyword
+        title: keyword,
       })
-      puts search_results
+      p search_results
     elsif genre_id.present?
       @books = RakutenWebService::Books::Book.search({
         books_genre_id: genre_id
       })
-      puts search_results
+      p search_results
     elsif keyword.present?
       @books = RakutenWebService::Books::Book.search({
-        title: keyword
+        title: keyword,
+        page: params[:page],
       })
-      puts search_results
+      p search_results
     end
 
     # if params[:keyword]
