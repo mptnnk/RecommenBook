@@ -3,13 +3,8 @@ class Public::BooksController < ApplicationController
   def search
     genre_id = params[:book_genre_id]
     keyword = params[:keyword]
-    # page = params[:page] || 1　||はorの意味
-    page = params[:page].to_i
-    page = 1 if page.blank? || page < 1
-    page = 100 if page > 100
-    
+    page = params[:page] || 1
     per = 30
-    # マジックナンバー：コード内に何度も出てくる数字のこと。変数指定しておけば変更しやすくてよい
     @books = []
 
     if genre_id.present? && keyword.present?
@@ -17,30 +12,34 @@ class Public::BooksController < ApplicationController
         books_genre_id: genre_id,
         title: keyword,
         page: page,
-        hits: per
+        hits: per,
+        sort: '-releaseDate'
       })
+      @books_page = Kaminari.paginate_array([], total_count: @books.response['count'] ).page(page).per(per)
       p search_results
     elsif genre_id.present?
       @books = RakutenWebService::Books::Book.search({
         books_genre_id: genre_id,
         page: page,
-        hits: per
+        hits: per,
+        sort: '-releaseDate'
       })
+      @books_page = Kaminari.paginate_array([], total_count: @books.response['count'] ).page(page).per(per)
       p search_results
     elsif keyword.present?
       @books = RakutenWebService::Books::Book.search({
         title: keyword,
         page: page,
-        hits: per
-        
+        hits: per,
+        sort: '-releaseDate'
       })
+      @books_page = Kaminari.paginate_array([], total_count: @books.response['count'] ).page(page).per(per)
+      p search_results
     end
-    
-    @books_page = Kaminari.paginate_array([], total_count: @books.response['count'] ).page(page).per(per)
+
     #@books = @books.page(page)
     
     # pp @books.response['pageCount']　#,page,@books_page
-    # ppをすると、ターミナルにどんなデータがとれたか出てくる。
     # response['']とすると、楽天ブックスAPIの出力パラメータで「全体情報」とされている部分についての情報が取れる
 
   end
