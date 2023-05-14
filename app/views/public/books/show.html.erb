@@ -6,9 +6,6 @@
   <div class="row mt-3">
     <div class="col-md-4">
       <%= link_to "レビューを投稿する", new_book_review_path(@book.isbn), class:"btn btn-success" %>
-      <%= unless @favorite_book %>
-        <%= button_to 'お気に入りの本に登録する', books_favorite_path(@book.isbn), method: :post, class:"btn btn-primary" %>
-      <% end %>
     </div>
   </div>
   

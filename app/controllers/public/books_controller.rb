@@ -4,6 +4,8 @@ class Public::BooksController < ApplicationController
     genre_id = params[:book_genre_id]
     keyword = params[:keyword]
     @books = []
+    @page = '1'
+    @check_page = 0
 
     if genre_id.present? && keyword.present?
       @books = RakutenWebService::Books::Book.search({
@@ -16,12 +18,28 @@ class Public::BooksController < ApplicationController
         books_genre_id: genre_id
       })
       p search_results
+      
     elsif keyword.present?
-      @books = RakutenWebService::Books::Book.search({
-        title: keyword,
-        page: params[:page],
-      })
-      p search_results
+      loop do
+        @books = RakutenWebService::Books::Book.search({
+          title: keyword,
+          page: page
+        })
+        break if @books.blank?
+        page += 1
+      end
+      
+      # for num in 1..n
+      #   @books = RakutenWebService::Books::Book.search({
+      #     title: keyword,
+      #     page: num
+      #   })
+      #   break if @books.blank?
+      #   num += 1
+      # end
+      
+      # p search_results
+
     end
 
     # if params[:keyword]
@@ -31,20 +49,20 @@ class Public::BooksController < ApplicationController
   
   def show
     @book = RakutenWebService::Books::Book.search(isbn: params[:id]).first
-    @favorite_book = current_user.favorite_books.find_by(isbn: params[:id]).first
+    # @favorite_book = current_user.favorite_books.find_by(isbn: params[:id]).first
     @review = Review.new
   end
   
-  def add_favorite
-    isbn = params[:isbn]
-    book_info = RakutenWebService::Books::Book.search(isbn: params[:id]).first
-    current_user.favorite_books.create(
-      isbn: isbn,
-      title: book_info.title,
-      author: book_info.author
-    )
-    redirect_to mypage_path(@user), notice: 'お気に入りの本を登録しました'
-  end
+  # def add_favorite
+  #   isbn = params[:isbn]
+  #   book_info = RakutenWebService::Books::Book.search(isbn: params[:id]).first
+  #   current_user.favorite_books.create(
+  #     isbn: isbn,
+  #     title: book_info.title,
+  #     author: book_info.author
+  #   )
+  #   redirect_to mypage_path(@user), notice: 'お気に入りの本を登録しました'
+  # end
 
 
   private
