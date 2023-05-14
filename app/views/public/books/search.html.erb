@@ -9,6 +9,6 @@
   <% end %>
   
   <% if @books.present? %>
-    <%= render 'book', books: @books %>
+    <%= render 'book', books: @books, books_page: @books_page %>
   <% end %>
 </div>

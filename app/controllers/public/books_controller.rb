@@ -3,48 +3,45 @@ class Public::BooksController < ApplicationController
   def search
     genre_id = params[:book_genre_id]
     keyword = params[:keyword]
+    page = params[:page] || 1
+    per = 30
     @books = []
-    @page = '1'
-    @check_page = 0
 
     if genre_id.present? && keyword.present?
       @books = RakutenWebService::Books::Book.search({
         books_genre_id: genre_id,
         title: keyword,
+        page: page,
+        hits: per,
+        sort: '-releaseDate'
       })
+      @books_page = Kaminari.paginate_array([], total_count: @books.response['count'] ).page(page).per(per)
       p search_results
     elsif genre_id.present?
       @books = RakutenWebService::Books::Book.search({
-        books_genre_id: genre_id
+        books_genre_id: genre_id,
+        page: page,
+        hits: per,
+        sort: '-releaseDate'
       })
+      @books_page = Kaminari.paginate_array([], total_count: @books.response['count'] ).page(page).per(per)
       p search_results
-      
     elsif keyword.present?
-      loop do
-        @books = RakutenWebService::Books::Book.search({
-          title: keyword,
-          page: page
-        })
-        break if @books.blank?
-        page += 1
-      end
-      
-      # for num in 1..n
-      #   @books = RakutenWebService::Books::Book.search({
-      #     title: keyword,
-      #     page: num
-      #   })
-      #   break if @books.blank?
-      #   num += 1
-      # end
-      
-      # p search_results
-
+      @books = RakutenWebService::Books::Book.search({
+        title: keyword,
+        page: page,
+        hits: per,
+        sort: '-releaseDate'
+      })
+      @books_page = Kaminari.paginate_array([], total_count: @books.response['count'] ).page(page).per(per)
+      p search_results
     end
 
-    # if params[:keyword]
-    #   @books = RakutenWebService::Books::Book.search(title: params[:keyword])
-    # end
+    #@books = @books.page(page)
+    
+    # pp @books.response['pageCount']　#,page,@books_page
+    # response['']とすると、楽天ブックスAPIの出力パラメータで「全体情報」とされている部分についての情報が取れる
+
   end
   
   def show
