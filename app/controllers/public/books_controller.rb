@@ -4,6 +4,8 @@ class Public::BooksController < ApplicationController
     genre_id = params[:book_genre_id]
     keyword = params[:keyword]
     @books = []
+    @page = '1'
+    @check_page = 0
 
     if genre_id.present? && keyword.present?
       @books = RakutenWebService::Books::Book.search({
@@ -11,21 +13,33 @@ class Public::BooksController < ApplicationController
         title: keyword,
       })
       p search_results
-      
     elsif genre_id.present?
       @books = RakutenWebService::Books::Book.search({
         books_genre_id: genre_id
       })
       p search_results
+      
     elsif keyword.present?
-      for num in 1..100 do
+      loop do
         @books = RakutenWebService::Books::Book.search({
           title: keyword,
-          page: num
-        }).page(params[:page])
+          page: page
+        })
+        break if @books.blank?
+        page += 1
       end
       
-      p search_results
+      # for num in 1..n
+      #   @books = RakutenWebService::Books::Book.search({
+      #     title: keyword,
+      #     page: num
+      #   })
+      #   break if @books.blank?
+      #   num += 1
+      # end
+      
+      # p search_results
+
     end
 
     # if params[:keyword]
@@ -35,20 +49,20 @@ class Public::BooksController < ApplicationController
   
   def show
     @book = RakutenWebService::Books::Book.search(isbn: params[:id]).first
-    @favorite_book = current_user.favorite_books.find_by(isbn: params[:id]).first
+    # @favorite_book = current_user.favorite_books.find_by(isbn: params[:id]).first
     @review = Review.new
   end
   
-  def add_favorite
-    isbn = params[:isbn]
-    book_info = RakutenWebService::Books::Book.search(isbn: params[:id]).first
-    current_user.favorite_books.create(
-      isbn: isbn,
-      title: book_info.title,
-      author: book_info.author
-    )
-    redirect_to mypage_path(@user), notice: 'お気に入りの本を登録しました'
-  end
+  # def add_favorite
+  #   isbn = params[:isbn]
+  #   book_info = RakutenWebService::Books::Book.search(isbn: params[:id]).first
+  #   current_user.favorite_books.create(
+  #     isbn: isbn,
+  #     title: book_info.title,
+  #     author: book_info.author
+  #   )
+  #   redirect_to mypage_path(@user), notice: 'お気に入りの本を登録しました'
+  # end
 
 
   private
@@ -58,8 +72,7 @@ class Public::BooksController < ApplicationController
   end
   
   def search_results
-    # if @books.present? && @books.count > 0
-    if @books.present?
+    if @books.present? && @books.count > 0
       flash.now[:notice]="検索結果を表示します"
     else
       flash.now[:alert]="該当する書籍はありません"
