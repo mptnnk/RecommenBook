@@ -3,8 +3,12 @@ class Public::BooksController < ApplicationController
   def search
     genre_id = params[:book_genre_id]
     keyword = params[:keyword]
-    page = params[:page] || 1
-    per = 10
+    # page = params[:page] || 1　||はorの意味
+    page = params[:page].to_i
+    page = 1 if page.blank? || page < 1
+    page = 100 if page > 100
+    
+    per = 30
     # マジックナンバー：コード内に何度も出てくる数字のこと。変数指定しておけば変更しやすくてよい
     @books = []
 
@@ -37,6 +41,7 @@ class Public::BooksController < ApplicationController
     
     # pp @books.response['pageCount']　#,page,@books_page
     # ppをすると、ターミナルにどんなデータがとれたか出てくる。
+    # response['']とすると、楽天ブックスAPIの出力パラメータで「全体情報」とされている部分についての情報が取れる
 
   end
   
