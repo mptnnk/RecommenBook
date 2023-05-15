@@ -36,8 +36,6 @@ class Public::BooksController < ApplicationController
       @books_page = Kaminari.paginate_array([], total_count: @books.response['count'] ).page(page).per(per)
       p search_results
     end
-
-    #@books = @books.page(page)
     
     # pp @books.response['pageCount']　#,page,@books_page
     # response['']とすると、楽天ブックスAPIの出力パラメータで「全体情報」とされている部分についての情報が取れる
@@ -46,7 +44,6 @@ class Public::BooksController < ApplicationController
   
   def show
     @book = RakutenWebService::Books::Book.search(isbn: params[:id]).first
-    # @favorite_book = current_user.favorite_books.find_by(isbn: params[:id]).first
     @review = Review.new
     @reviews = Review.where(isbn: @book.isbn).page(params[:page]).per(10)
   end
