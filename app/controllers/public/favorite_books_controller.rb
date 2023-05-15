@@ -1,16 +1,11 @@
 class Public::FavoriteBooksController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, only: [:create, :destroy]
   
   def create
     @book = RakutenWebService::Books::Book.search(isbn: params[:book_id]).first
-    @book_isbn = @book["isbn"]
-    if current_user.favorite_books.exists?(isbn: @book.isbn)
-      redirect_to request.referer, alert: 'すでにお気に入りに登録済みの本です'
-    else
-      @favorite_book = current_user.favorite_books.build(isbn: @book.isbn)
-      if @favorite_book.save
-        redirect_to book_path(@book.isbn), notice: 'お気に入りの本に登録しました'
-      end
+    @favorite_book = current_user.favorite_books.build(isbn: @book.isbn)
+    if @favorite_book.save
+      redirect_to book_path(@book.isbn), notice: 'お気に入りの本に登録しました'
     end
   end
   
@@ -21,8 +16,11 @@ class Public::FavoriteBooksController < ApplicationController
   end
 
   def destroy
-    @book = RakutenWebService::Books::Book.search(isbn: params[book_id]).first
-    @book_isbn = @book["isbn"]
+    @book = RakutenWebService::Books::Book.search(isbn: params[:book_id]).first
+    @favorite_book = current_user.favorite_books.find_by(isbn: @book.isbn)
+    if @favorite_book.destroy
+      redirect_to request.referer, alert: 'お気に入りから削除しました'
+    end
   end
   
   private
