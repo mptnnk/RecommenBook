@@ -48,6 +48,7 @@ class Public::BooksController < ApplicationController
     @book = RakutenWebService::Books::Book.search(isbn: params[:id]).first
     # @favorite_book = current_user.favorite_books.find_by(isbn: params[:id]).first
     @review = Review.new
+    @reviews = Review.where(isbn: @book.isbn).page(params[:page]).per(10)
   end
 
   private
