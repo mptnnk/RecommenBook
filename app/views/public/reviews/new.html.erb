@@ -7,7 +7,6 @@
     
   <div class="row">
     <div class="col">
-      
       <%= form_with model: @review, url: book_reviews_path(@book.isbn) do |review| %>
         <%= review.hidden_field :isbn, value: @book_isbn %>
         <%= review.label :"レビューを書く", class:"border border-primary p-2 rounded"%><br>

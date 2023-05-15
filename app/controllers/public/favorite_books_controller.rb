@@ -1,4 +1,6 @@
 class Public::FavoriteBooksController < ApplicationController
+  before_action: authenticate_user!
+  
   def create
     @book = RakutenWebService::Books::Book.search(isbn: params[:book_id]).first
     @book_isbn = @book["isbn"]
@@ -6,6 +8,9 @@ class Public::FavoriteBooksController < ApplicationController
   end
 
   def index
+  end
+  
+  def destroy
   end
   
   private

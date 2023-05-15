@@ -7,7 +7,7 @@ class User < ApplicationRecord
   validates :name, presence: true, uniqueness: true
   
   has_many :reviews, dependent: :destroy
-  has_many :favorite_books
+  has_many :favorite_books, dependent: :destroy
   # おすすめ本1冊しか登録できない仕様ならhas_oneだけど、読みたい本とかお気に入りとかを登録するのにbookテーブルを使えるならhas_manyがいいかも
   
   has_one_attached :profile_image
