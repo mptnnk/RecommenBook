@@ -58,7 +58,7 @@ class Public::BooksController < ApplicationController
   
   def search_results
     if @books.present? && @books.count > 0
-      flash.now[:notice]="検索結果を表示します"
+      flash.now[:notice]="検索結果を表示します（新着順）"
     else
       flash.now[:alert]="該当する書籍はありません"
     end
