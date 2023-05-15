@@ -1,9 +1,5 @@
 Rails.application.routes.draw do
-  
-  namespace :public do
-    get 'favorite_books/create'
-    get 'favorite_books/index'
-  end
+
   devise_for :admin, skip:[:registrations,:passwords], controllers:{
     sessions:'admin/sessions'
   }
@@ -33,12 +29,13 @@ Rails.application.routes.draw do
     
     # booksコントローラ
     get 'books/search' => "books#search"
-    post 'books/favorite' => "books#add_favorite"
     
     resources :books, only: [:show] do
       resources :reviews, only: [:new, :create]
+      resources :favorite_books, only: [:create, :destroy]
     end
     resources :reviews, only: [:index, :show, :edit, :update, :destroy]
+    resources :favorite_books, only: [:index]
   end
   
   # namespace :public do

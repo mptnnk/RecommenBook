@@ -17,7 +17,6 @@ class User < ApplicationRecord
   end
   
   def to_param
-    #  to_paramはURLのidの部分にid以外のものを指定できる既存のメソッド
     name
   end
   

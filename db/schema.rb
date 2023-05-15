@@ -67,12 +67,8 @@ ActiveRecord::Schema.define(version: 2023_05_14_131356) do
   end
 
   create_table "favorite_books", force: :cascade do |t|
+    t.integer "user_id", null: false
     t.string "isbn", null: false
-    t.string "title", null: false
-    t.string "author"
-    t.string "url"
-    t.string "image_url"
-    t.string "item_caption"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -86,7 +82,7 @@ ActiveRecord::Schema.define(version: 2023_05_14_131356) do
 
   create_table "reviews", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.string "isbn"
+    t.string "isbn", null: false
     t.text "content"
     t.datetime "readed_at"
     t.boolean "in_release", default: false
@@ -98,7 +94,6 @@ ActiveRecord::Schema.define(version: 2023_05_14_131356) do
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
-    t.integer "book_id"
     t.string "name", null: false
     t.boolean "is_active", default: true
     t.string "reset_password_token"

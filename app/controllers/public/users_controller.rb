@@ -1,14 +1,15 @@
 class Public::UsersController < ApplicationController
   before_action :authenticate_user!, only: [:edit, :update, :unsubscribe]
-  before_action :set_current_user
+  before_action :set_current_user, only: [:edit, :update, :unsubscribe]
   
   def index
     
   end
 
   def show
-    @user = User.find_by(name: params[:id])
-    # @favorite_books = current_user.favorite_books
+    @user = User.find_by(name: params[:name])
+    # ルーティングでURLに:nameを渡すことを指定しているので、キー=>カラムに当てはめて、nameがキーとなる場合はparamの中身のカラムは:nameが正しい。
+    # @favorite_books = FavoriteBook.where(user_id: @user.id)
   end
 
   def edit
