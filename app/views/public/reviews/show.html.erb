@@ -1,3 +1,4 @@
+<!--レビュー詳細画面-->
 <div class="container">
   <div class="row">
     <%= render 'public/books/show', book: @book %>
@@ -14,6 +15,15 @@
         <tr>
           <th>レビュー</th>
           <td colspan="3"><%= @review.content %></td>
+        </tr>
+        <tr>
+          <th></th>
+          <td>
+            <% if @review.user == current_user %>
+              <%= link_to "編集する", edit_review_path(@review.id), class:"btn btn-primary btn-sm"%>
+              <%= link_to "削除する", review_path(@review.id), method: :delete, "data-confirm" => "本当に削除しますか？", class:"btn btn-danger btn-sm" %>
+            <% end %>
+          </td>
         </tr>
       </table>
     </div>

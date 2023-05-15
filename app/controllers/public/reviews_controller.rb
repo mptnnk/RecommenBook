@@ -34,7 +34,9 @@ class Public::ReviewsController < ApplicationController
   
   def destroy
     @review.destroy if @review
-    redirect_to request.referer, alert: 'レビューを削除しました'
+    isbn = @review.isbn
+    @book = RakutenWebService::Books::Book.search(isbn: isbn).first
+    redirect_to book_path(@book.isbn), alert: 'レビューを削除しました'
   end
   
   private

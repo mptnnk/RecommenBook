@@ -1,9 +1,10 @@
+<!--検索画面（検索結果一覧表示もあり）-->
 <div class="search-box">
   <%= form_with url: books_search_path, method: :get do |book| %>
     <div class="form-group">
-      <%= book.text_field :keyword, class:"form-control" %>
-      <%= book.collection_select(:book_genre_id, Genre.all, :book_genre_id, :name, include_blank: "--") %>
-      <%= book.submit '検索', class:"form-control btn btn-success" %>
+      <%= book.text_field :keyword, :placeholder =>"キーワードを入力", class:"form-control mt-2 mb-2 col-md-8" %>
+      <%= book.collection_select(:book_genre_id, Genre.all, :book_genre_id, :name, include_blank: "ジャンルを選ぶ") %><br>
+      <%= book.submit '検索', class:"form-control btn btn-success mt-2 col-md-3" %>
     </div>
     
   <% end %>
