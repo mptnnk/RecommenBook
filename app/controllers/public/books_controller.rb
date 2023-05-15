@@ -49,18 +49,6 @@ class Public::BooksController < ApplicationController
     # @favorite_book = current_user.favorite_books.find_by(isbn: params[:id]).first
     @review = Review.new
   end
-  
-  # def add_favorite
-  #   isbn = params[:isbn]
-  #   book_info = RakutenWebService::Books::Book.search(isbn: params[:id]).first
-  #   current_user.favorite_books.create(
-  #     isbn: isbn,
-  #     title: book_info.title,
-  #     author: book_info.author
-  #   )
-  #   redirect_to mypage_path(@user), notice: 'お気に入りの本を登録しました'
-  # end
-
 
   private
   
@@ -70,7 +58,7 @@ class Public::BooksController < ApplicationController
   
   def search_results
     if @books.present? && @books.count > 0
-      flash.now[:notice]="検索結果を表示します"
+      flash.now[:notice]="検索結果を表示します（新着順）"
     else
       flash.now[:alert]="該当する書籍はありません"
     end

@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
   
+  namespace :public do
+    get 'favorite_books/create'
+    get 'favorite_books/index'
+  end
   devise_for :admin, skip:[:registrations,:passwords], controllers:{
     sessions:'admin/sessions'
   }
@@ -34,6 +38,7 @@ Rails.application.routes.draw do
     resources :books, only: [:show] do
       resources :reviews, only: [:new, :create]
     end
+    resources :reviews, only: [:index, :show, :edit, :destroy]
   end
   
   # namespace :public do
