@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_08_053740) do
+ActiveRecord::Schema.define(version: 2023_05_14_131356) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -64,6 +64,17 @@ ActiveRecord::Schema.define(version: 2023_05_08_053740) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["isbn"], name: "index_books_on_isbn"
     t.index ["title"], name: "index_books_on_title"
+  end
+
+  create_table "favorite_books", force: :cascade do |t|
+    t.string "isbn", null: false
+    t.string "title", null: false
+    t.string "author"
+    t.string "url"
+    t.string "image_url"
+    t.string "item_caption"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "genres", force: :cascade do |t|
