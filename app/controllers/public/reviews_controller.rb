@@ -1,6 +1,6 @@
 class Public::ReviewsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :destroy]
-  before_action :submitted_review, only: [:show, :edit, :destroy]
+  before_action :submitted_review, only: [:show, :edit, :update, :destroy]
   # before_action :book_isbn, only: [:new, :create, :edit, :destroy]
   
   def new
@@ -26,10 +26,24 @@ class Public::ReviewsController < ApplicationController
   end
 
   def show
-    @book = RakutenWebService::Books::Book.search(isbn: params[:book_id]).first
+    isbn = @review.isbn
+    @book = RakutenWebService::Books::Book.search(isbn: isbn).first
   end
 
   def edit
+    isbn = @review.isbn
+    @book = RakutenWebService::Books::Book.search(isbn: isbn).first
+  end
+  
+  def update
+    isbn = @review.isbn
+    @book = RakutenWebService::Books::Book.search(isbn: isbn).first
+    if @review.update(review_params)
+      flash[:notice] = "レビュー内容を更新しました"
+      redirect_to book_path(@book.isbn)
+    else
+      render :edit
+    end
   end
   
   def destroy

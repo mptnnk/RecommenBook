@@ -29,7 +29,7 @@
         <tr>
           <th></th>
           <td>
-            <%= link_to "詳細を見る", review_path(review.id, book_id: @book.isbn), class:"btn btn-primary btn-sm" %>
+            <%= link_to "詳細を見る", review_path(review.id), class:"btn btn-primary btn-sm" %>
             <% if review.user == current_user %>
               <%= link_to "編集する", edit_review_path(review.id), class:"btn btn-success btn-sm" %>
               <%= link_to "削除する", review_path(review.id), method: :delete, "data-confirm" => "本当に削除しますか？", class:"btn btn-danger btn-sm" %>
