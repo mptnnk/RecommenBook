@@ -1,2 +1,32 @@
-<h1>Public::Reviews#show</h1>
-<p>Find me in app/views/public/reviews/show.html.erb</p>
+<!--レビュー詳細画面-->
+<div class="container">
+  <div class="row">
+    <%= render 'public/books/show', book: @book %>
+  </div>
+  <div class="row">
+    <div class="col-md-8">
+      <table class="table table-borderless">
+        <tr>
+          <th style="width: 20%">投稿者</th>
+          <td><%= @review.user.name %></td>
+          <th style="width: 20%">読み終わった日</th>
+          <td><%= @review.readed_at&.strftime("%Y/%m/%d") %></td>
+        </tr>
+        <tr>
+          <th>レビュー</th>
+          <td colspan="3"><%= @review.content %></td>
+        </tr>
+        <tr>
+          <th></th>
+          <td>
+            <% if @review.user == current_user %>
+              <%= link_to "編集する", edit_review_path(@review.id), class:"btn btn-primary btn-sm"%>
+              <%= link_to "削除する", review_path(@review.id), method: :delete, "data-confirm" => "本当に削除しますか？", class:"btn btn-danger btn-sm" %>
+            <% end %>
+            <%= link_to "本の詳細画面に戻る", book_path(@book.isbn), class:"btn btn-success btn-sm" %>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
