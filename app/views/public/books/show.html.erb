@@ -4,7 +4,7 @@
     <%= render 'show', book: @book %>
   </div>
   <div class="row mt-3">
-    <div class="col-md-4">
+    <div class="col-md-8">
       <%= link_to "レビューを投稿する", new_book_review_path(@book.isbn), class:"btn btn-success" %>
     </div>
   </div>
@@ -22,13 +22,13 @@
         </tr>
         <tr>
           <th>レビュー</th>
-          <td colspan="3"><%= review.content.truncate(100) %></td>
+          <td colspan="3"><%= review.content.truncate(50) %></td>
           <!--長文の場合の省略方法と、「ネタバレを読む」の場合の編みかけ方法を後で設定する-->
         </tr>
         <tr>
           <th></th>
           <td>
-            <%= link_to "詳細を見る", review_path(review.id), class:"btn btn-primary btn-sm" %>
+            <%= link_to "詳細を見る", review_path(review.id, book_id: @book.isbn), class:"btn btn-primary btn-sm" %>
             <% if review.user == current_user %>
               <%= link_to "編集する", edit_review_path(review.id), class:"btn btn-success btn-sm" %>
               <%= link_to "削除する", review_path(review.id), method: :delete, "data-confirm" => "本当に削除しますか？", class:"btn btn-danger btn-sm" %>

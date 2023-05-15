@@ -1,2 +1,21 @@
-<h1>Public::Reviews#show</h1>
-<p>Find me in app/views/public/reviews/show.html.erb</p>
+<div class="container">
+  <div class="row">
+    <%= render 'public/books/show', book: @book %>
+  </div>
+  <div class="row">
+    <div class="col-md-8">
+      <table class="table table-borderless">
+        <tr>
+          <th style="width: 20%">投稿者</th>
+          <td><%= @review.user.name %></td>
+          <th style="width: 20%">読み終わった日</th>
+          <td><%= @review.readed_at&.strftime("%Y/%m/%d") %></td>
+        </tr>
+        <tr>
+          <th>レビュー</th>
+          <td colspan="3"><%= @review.content %></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

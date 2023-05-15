@@ -26,11 +26,10 @@ class Public::ReviewsController < ApplicationController
   end
 
   def show
-    
+    @book = RakutenWebService::Books::Book.search(isbn: params[:book_id]).first
   end
 
   def edit
-    
   end
   
   def destroy
