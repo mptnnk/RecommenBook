@@ -33,23 +33,12 @@ Rails.application.routes.draw do
     resources :books, only: [:show] do
       resources :reviews, only: [:new, :create]
       resources :favorite_books, only: [:create, :destroy]
+      resources :readed_books, only: [:create, :destroy]
     end
     resources :reviews, only: [:index, :show, :edit, :update, :destroy]
     resources :favorite_books, only: [:index]
+    resources :readed_books, only: [:index]
   end
-  
-  # namespace :public do
-  #   #   get 'homes/top'
-  #   #   get 'homes/about'
-  #   get 'users/index'
-  #   get 'users/show'
-  #   get 'users/edit'
-  #   get 'users/unsubscribe'
-  #   get 'reviews/new'
-  #   get 'reviews/index'
-  #   get 'reviews/show'
-  #   get 'reviews/edit'
-  # # end
   
   namespace :admin do
     get '/' => 'homes#top'

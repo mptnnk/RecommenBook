@@ -9,11 +9,21 @@
     <div class="col">
       <%= form_with model: @review, url: book_reviews_path(@book.isbn) do |review| %>
         <%= review.hidden_field :isbn, value: @book_isbn %>
-        <%= review.label :"レビューを書く", class:"border border-primary p-2 rounded"%><br>
+        <%= review.label :"レビューを書く", class:"border border-primary p-2 mt-2 rounded"%><br>
         <%= review.text_area :content, size:'100x5' %><br>
         <%= review.label :"読み終わった日" %>
         <%= review.date_field :readed_at %><br>
-        <%= review.submit "投稿", class:"btn btn-success mt-2" %>
+        <%= review.submit "レビューを投稿", class:"btn btn-success mt-2" %>
+      <% end %>
+    </div>
+  </div>
+  <div class="row mt-5">
+    <div class="col">
+      <p class="border border-primary p-2 ronded">レビューを登録せず、読んだ本登録のみ↓</p>
+      <%= form_with model: @readed_book, url: book_readed_books_path(@book.isbn), method: :post do |readed|%>
+        <%= readed.hidden_field :isbn, value: @book_isbn %>
+        <%= readed.date_field :readed_at %><br>
+        <%= readed.submit "読んだ本に登録する", class:"btn btn-primary mt-2" %>
       <% end %>
     </div>
   </div>

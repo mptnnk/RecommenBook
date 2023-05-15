@@ -6,12 +6,12 @@
   </div>
   <div class="row mt-3">
     <div class="col-md-8">
-      <%= link_to "レビューを投稿する", new_book_review_path(@book.isbn), class:"btn btn-success" %>
+      <%= link_to "レビューを投稿する／読んだ本に登録する", new_book_review_path(@book.isbn), class:"btn btn-success" %><br>
       
       <% if current_user.favorite_books.exists?(isbn: @book.isbn) %>
-        <%= link_to "お気に入り登録を解除する", book_favorite_book_path(@book.isbn), method: :delete, class:"btn btn-danger" %>
+        <%= link_to "お気に入り登録を解除する", book_favorite_book_path(@book.isbn), method: :delete, class:"btn btn-danger mt-2" %>
       <% else %>
-        <%= link_to "お気に入りの本に登録する", book_favorite_books_path(@book.isbn), method: :post, class:"btn btn-primary" %>
+        <%= link_to "お気に入りの本に登録する", book_favorite_books_path(@book.isbn), method: :post, class:"btn btn-primary mt-2" %>
       <% end %>
     </div>
   </div>

@@ -12,6 +12,10 @@
     <th>FavoriteBook</th>
     <td><%= link_to "お気に入りの本一覧を見る", favorite_books_path(user_id: @user.id) %></td>
   </tr>
+  <tr>
+    <th>ReadedBook</th>
+    <td><%= link_to "読んだ本一覧を見る",readed_books_path(user_id: @user.id) %></td>
+  </tr>
   <!--emailはためしに表示させているだけ。あとで消す-->
   <!--読んだ本、いちおし本、いいね履歴、コメント履歴、フォロー、フォロワー、好きなジャンルを後で追加-->
 </table>
