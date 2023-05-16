@@ -2,25 +2,34 @@ class Public::TweetsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :destroy]
   
   def new
-    @book = RakutenWebService::Books::Book.search(isbn: params[:book_id]).first
-    @book_isbn = @book["isbn"]
-    @tweet = Tweet.new
+    if params[:book_id].present?
+      @book = RakutenWebService::Books::Book.search(isbn: params[:book_id]).first
+      @book_isbn = @book["isbn"]
+      @tweet = Tweet.new
+    else
+      @tweet = Tweet.new
+    end
   end
   
   def create
-    @book = RakutenWebService::Books::Book.search(isbn: params[:tweet][:isbn]).first
-    if @book.present?
-      @tweet = Tweet.new(
+    if params[:book_id].present?
+      @book = RakutenWebService::Books::Book.search(isbn: params[:book_id]).first
+      @tweet = current_user.tweets.build(
         isbn: @book.isbn,
-        tweet_content: params[:tweet_content]
+        tweet_content: params[:tweet][:tweet_content]
       )
+      if @tweet.save!
+        redirect_to book_path(@book.isbn), notice: "つぶやきを投稿しました"
+      else
+        render :new
+      end
     else
-      @tweet = Tweet.new(tweet_content: params[:tweet_content])
-    end
-    if @tweet.save!
-      redirect_to book_path(@book.isbn), notice: "つぶやきを投稿しました"
-    else
-      render :new
+      @tweet = current_user.tweets.build(tweet_content: params[:tweet][:tweet_content])
+      if @tweet.save!
+        redirect_to tweet_path, notice: "つぶやきを投稿しました"
+      else
+        render :new
+      end
     end
   end
 
