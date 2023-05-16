@@ -6,7 +6,11 @@
       <table class="table table-borderless">
         <tr>
           <th style="width: 20%">タイトル</th>
-          <td><%= book.title %></td>
+          <td>
+            <%= link_to book_path(book.isbn) do %>
+              <%= book.title %>
+            <% end %>
+          </td>
         <tr>
           <th>著者</th>
           <td>

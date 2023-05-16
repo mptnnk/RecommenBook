@@ -15,11 +15,19 @@
           <table class="table table-sm">
             <tr>
               <th>タイトル</th>
-              <td colspan="3"><%= book['title'] %></td>
+              <td colspan="3">
+                <%= link_to book_path(book.isbn) do %>
+                  <%= book['title'] %>
+                <% end %>
+              </td>
             </tr>
             <tr>
               <th style="width: 20%">投稿者</th>
-              <td><%= review.user.name %></td>
+              <td>
+                <%= link_to mypage_path(name: review.user.name) do %>
+                  <%= review.user.name %>
+                <% end %>
+              </td>
               <th style="width: 20%">読み終わった日</th>
               <td><%= review.readed_at&.strftime("%Y/%m/%d") %></td>
             </tr>

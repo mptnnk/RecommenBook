@@ -10,7 +10,11 @@
   </tr>
   <tr>
     <th>Reviews</th>
-    <td><%= link_to "レビュー一覧を見る", reviews_path(user_id: @user.id) %></td>
+    <td>
+      <%= link_to reviews_path(user_id: @user.id) do %>
+        <%= @user.name %>さんのレビュー一覧
+      <% end %>
+    </td>
   </tr>
   <tr>
     <th>FavoriteBook</th>
