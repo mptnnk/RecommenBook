@@ -12,7 +12,7 @@ class Public::FavoriteBooksController < ApplicationController
   def index
     user_id = params[:user_id]
     @user = User.find(user_id)
-    @favorite_books = FavoriteBook.where(user_id: @user.id)
+    @favorite_books = FavoriteBook.where(user_id: @user.id).page(params[:page]).per(10)
   end
 
   def destroy

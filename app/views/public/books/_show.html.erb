@@ -1,10 +1,8 @@
-    <div class="col-md-4">
+    <div class="col-md-3 text-center">
       <%= image_tag(book.large_image_url) %><br>
-      <%= link_to "商品の購入ページへ（楽天ブックス）", book.item_url, class:"btn btn-success btn-sm mt-3" %>
-      <%= link_to "前の画面へ", 'javascript:history.back()', class:"btn btn-primary btn-sm mt-3" %>
     </div>
     
-    <div class="col-md-8">
+    <div class="col-md-9">
       <table class="table table-borderless">
         <tr>
           <th style="width: 20%">タイトル</th>
@@ -25,4 +23,9 @@
         </tr>
       </table>
     </div>
+    
+  <div class="col">
+    <%= link_to "商品の購入ページへ（楽天ブックス）", book.item_url, style:"display: inline-block; color: green", class:"text-center border border-success rounded p-2 mt-3" %>
+    
+  </div>
     

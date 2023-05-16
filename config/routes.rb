@@ -33,7 +33,7 @@ Rails.application.routes.draw do
     resources :books, only: [:show] do
       resources :reviews, only: [:new, :create]
       resources :favorite_books, only: [:create, :destroy]
-      resources :readed_books, only: [:create, :destroy]
+      resources :readed_books, only: [:destroy, :create]
     end
     resources :reviews, only: [:index, :show, :edit, :update, :destroy]
     resources :favorite_books, only: [:index]

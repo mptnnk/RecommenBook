@@ -4,7 +4,10 @@ class Public::ReadedBooksController < ApplicationController
   def create
     @book = RakutenWebService::Books::Book.search(isbn: params[:book_id]).first
     @book_isbn = @book['isbn']
-    @readed_book = current_user.readed_books.build(isbn: @book.isbn)
+    @readed_book = current_user.readed_books.build(
+      isbn: @book.isbn,
+      readed_at: params[:readed_at]
+    )
     if @readed_book.save
       redirect_to book_path(@book.isbn), notice: '読んだ本に登録しました'
     end
