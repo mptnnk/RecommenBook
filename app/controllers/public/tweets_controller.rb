@@ -8,6 +8,20 @@ class Public::TweetsController < ApplicationController
   end
   
   def create
+    @book = RakutenWebService::Books::Book.search(isbn: params[:tweet][:isbn]).first
+    if @book.present?
+      @tweet = Tweet.new(
+        isbn: @book.isbn,
+        tweet_content: params[:tweet_content]
+      )
+    else
+      @tweet = Tweet.new(tweet_content: params[:tweet_content])
+    end
+    if @tweet.save!
+      redirect_to book_path(@book.isbn), notice: "つぶやきを投稿しました"
+    else
+      render :new
+    end
   end
 
   def index
@@ -22,7 +36,7 @@ class Public::TweetsController < ApplicationController
   private
   
   def tweet_params
-    params.require(:tweet).permit(:isbn, :tweet_content,).merge(user_id :current_user.id)
+    params.require(:tweet).permit(:isbn, :tweet_content).merge(user_id:current_user.id)
   end
   
 end

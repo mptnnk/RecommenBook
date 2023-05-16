@@ -1,2 +1,27 @@
-<h1>Public::Tweets#new</h1>
-<p>Find me in app/views/public/tweets/new.html.erb</p>
+<!--つぶやき新規登録-->
+<div class="container">
+  <% if @book.present? %>
+    <div class="row">
+      <%= render 'public/books/show', book: @book %>
+    </div>
+  <% end %>
+  
+  <div class="row">
+    <div class="col">
+      <% if @book.present? %>
+        <%= form_with model: @tweet, url: tweets_path, method: :post do |tweet| %>
+          <%= tweet.hidden_field :isbn, value: @book_isbn %>
+          <%= tweet.label :"つぶやく", class:"border border-primary p-2 mt-2 rounded" %><br>
+          <%= tweet.text_area :tweet_content, size:"100x2" %><br>
+          <%= tweet.submit "つぶやきを投稿", class:"btn btn-success mt-2" %>
+        <% end %>
+      <% else %>
+        <%= form_with model: @tweet, url: tweets_path, method: :post do |tweet| %>
+          <%= tweet.label :"つぶやく", class:"border border-primary p-2 mt-2 rounded" %><br>
+          <%= tweet.text_area :tweet_content, size:"100x2" %><br>
+          <%= tweet.submit "つぶやきを投稿", class:"btn btn-success mt-2" %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
