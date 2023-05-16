@@ -6,7 +6,8 @@
   </div>
   <div class="row mt-3">
     <div class="col-md-8">
-      <%= link_to "レビューを投稿する／読んだ本に登録する", new_book_review_path(@book.isbn), class:"btn btn-success" %><br>
+      <%= link_to "レビューを投稿する／読んだ本に登録する", new_book_review_path(@book.isbn), class:"btn btn-success" %>
+      <%= link_to "この本についてつぶやく", new_tweet_path(book_id: @book.isbn), class:"btn btn-primary" %><br>
       
       <% if current_user.favorite_books.exists?(isbn: @book.isbn) %>
         <%= link_to "お気に入り登録を解除する", book_favorite_book_path(@book.isbn), method: :delete, class:"btn btn-danger mt-2" %>
@@ -23,7 +24,11 @@
       <table class="table table-sm table-borderless">
         <tr>
           <th style="width: 20%">投稿者</th>
-          <td><%= review.user.name %></td>
+          <td>
+            <%= link_to mypage_path(name: review.user.name) do %>
+              <%= review.user.name %>
+            <% end %>
+          </td>
           <th style="width: 20%">読み終わった日</th>
           <td><%= review.readed_at&.strftime("%Y/%m/%d") %></td>
           <!--「&.」は、nilの場合はnil、そうでない場合はメソッドを呼び出す-->

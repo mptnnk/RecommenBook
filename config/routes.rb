@@ -1,10 +1,5 @@
 Rails.application.routes.draw do
 
-  namespace :public do
-    get 'tweets/new'
-    get 'tweets/index'
-    get 'tweets/show'
-  end
   devise_for :admin, skip:[:registrations,:passwords], controllers:{
     sessions:'admin/sessions'
   }
@@ -43,6 +38,7 @@ Rails.application.routes.draw do
     resources :reviews, only: [:index, :show, :edit, :update, :destroy]
     resources :favorite_books, only: [:index]
     resources :readed_books, only: [:index]
+    resources :tweets, only: [:new, :create, :index, :show, :destroy]
   end
   
   namespace :admin do
