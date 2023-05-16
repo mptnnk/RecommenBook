@@ -13,7 +13,7 @@ class Public::ReadedBooksController < ApplicationController
   def index
     user_id = params[:user_id]
     @user = User.find(user_id)
-    @readed_books = ReadedBooks.where(user_id: @user.id)
+    @readed_books = ReadedBook.where(user_id: @user.id)
   end
   
   def destroy
@@ -27,7 +27,7 @@ class Public::ReadedBooksController < ApplicationController
   private
   
   def readed_book_params
-    params.require(:readed_book).permit(:isbn).merge(user_id :current_user.id)
+    params.require(:readed_book).permit(:isbn, :readed_at).merge(user_id :current_user.id)
   end
 
 end
