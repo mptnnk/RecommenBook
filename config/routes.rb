@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
 
+  namespace :public do
+    get 'tweets/new'
+    get 'tweets/index'
+    get 'tweets/show'
+  end
   devise_for :admin, skip:[:registrations,:passwords], controllers:{
     sessions:'admin/sessions'
   }
