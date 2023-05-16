@@ -34,6 +34,12 @@ class Public::TweetsController < ApplicationController
   end
 
   def index
+    if params[:user_id]
+      @user = User.find(params[:user_id])
+      @tweets = Tweet.where(user_id: @user.id).page(params[:page]).per(10).order(created_at: :DESC)
+    else
+      @tweets = Tweet.page(params[:page]).per(10).order(created_at: :DESC)
+    end
   end
 
   def show

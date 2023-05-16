@@ -1,33 +1,48 @@
 <table class="table">
-  <tr><%= image_tag user.get_profile_image, size:'80x100' %></tr>
+  <div class="text-center mt-2 mb-2">
+    <%= image_tag user.get_profile_image, size:'80x100' %>
   <tr>
+  </div>
     <th>name</th>
     <td><%= user.name %></td>
-  </tr>
-  <tr>
-    <th>email</th>
-    <td><%= user.email %></td>
   </tr>
   <tr>
     <th>Reviews</th>
     <td>
       <%= link_to reviews_path(user_id: @user.id) do %>
-        <%= @user.name %>さんのレビュー一覧
+        <%= @user.reviews.count %>reviews
       <% end %>
     </td>
   </tr>
   <tr>
-    <th>FavoriteBook</th>
-    <td><%= link_to "お気に入りの本一覧を見る", favorite_books_path(user_id: @user.id) %></td>
+    <th>FavoriteBooks</th>
+    <td>
+      <%= link_to favorite_books_path(user_id: @user.id) do %>
+        <%= @user.favorite_books.count %>books
+      <% end %>
+    </td>
   </tr>
   <tr>
-    <th>ReadedBook</th>
-    <td><%= link_to "読んだ本一覧を見る",readed_books_path(user_id: @user.id) %></td>
+    <th>ReadedBooks</th>
+    <td>
+      <%= link_to readed_books_path(user_id: @user.id) do %>
+        <%= @user.readed_books.count %>books
+      <% end %>
+    </td>
   </tr>
-  <!--emailはためしに表示させているだけ。あとで消す-->
-  <!--読んだ本、いちおし本、いいね履歴、コメント履歴、フォロー、フォロワー、好きなジャンルを後で追加-->
+  <tr>
+    <th>Tweets</th>
+    <td>
+      <%= link_to tweets_path(user_id: @user.id) do %>
+        <%= @user.tweets.count %>tweets
+      <% end %>
+    </td>
+  </tr>
+  <!--いちおし本、いいね履歴、コメント履歴、フォロー、フォロワー、好きなジャンルを後で追加-->
 </table>
 
 <div class="row">
-  <%= link_to "編集する", users_information_edit_path, class:"btn btn-outline-secondary btn-block"%>
+  <% if current_user == @user %>
+    <%= link_to "編集する", users_information_edit_path, class:"btn btn-outline-secondary btn-block"%>
+  <% end %>
 </div>

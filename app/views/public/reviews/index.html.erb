@@ -1,3 +1,4 @@
+<!--reviewの一覧-->
 <div class="container">
   <h4 class="page-title">
     <% if params[:user_id] %>
@@ -14,6 +15,11 @@
           <% book = RakutenWebService::Books::Book.search(isbn: isbn).first %>
           <table class="table table-sm">
             <tr>
+              <td style="width:8%" rowspan="2">
+                <%= link_to book_path(book.isbn) do %>
+                  <%= image_tag(book['small_image_url']) %>
+                <% end %>
+              </td>
               <th style="width:10%">タイトル</th>
               <td style="width:30%">
                 <%= link_to book_path(book.isbn) do %>
@@ -33,17 +39,18 @@
               <th>レビュー</th>
               <td colspan="3"><%= review.content.truncate(50) %></td>
               <!--長文の場合の省略方法と、「ネタバレを読む」の場合の編みかけ方法を後で設定する-->
-              <td colspan="2"><%= link_to "詳細を見る", review_path(review.id), style:"display: inline", class:"btn btn-primary btn-sm" %>
+              <td colspan="2">
+                <%= link_to "詳細を見る", review_path(review.id), style:"display: inline", class:"btn btn-primary btn-sm" %>
                 <% if review.user == current_user %>
                  <%= link_to "編集する", edit_review_path(review.id), style:"display: inline", class:"btn btn-success btn-sm"%>
-                 <%= link_to "削除する", review_path(review.id), method: :delete, "data-confirm" => "本当に削除しますか？", style:"display: inline", class:"btn btn-danger btn-sm" %>
+                 <%= link_to "削除する", review_path(review.id), method: :delete, "data-confirm" => "レビューを削除しますか？", style:"display: inline", class:"btn btn-danger btn-sm" %>
                 <% end %>
               </td>
             </tr>
           </table>
         <% end %>
       <% else %>
-        <p>投稿がありません</p>
+        <p>レビューがありません</p>
       <% end %>
     </div>
   </div>

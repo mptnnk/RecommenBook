@@ -1,3 +1,4 @@
+<!--favorite_bookの一覧-->
 <div class="container">
   <h4 class="page-title"><%= @user.name %>さんのお気に入りの本一覧</h4>
   <div class="row">
@@ -17,9 +18,9 @@
           <% book = RakutenWebService::Books::Book.search(isbn: isbn).first %>
           <tbody>
             <tr>
-              <td>
+              <td class="text-center">
                 <%= link_to book_path(book.isbn) do %>
-                  <%= image_tag(book['medium_image_url']) %>
+                  <%= image_tag(book['small_image_url']) %>
                 <% end %>
               </td>
               <td>
@@ -28,7 +29,7 @@
                 <% end %>
               </td>
               <td><%= book['author'] %></td>
-              <td><%= book['item_caption'] %></td>
+              <td><%= book['item_caption'].truncate(80) %></td>
             </tr>
           </tbody>
           <% end %>
