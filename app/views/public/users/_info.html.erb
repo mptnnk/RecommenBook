@@ -9,6 +9,10 @@
     <td><%= user.email %></td>
   </tr>
   <tr>
+    <th>Reviews</th>
+    <td><%= link_to "レビュー一覧を見る", reviews_path(user_id: @user.id) %></td>
+  </tr>
+  <tr>
     <th>FavoriteBook</th>
     <td><%= link_to "お気に入りの本一覧を見る", favorite_books_path(user_id: @user.id) %></td>
   </tr>

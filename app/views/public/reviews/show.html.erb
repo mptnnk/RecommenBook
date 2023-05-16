@@ -24,7 +24,8 @@
               <%= link_to "削除する", review_path(@review.id), method: :delete, "data-confirm" => "本当に削除しますか？", class:"btn btn-danger btn-sm" %>
             <% end %>
             
-            <%= link_to "本の詳細画面に戻る", book_path(@book.isbn), class:"btn btn-success btn-sm" %>
+            <%= link_to "本の詳細画面へ", book_path(@book.isbn), class:"btn btn-success btn-sm", style: 'display: inline' %>
+            <%= link_to "前の画面へ", 'javascript:history.back()', class:"btn btn-primary btn-sm", style: 'display: inline' %>
           </td>
         </tr>
       </table>

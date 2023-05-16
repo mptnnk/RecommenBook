@@ -19,7 +19,7 @@
   </div>
   <div class="row mt-5">
     <div class="col">
-      <p class="border border-primary p-2 ronded">レビューを登録せず、読んだ本登録のみ↓</p>
+      <p class="border border-primary p-2 rounded" style="display:inline-block">レビューを登録せず、読んだ本登録のみ<i class="fas fa-book"></i></p>
       <%= form_with model: @readed_book, url: book_readed_books_path(@book.isbn), method: :post do |readed|%>
         <%= readed.hidden_field :isbn, value: @book_isbn %>
         <%= readed.date_field :readed_at %><br>
