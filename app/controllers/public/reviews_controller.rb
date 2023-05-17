@@ -30,18 +30,15 @@ class Public::ReviewsController < ApplicationController
   end
 
   def show
-    isbn = @review.isbn
-    @book = RakutenWebService::Books::Book.search(isbn: isbn).first
+    @book = RakutenWebService::Books::Book.search(isbn: @review.isbn).first
   end
 
   def edit
-    isbn = @review.isbn
-    @book = RakutenWebService::Books::Book.search(isbn: isbn).first
+    @book = RakutenWebService::Books::Book.search(isbn: @review.isbn).first
   end
   
   def update
-    isbn = @review.isbn
-    @book = RakutenWebService::Books::Book.search(isbn: isbn).first
+    @book = RakutenWebService::Books::Book.search(isbn: @review.isbn).first
     if @review.update(review_params)
       flash[:notice] = "レビュー内容を更新しました"
       redirect_to book_path(@book.isbn)
@@ -52,8 +49,7 @@ class Public::ReviewsController < ApplicationController
   
   def destroy
     @review.destroy if @review
-    isbn = @review.isbn
-    @book = RakutenWebService::Books::Book.search(isbn: isbn).first
+    @book = RakutenWebService::Books::Book.search(isbn: @review.isbn).first
     redirect_to book_path(@book.isbn), alert: 'レビューを削除しました'
   end
   

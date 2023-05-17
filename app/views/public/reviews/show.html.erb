@@ -4,28 +4,28 @@
     <%= render 'public/books/show', book: @book %>
   </div>
   <div class="row">
-    <div class="col-md-8">
+    <div class="col">
       <table class="table table-borderless">
         <tr>
-          <th style="width: 20%">投稿者</th>
-          <td><%= @review.user.name %></td>
+          <th style="width: 10%">投稿者</th>
+          <td>
+            <%= link_to mypage_path(name: @review.user.name) do %>
+              <%= @review.user.name %>
+            <% end %>
+          </td>
+          <th>投稿日</th>
+          <td><%= @review.created_at.strftime('%Y/%m/%d') %></td>
           <th style="width: 20%">読み終わった日</th>
           <td><%= @review.readed_at&.strftime("%Y/%m/%d") %></td>
         </tr>
         <tr>
           <th>レビュー</th>
           <td colspan="3"><%= @review.content %></td>
-        </tr>
-        <tr>
-          <th></th>
           <td>
             <% if @review.user == current_user %>
               <%= link_to "編集する", edit_review_path(@review.id), class:"btn btn-primary btn-sm"%>
-              <%= link_to "削除する", review_path(@review.id), method: :delete, "data-confirm" => "本当に削除しますか？", class:"btn btn-danger btn-sm" %>
+              <%= link_to "削除する", review_path(@review.id), method: :delete, "data-confirm" => "レビューを削除しますか？", class:"btn btn-danger btn-sm" %>
             <% end %>
-            
-            
-            
           </td>
         </tr>
       </table>

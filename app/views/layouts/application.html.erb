@@ -43,18 +43,17 @@
                   <%= link_to "マイページ", mypage_path(current_user.name), style:"color:gray", class:"border border-secondary rounded p-2" %>
                 </li>
                 <li class="nav-link">
-                  <%= link_to "ログアウト", destroy_user_session_path, method: :delete, style:"color:gray", class:"border border-secondary rounded p-2" %>
-                </li>
-                <li class="nav-link">
-                  <%= link_to "レビュー一覧", reviews_path, style:"color:gray", class:"border border-secondary rounded p-2" %>
-                </li>
-                <li class="nav-link">
-                  <%= link_to "つぶやき一覧", tweets_path, style:"color:gray", class:"border border-secondary rounded p-2" %>
-                </li>
-                <li class="nav-link">
                   <%= link_to "本の検索", books_search_path, style:"color:gray", class:"border border-secondary rounded p-2" %>
                 </li>
-                
+                <li class="nav-link">
+                  <%= link_to "レビュー", reviews_path, style:"color:gray", class:"border border-secondary rounded p-2" %>
+                </li>
+                <li class="nav-link">
+                  <%= link_to "つぶやき", tweets_path, style:"color:gray", class:"border border-secondary rounded p-2" %>
+                </li>
+                <li class="nav-link">
+                  <%= link_to "ログアウト", destroy_user_session_path, method: :delete, style:"color:gray", class:"border border-secondary rounded p-2" %>
+                </li>
               <% else %>
               <!--どちらもログインしていないとき-->
                 <li class="nav-link">
