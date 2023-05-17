@@ -27,6 +27,12 @@ Rails.application.routes.draw do
     get 'users/information/edit' => 'users#edit'
     patch 'users/information' => 'users#update'
     
+    resources :users, only:[] do
+      resource :relationships, only: [:create, :destroy]
+      get 'followings' => 'relationships#followings', as: 'followings'
+      get 'followers' => 'relationships#followers', as: 'followers'
+    end
+    
     # booksコントローラ
     get 'books/search' => "books#search"
     

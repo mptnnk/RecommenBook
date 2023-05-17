@@ -9,32 +9,32 @@
   <tr>
     <th>Reviews</th>
     <td>
-      <%= link_to reviews_path(user_id: @user.id) do %>
-        <%= @user.reviews.count %>reviews
+      <%= link_to reviews_path(user_id: user.id) do %>
+        <%= user.reviews.count %>reviews
       <% end %>
     </td>
   </tr>
   <tr>
     <th>FavoriteBooks</th>
     <td>
-      <%= link_to favorite_books_path(user_id: @user.id) do %>
-        <%= @user.favorite_books.count %>books
+      <%= link_to favorite_books_path(user_id: user.id) do %>
+        <%= user.favorite_books.count %>books
       <% end %>
     </td>
   </tr>
   <tr>
     <th>ReadedBooks</th>
     <td>
-      <%= link_to readed_books_path(user_id: @user.id) do %>
-        <%= @user.readed_books.count %>books
+      <%= link_to readed_books_path(user_id: user.id) do %>
+        <%= user.readed_books.count %>books
       <% end %>
     </td>
   </tr>
   <tr>
     <th>Tweets</th>
     <td>
-      <%= link_to tweets_path(user_id: @user.id) do %>
-        <%= @user.tweets.count %>tweets
+      <%= link_to tweets_path(user_id: user.id) do %>
+        <%= user.tweets.count %>tweets
       <% end %>
     </td>
   </tr>
@@ -42,7 +42,9 @@
 </table>
 
 <div class="row">
-  <% if current_user == @user %>
+  <% if current_user !=  user %>
+    <%= render "public/relationships/btn", user: user %>
+  <% else %>
     <%= link_to "編集する", users_information_edit_path, class:"btn btn-outline-secondary btn-block"%>
   <% end %>
 </div>
