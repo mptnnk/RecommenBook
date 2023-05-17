@@ -14,31 +14,33 @@
           <% book = RakutenWebService::Books::Book.search(isbn: review.isbn).first %>
           <table class="table table-sm">
             <tr>
-              <td style="width:8%" rowspan="2">
+              <td style="width: 8%" rowspan="2">
                 <%= link_to book_path(book.isbn) do %>
                   <%= image_tag(book['small_image_url']) %>
                 <% end %>
               </td>
-              <th style="width:10%">タイトル</th>
-              <td style="width:30%">
+              <th style="width: 10%">タイトル</th>
+              <td style="width: 30%">
                 <%= link_to book_path(book.isbn) do %>
                   <%= book['title'].truncate(30) %>
                 <% end %>
               </td>
-              <th style="width:10%">投稿者</th>
-              <td style="width:10%">
+              <th style="width: 10%">投稿者</th>
+              <td style="width: 10%">
                 <%= link_to mypage_path(name: review.user.name) do %>
                   <%= review.user.name %>
                 <% end %>
               </td>
-              <th style="width:20%">読み終わった日</th>
+              <th style="width: 10%">投稿日</th>
+              <td><%= review.created_at.strftime('%Y/%m/%d') %></td>
+              <th style="width: 15%">読み終わった日</th>
               <td><%= review.readed_at&.strftime("%Y/%m/%d") %></td>
             </tr>
             <tr>
               <th>レビュー</th>
-              <td colspan="3"><%= review.content.truncate(50) %></td>
+              <td colspan="4"><%= review.content.truncate(50) %></td>
               <!--長文の場合の省略方法と、「ネタバレを読む」の場合の編みかけ方法を後で設定する-->
-              <td colspan="2">
+              <td colspan="3">
                 <%= link_to "詳細を見る", review_path(review.id), style:"display: inline", class:"btn btn-primary btn-sm" %>
                 <% if review.user == current_user %>
                  <%= link_to "編集する", edit_review_path(review.id), style:"display: inline", class:"btn btn-success btn-sm"%>

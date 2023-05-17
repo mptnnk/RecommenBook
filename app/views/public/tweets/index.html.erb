@@ -9,7 +9,7 @@
   </h4>
   
   <div class="row">
-    <div class="col mt-3">
+    <div class="col">
       <!--user_idの受け渡しがあるとき・ないときの@tweetsの条件はコントローラで設定済み-->
       <!--@tweetsが存在するとき-->
       <% if @tweets.present? %>
@@ -18,7 +18,7 @@
             <tr>　<!--1行目--> 
               <% if tweet.isbn.present? %>
                 <% book = RakutenWebService::Books::Book.search(isbn: tweet.isbn).first %>
-                <td rowspan="2" style="width: 10%">
+                <td rowspan="2" style="width: 8%">
                   <%= link_to book_path(book.isbn) do %>
                     <%= image_tag(book['small_image_url']) %>
                   <% end %>
@@ -39,17 +39,19 @@
               <% end %>
               
               <th style="width: 10%">投稿者</th>
-              <td>
+              <td style="width: 10%">
                 <%= link_to mypage_path(name: tweet.user.name) do %>
                   <%= tweet.user.name %>
                 <% end %>
               </td>
+              <th style="width: 10%">投稿日</th>
+              <td style="width: 15%"><%= tweet.created_at.strftime('%Y/%m/%d') %></td>
             </tr>
             
             <tr>　<!--2行目-->
               <th>つぶやき</th>
-              <td colspan="2"><%= tweet.tweet_content.truncate(50) %></td>
-              <td>
+              <td colspan="3"><%= tweet.tweet_content.truncate(50) %></td>
+              <td colspan="2">
                 <%= link_to "詳細を見る", tweet_path(tweet.id), style:"display: inline-block", class:"btn btn-primary btn-sm" %>
                 <% if tweet.user == current_user %>
                   <%= link_to "削除する", tweet_path(tweet.id), method: :delete, "data-confirm" => "つぶやきを削除しますか？", style:"display: inline-block", class:"btn btn-danger btn-sm" %>
