@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_14_131356) do
+ActiveRecord::Schema.define(version: 2023_05_16_063126) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -67,12 +67,8 @@ ActiveRecord::Schema.define(version: 2023_05_14_131356) do
   end
 
   create_table "favorite_books", force: :cascade do |t|
+    t.integer "user_id", null: false
     t.string "isbn", null: false
-    t.string "title", null: false
-    t.string "author"
-    t.string "url"
-    t.string "image_url"
-    t.string "item_caption"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -84,10 +80,18 @@ ActiveRecord::Schema.define(version: 2023_05_14_131356) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "readed_books", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "isbn", null: false
+    t.datetime "readed_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "reviews", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.string "isbn"
-    t.text "content"
+    t.string "isbn", null: false
+    t.text "content", null: false
     t.datetime "readed_at"
     t.boolean "in_release", default: false
     t.boolean "spoiler", default: false
@@ -95,10 +99,17 @@ ActiveRecord::Schema.define(version: 2023_05_14_131356) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "tweets", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "isbn"
+    t.text "tweet_content"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
-    t.integer "book_id"
     t.string "name", null: false
     t.boolean "is_active", default: true
     t.string "reset_password_token"

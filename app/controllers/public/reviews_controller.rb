@@ -7,13 +7,12 @@ class Public::ReviewsController < ApplicationController
     @book = RakutenWebService::Books::Book.search(isbn: params[:book_id]).first
     @book_isbn = @book["isbn"]
     @review = Review.new
+    @readed_book = current_user.readed_books.find_by(isbn: @book.isbn)
   end
   
   def create
     @book = RakutenWebService::Books::Book.search(isbn: params[:book_id]).first
     @review = Review.new(review_params)
-    # @review.book_title = @book.title
-    # @review.book_author = @book.author
     if @review.save!
       redirect_to book_path(@book.isbn), notice: 'レビューが投稿されました'
     else
@@ -22,8 +21,12 @@ class Public::ReviewsController < ApplicationController
   end
 
   def index
-    @reviews = Review.page(params[:page]).per(10).order(created_at: :DESC)
-    
+    if params[:user_id]
+      @user = User.find(params[:user_id])
+      @reviews = Review.where(user_id: @user.id).page(params[:page]).per(10).order(created_at: :DESC)
+    else
+      @reviews = Review.page(params[:page]).per(10).order(created_at: :DESC)
+    end
   end
 
   def show

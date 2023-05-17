@@ -9,6 +9,8 @@ class User < ApplicationRecord
   has_many :reviews, dependent: :destroy
   has_many :favorite_books, dependent: :destroy
   # おすすめ本1冊しか登録できない仕様ならhas_oneだけど、読みたい本とかお気に入りとかを登録するのにbookテーブルを使えるならhas_manyがいいかも
+  has_many :readed_books, dependent: :destroy
+  has_many :tweets, dependent: :destroy
   
   has_one_attached :profile_image
   
@@ -17,7 +19,6 @@ class User < ApplicationRecord
   end
   
   def to_param
-    #  to_paramはURLのidの部分にid以外のものを指定できる既存のメソッド
     name
   end
   

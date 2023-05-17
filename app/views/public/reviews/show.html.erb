@@ -23,7 +23,9 @@
               <%= link_to "編集する", edit_review_path(@review.id), class:"btn btn-primary btn-sm"%>
               <%= link_to "削除する", review_path(@review.id), method: :delete, "data-confirm" => "本当に削除しますか？", class:"btn btn-danger btn-sm" %>
             <% end %>
-            <%= link_to "本の詳細画面に戻る", book_path(@book.isbn), class:"btn btn-success btn-sm" %>
+            
+            
+            
           </td>
         </tr>
       </table>

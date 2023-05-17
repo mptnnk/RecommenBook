@@ -1,2 +1,43 @@
-<h1>Public::FavoriteBooks#index</h1>
-<p>Find me in app/views/public/favorite_books/index.html.erb</p>
+<!--favorite_bookの一覧-->
+<div class="container">
+  <h4 class="page-title"><%= @user.name %>さんのお気に入りの本一覧</h4>
+  <div class="row">
+    <div class="col">
+      <% if @favorite_books.present? %>
+        <table class="table table-sm">
+          <thead>
+            <tr>
+              <th style="width:10%"></th>
+              <th style="width:30%">タイトル</th>
+              <th style="width:10%">著者</th>
+              <th style="width:40%">本の概要</th>
+            </tr>
+          </thead>
+          <% @favorite_books.each do |favorite_book|%>
+          <% isbn = favorite_book.isbn %>
+          <% book = RakutenWebService::Books::Book.search(isbn: isbn).first %>
+          <tbody>
+            <tr>
+              <td class="text-center">
+                <%= link_to book_path(book.isbn) do %>
+                  <%= image_tag(book['small_image_url']) %>
+                <% end %>
+              </td>
+              <td>
+                <%= link_to book_path(book.isbn) do %>
+                  <%= book['title'] %>
+                <% end %>
+              </td>
+              <td><%= book['author'] %></td>
+              <td><%= book['item_caption'].truncate(80) %></td>
+            </tr>
+          </tbody>
+          <% end %>
+        </table>
+      <% else %>
+        <p>登録されているお気に入りの本はありません。</p>
+      <% end %>
+      <%= paginate @favorite_books, theme: 'twitter-bootstrap-4' %>
+    </div>
+  </div>
+</div>
