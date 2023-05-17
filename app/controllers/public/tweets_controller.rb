@@ -26,7 +26,7 @@ class Public::TweetsController < ApplicationController
     else
       @tweet = current_user.tweets.build(tweet_content: params[:tweet][:tweet_content])
       if @tweet.save!
-        redirect_to tweet_path, notice: "つぶやきを投稿しました"
+        redirect_to tweets_path, notice: "つぶやきを投稿しました"
       else
         render :new
       end
@@ -34,9 +34,11 @@ class Public::TweetsController < ApplicationController
   end
 
   def index
+    # user_idの受け渡しがあるときの@tweets
     if params[:user_id]
       @user = User.find(params[:user_id])
       @tweets = Tweet.where(user_id: @user.id).page(params[:page]).per(10).order(created_at: :DESC)
+    # user_idの受け渡しがないときの@tweets
     else
       @tweets = Tweet.page(params[:page]).per(10).order(created_at: :DESC)
     end
