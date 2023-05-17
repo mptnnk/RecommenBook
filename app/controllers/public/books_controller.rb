@@ -45,8 +45,9 @@ class Public::BooksController < ApplicationController
   def show
     @book = RakutenWebService::Books::Book.search(isbn: params[:id]).first
     @review = Review.new
-    @reviews = Review.where(isbn: @book.isbn).page(params[:page]).per(10)
+    @reviews = Review.where(isbn: @book.isbn)
     @tweet = Tweet.new
+    @tweets = Tweet.where(isbn: @book.isbn)
   end
 
   private

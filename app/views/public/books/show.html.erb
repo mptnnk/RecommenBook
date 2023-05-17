@@ -5,52 +5,54 @@
     <%= render 'show', book: @book %>
   </div>
   <div class="row mt-3">
-    <div class="col-md-8">
+    <div class="col">
       <%= link_to "レビューを投稿する／読んだ本に登録する", new_book_review_path(@book.isbn), class:"btn btn-success" %>
-      <%= link_to "この本についてつぶやく", new_tweet_path(book_id: @book.isbn), class:"btn btn-primary" %><br>
+      <%= link_to "この本についてつぶやく", new_tweet_path(book_id: @book.isbn), class:"btn btn-primary" %>
       
       <% if current_user.favorite_books.exists?(isbn: @book.isbn) %>
-        <%= link_to "お気に入り登録を解除する", book_favorite_book_path(@book.isbn), method: :delete, class:"btn btn-danger mt-2" %>
+        <%= link_to "お気に入り登録を解除する", book_favorite_book_path(@book.isbn), method: :delete, class:"btn btn-danger" %>
       <% else %>
-        <%= link_to "お気に入りの本に登録する", book_favorite_books_path(@book.isbn), method: :post, class:"btn btn-primary mt-2" %>
+        <%= link_to "お気に入りの本に登録する", book_favorite_books_path(@book.isbn), method: :post, class:"btn btn-primary" %>
       <% end %>
     </div>
   </div>
   
   <!--その書籍に関するレビューの一覧-->
-  <div class="row">
-    <div class="col-md-8 mt-3">
-      <% @reviews.each do |review| %>
-      <table class="table table-sm table-borderless">
-        <tr>
-          <th style="width: 20%">投稿者</th>
-          <td>
-            <%= link_to mypage_path(name: review.user.name) do %>
-              <%= review.user.name %>
-            <% end %>
-          </td>
-          <th style="width: 20%">読み終わった日</th>
-          <td><%= review.readed_at&.strftime("%Y/%m/%d") %></td>
-          <!--「&.」は、nilの場合はnil、そうでない場合はメソッドを呼び出す-->
-        </tr>
-        <tr>
-          <th>レビュー</th>
-          <td colspan="3"><%= review.content.truncate(50) %></td>
-          <!--長文の場合の省略方法と、「ネタバレを読む」の場合の編みかけ方法を後で設定する-->
-        </tr>
-        <tr>
-          <th></th>
-          <td>
-            <%= link_to "詳細を見る", review_path(review.id), class:"btn btn-primary btn-sm" %>
-            <% if review.user == current_user %>
-              <%= link_to "編集する", edit_review_path(review.id), class:"btn btn-success btn-sm" %>
-              <%= link_to "削除する", review_path(review.id), method: :delete, "data-confirm" => "本当に削除しますか？", class:"btn btn-danger btn-sm" %>
-            <% end %>
-          </td>
-        </tr>
-      </table>
-      <% end %>
-      <%= paginate @reviews %>
+  <h5 class="page-title mt-5">この本のレビュー</h5>
+  <% if @reviews.present? %>
+    <div class="row">
+      <div class="col mt-3">
+        <% @reviews.each do |review| %>
+        <table class="table table-sm table-borderless">
+          <tr>
+            <th style="width: 10%">投稿者</th>
+            <td style="width: 20%">
+              <%= link_to mypage_path(name: review.user.name) do %>
+                <%= review.user.name %>
+              <% end %>
+            </td>
+            <th style="width: 20%">読み終わった日</th>
+            <td><%= review.readed_at&.strftime("%Y/%m/%d") %></td>
+            <!--「&.」は、nilの場合はnil、そうでない場合はメソッドを呼び出す-->
+          </tr>
+          <tr>
+            <th>レビュー</th>
+            <td colspan="2"><%= review.content.truncate(50) %></td>
+            <!--長文の場合の省略方法と、「ネタバレを読む」の場合の編みかけ方法を後で設定する-->
+            <td>
+              <%= link_to "詳細を見る", review_path(review.id), style:"display: inline-block", class:"btn btn-primary btn-sm" %>
+              <% if review.user == current_user %>
+                <%= link_to "編集する", edit_review_path(review.id), class:"btn btn-success btn-sm" %>
+                <%= link_to "削除する", review_path(review.id), method: :delete, "data-confirm" => "本当に削除しますか？", class:"btn btn-danger btn-sm" %>
+              <% end %>
+            </td>
+          </tr>
+        </table>
+        <% end %>
+        <%= paginate @reviews %>
+      </div>
     </div>
-  </div>
+  <% else %>
+    <p class="ml-3">この本のレビューはまだありません</p>
+  <% end %>
 </div>

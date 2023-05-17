@@ -17,27 +17,28 @@
           <table class="table table-sm">
             <tr>　<!--1行目--> 
               <% if tweet.isbn.present? %>
-                <% isbn = tweet.isbn %>
-                <% book = RakutenWebService::Books::Book.search(isbn: isbn).first %>
-                <td rowspan="2">
+                <% book = RakutenWebService::Books::Book.search(isbn: tweet.isbn).first %>
+                <td rowspan="2" style="width: 10%">
                   <%= link_to book_path(book.isbn) do %>
                     <%= image_tag(book['small_image_url']) %>
                   <% end %>
                 </td>
                 
-                <th style="width:10%">タイトル</th>
-                <td style="width:30%">
+                <th style="width: 10%">タイトル</th>
+                <td style="width: 30%">
                   <%= link_to book_path(book.isbn) do %>
                     <%= book['title'].truncate(30) %>
                   <% end %>
                 </td>
+                
               <% else%>
-                <td rowspan="2" style="width:10%"></td>
-                <th style="width:10%"></th>
-                <td style="width:30%"></td>
+                <td rowspan="2" style="width: 10%"></td>
+                <th style="width: 10%"></th>
+                <td style="width: 30%"></td>
+                
               <% end %>
               
-              <th>投稿者</th>
+              <th style="width: 10%">投稿者</th>
               <td>
                 <%= link_to mypage_path(name: tweet.user.name) do %>
                   <%= tweet.user.name %>

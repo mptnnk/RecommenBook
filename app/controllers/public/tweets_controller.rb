@@ -45,9 +45,18 @@ class Public::TweetsController < ApplicationController
   end
 
   def show
+    @tweet = Tweet.find(params[:id])
+    if @tweet.isbn.present?
+      @book = RakutenWebService::Books::Book.search(isbn: @tweet.isbn).first
+    end
+      
   end
   
   def destroy
+    @tweet = Tweet.find(params[:id])
+    if @tweet.destroy
+      redirect_to tweets_path, alert: 'つぶやきを削除しました'
+    end
   end
   
   private
