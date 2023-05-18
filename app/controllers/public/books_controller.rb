@@ -48,6 +48,7 @@ class Public::BooksController < ApplicationController
     @reviews = Review.where(isbn: @book.isbn).order(created_at: :DESC)
     @tweet = Tweet.new
     @tweets = Tweet.where(isbn: @book.isbn).order(created_at: :DESC)
+    @book_favorites = FavoriteBook.where(isbn: @book.isbn)
   end
 
   private
