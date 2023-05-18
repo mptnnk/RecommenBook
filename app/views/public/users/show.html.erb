@@ -2,9 +2,11 @@
 <div class="container">
   <div class="row">
     <div class="col-md-3">
-      <h2 class="page-title">User info</h2><br>
       <%= render 'info', user: @user %>
     </div>
-    <%= link_to "つぶやき投稿仮置き場", new_tweet_path %>
+    <div class="col-md-8 offset-md-1">
+      <h2 class="page-title"><%= @user.name %>さんのマイページ</h2>
+    </div>
+    
   </div>
 </div>

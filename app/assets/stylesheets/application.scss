@@ -20,11 +20,18 @@
   box-sizing: border-box;
 }
 
+.helloname{
+  font-family: 'Darumadrop One', cursive;
+  font-size: 30px;
+}
+
 .page-title{
-  background-color: #ddd;
+  font-family: 'Yusei Magic', sans-serif;
+  // background-color: #ddd;
   display: inline-block;
-  padding: 5px;
-  border-radius: 5px;
+  // padding: 5px;
+  // border-radius: 5px;
+  font-size: 40px;
 }
 
 .page-subtitle{
@@ -38,3 +45,4 @@
 .pagination{
   justify-content: center;
 }
+

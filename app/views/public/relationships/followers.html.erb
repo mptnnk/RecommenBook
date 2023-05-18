@@ -5,6 +5,7 @@
     </div>
     
     <div class="col-md-8 offset-md-1">
+      <h4 class="page-title"><%= @user.name %>さんのフォロワー</h4>
       <% if @users.exists? %>
         <%= render 'public/users/index', users: @users %>
       <% else %>
