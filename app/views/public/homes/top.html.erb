@@ -1,18 +1,32 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-6 mr-auto">
-      <!--あとでログイン・ゲストログイン・新規登録の部分テンプレートをつくってはめる-->
-    </div>
-    <div class="col-md-8 offset-md-1">
-      <h1 class="top-text">
-        ようこそRecommenBookへ
-      </h1>
-      <h5 class="top-text">
-        紹介文です。紹介文です。紹介文です。紹介文です。<br>
-        紹介文です。紹介文です。紹介文です。紹介文です。<br>
-        紹介文です。紹介文です。紹介文です。紹介文です。<br>
-        紹介文です。紹介文です。紹介文です。紹介文です。<br>
-      </h5>
-    </div>
+    <% if user_signed_in? %>
+      <div class="col-md-12">
+        <h1 class="page-title">
+          ようこそRecommenBookへ
+        </h1>
+        <h5 class="top-text">
+          紹介文です。紹介文です。紹介文です。紹介文です。<br>
+          紹介文です。紹介文です。紹介文です。紹介文です。<br>
+          紹介文です。紹介文です。紹介文です。紹介文です。<br>
+          紹介文です。紹介文です。紹介文です。紹介文です。<br>
+        </h5>
+      </div>
+    <% else %>
+      <div class="col-md-3">
+        <%= render "session", user: @user %>
+      </div>
+      <div class="col-md-8 offset-md-1">
+        <h1 class="page-title">
+          ようこそRecommenBookへ
+        </h1>
+        <h5 class="top-text">
+          紹介文です。紹介文です。紹介文です。紹介文です。<br>
+          紹介文です。紹介文です。紹介文です。紹介文です。<br>
+          紹介文です。紹介文です。紹介文です。紹介文です。<br>
+          紹介文です。紹介文です。紹介文です。紹介文です。<br>
+        </h5>
+      </div>
+    <% end %>
   </div>
 </div>
