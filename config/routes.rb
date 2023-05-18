@@ -42,12 +42,12 @@ Rails.application.routes.draw do
       resources :readed_books, only: [:destroy, :create]
     end
     resources :reviews, only: [:index, :show, :edit, :update, :destroy] do
-      resource :review_likes, only: [:create, :destroy]
+      resource :likes, only: [:create, :destroy]
     end
     resources :favorite_books, only: [:index]
     resources :readed_books, only: [:index]
     resources :tweets, only: [:new, :create, :index, :show, :destroy] do
-      resource :tweet_likes, only: [:create, :destroy]
+      resource :likes, only: [:create, :destroy]
     end
   end
   

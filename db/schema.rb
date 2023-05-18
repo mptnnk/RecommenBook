@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_18_105018) do
+ActiveRecord::Schema.define(version: 2023_05_18_120546) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -81,6 +81,14 @@ ActiveRecord::Schema.define(version: 2023_05_18_105018) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "likes", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "review_id"
+    t.integer "tweet_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "readed_books", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "isbn", null: false
@@ -96,13 +104,6 @@ ActiveRecord::Schema.define(version: 2023_05_18_105018) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "review_likes", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "review_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "reviews", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "isbn", null: false
@@ -110,13 +111,6 @@ ActiveRecord::Schema.define(version: 2023_05_18_105018) do
     t.datetime "readed_at"
     t.boolean "in_release", default: false
     t.boolean "spoiler", default: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "tweet_likes", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "tweet_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
