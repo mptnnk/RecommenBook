@@ -5,7 +5,13 @@
       <%= render 'info', user: @user %>
     </div>
     <div class="col-md-8 offset-md-1">
-      <h2 class="page-title"><%= @user.name %>さんのマイページ</h2>
+      <h2 class="page-title">
+        <% if @user == current_user %>
+          マイページ
+        <% else %>
+          <%= @user.name %>さんのプロフィール
+        <% end %>
+      </h2>
     </div>
     
   </div>

@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(version: 2023_05_17_081704) do
   create_table "favorite_books", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "isbn", null: false
+    t.boolean "recommenbook", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

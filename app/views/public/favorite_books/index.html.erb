@@ -1,8 +1,11 @@
 <!--favorite_bookの一覧-->
-<div class="container">
-  <h4 class="page-title"><%= @user.name %>さんのお気に入りの本一覧</h4>
+<div class="container-fluid">
   <div class="row">
-    <div class="col">
+    <div class="col-md-3">
+      <%= render 'public/users/info', user: @user %>
+    </div>
+    <div class="col-md-8 offset-md-1">
+      <h4 class="page-title"><%= @user.name %>さんのお気に入りの本一覧</h4>
       <% if @favorite_books.present? %>
         <table class="table table-sm">
           <thead>
