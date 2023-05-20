@@ -5,6 +5,7 @@ class Public::TweetsController < ApplicationController
     if params[:book_id].present?
       @book = RakutenWebService::Books::Book.search(isbn: params[:book_id]).first
       @book_isbn = @book["isbn"]
+      @book_favorites = FavoriteBook.where(isbn: @book.isbn)
       @tweet = Tweet.new
     else
       @tweet = Tweet.new

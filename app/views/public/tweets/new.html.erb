@@ -2,7 +2,7 @@
 <div class="container">
   <% if @book.present? %>
     <div class="row">
-      <%= render 'public/books/show', book: @book %>
+      <%= render 'public/books/show', book: @book, book_favorites: @book_favorites %>
     </div>
   <% end %>
   
