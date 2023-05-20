@@ -44,7 +44,7 @@ Rails.application.routes.draw do
     resources :reviews, only: [:index, :show, :edit, :update, :destroy] do
       resource :likes, only: [:create, :destroy]
     end
-    resources :favorite_books, only: [:index]
+    resources :favorite_books, only: [:index, :update]
     resources :readed_books, only: [:index]
     resources :tweets, only: [:new, :create, :index, :show, :destroy] do
       resource :likes, only: [:create, :destroy]

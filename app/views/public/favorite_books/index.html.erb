@@ -11,10 +11,10 @@
           <thead class="text-center">
             <tr>
               <th style="width:10%"></th>
-              <th style="width:30%">タイトル</th>
-              <th style="width:12%">著　者</th>
+              <th style="width:10%">タイトル</th>
+              <th style="width:10%">著　者</th>
               <th style="width:40%">説　明</th>
-              <th></th>
+              <th colspan="2"></th>
             </tr>
           </thead>
           <% @favorite_books.each do |favorite_book|%>
@@ -38,6 +38,20 @@
               </td>
               <td>
                 
+                <% if current_user.favorite_books.where(recommenbook: true).exists? %>
+                  <% if favorite_book.recommenbook.present? %>
+                    <%= form_with model: @favorite_book, url: favorite_book_path(favorite_book.id), method: :patch, local: true do |rmbook| %>
+                      <%= rmbook.hidden_field :recommenbook, value: false %>
+                      <%= rmbook.submit "おすすめ本解除", class: "btn btn-sm btn-danger" %>
+                    <% end %>
+                  <% end %>
+                <% else %>
+                  <%= form_with model: @favorite_book, url: favorite_book_path(favorite_book.id), method: :patch, local: true do |addbook| %>
+                    <%= addbook.hidden_field :recommenbook, value: true %>
+                    <%= addbook.submit "おすすめ本登録", class: "btn btn-sm btn-primary" %>
+                  <% end %>
+                <% end %>
+
               </td>
             </tr>
           </tbody>
