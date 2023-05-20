@@ -48,12 +48,12 @@
                 <% end %>
               </td>
             </tr>
-            </tr>
+            <tr>
               <th></th>
               <td class=<%= "like-" + review.id.to_s %> >
                 <%= render "public/likes/reviewbtn", review: review %>
               </td>
-            <tr>
+            </tr>
           </table>
         <% end %>
       <% else %>

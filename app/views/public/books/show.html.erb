@@ -49,6 +49,13 @@
               <% end %>
             </td>
           </tr>
+          <tr>
+            <th></th>
+            <td class=<%= "like-" + review.id.to_s %> >
+              <%= render "public/likes/reviewbtn", review: review %>
+            </td>
+          </tr>
+          
         </table>
         <% end %>
       </div>
@@ -82,6 +89,12 @@
               <% if tweet.user == current_user %>
                 <%= link_to "削除する", tweet_path(tweet.id), method: :delete, "data-confirm" => "つぶやきを削除しますか？", class:"btn btn-danger btn-sm" %>
               <% end %>
+            </td>
+          </tr>
+          <tr>
+            <th></th>
+            <td class=<%= "like-" + tweet.id.to_s %> >
+              <%= render "public/likes/tweetbtn", tweet: tweet %>
             </td>
           </tr>
         </table>

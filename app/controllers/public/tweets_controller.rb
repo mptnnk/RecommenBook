@@ -35,11 +35,9 @@ class Public::TweetsController < ApplicationController
   end
 
   def index
-    # user_idの受け渡しがあるときの@tweets
     if params[:user_id]
       @user = User.find(params[:user_id])
       @tweets = Tweet.where(user_id: @user.id).page(params[:page]).per(10).order(created_at: :DESC)
-    # user_idの受け渡しがないときの@tweets
     else
       @tweets = Tweet.page(params[:page]).per(10).order(created_at: :DESC)
     end
