@@ -17,7 +17,7 @@ class Public::LikesController < ApplicationController
   end
   
   def index
-    if params[:user_id]
+    # if params[:user_id]
       @user = User.find(params[:user_id])
       tweet_likes = Like.where(user_id: @user.id).where.not(tweet_id: nil)
       @tweets = Tweet.joins(:likes).where(likes: { id: tweet_likes.pluck(:id) })
@@ -25,16 +25,16 @@ class Public::LikesController < ApplicationController
       @reviews = Review.joins(:likes).where(likes: { id: review_likes.pluck(:id)})
       @combined_records = @tweets + @reviews
       @combined_records = @combined_records.sort_by { |record| -record.likes.count }
-
-    else
-      tweet_likes = Like.where.not(tweet_id: nil)
-      @tweets = Tweet.joins(:likes).where(likes: { id: tweet_likes.pluck(:id) })
-      review_likes = Like.where.not(review_id: nil)
-      @reviews = Review.joins(:likes).where(likes: { id: review_likes.pluck(:id)})
-      @combined_records = @tweets + @reviews
-      @combined_records = @combined_records.sort_by { |record| -record.likes.count }
+    # else
+    #   tweet_likes = Like.where.not(tweet_id: nil)
+    #   @tweets = Tweet.joins(:likes).where(likes: { id: tweet_likes.pluck(:id) })
+    #   review_likes = Like.where.not(review_id: nil)
+    #   @reviews = Review.joins(:likes).where(likes: { id: review_likes.pluck(:id)})
+    #   @combined_records = @tweets + @reviews
+    #   @combined_records = @combined_records.sort_by { |record| -record.likes.count }
       
-    end
+    # end
+    # 全体のいいね一覧を作成することがなければif~elseは不要
   end
   
   def destroy

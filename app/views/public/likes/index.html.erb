@@ -1,32 +1,51 @@
-
-  <table class="table table-bordered">
-    
-    <thead>
-      <tr>
-        <th style="width: 10%">ID</th>
-        <th style="width: 30%">content</th>
-        <th style="width: 10%">作成者</th>
-      </tr>
-    </thead>
-    <% @combined_records.each do |record| %>
-    <% if record.is_a?(Tweet) %>
-      <tbody>
-        <tr>
-          <td><%= record.id %></td>
-          <td><%= record.tweet_content %></td>
-          <td><%= record.user.name %></td>
-          <td><%= link_to "tweet", tweet_path(record.id) %></td>
-        </tr>
-    <% elsif record.is_a?(Review) %>
-        <tr>
-          <td><%= record.id %></td>
-          <td><%= record.content %></td>
-          <td><%= record.user.name %></td>
-          <td><%= link_to "review", review_path(record.id) %></td>
-        </tr>
-      </tbody>
-    <% end %>
-    <% end %>
-  </table>
-
-
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <%= render 'public/users/info', user: @user %>
+    </div>
+    <div class="col-md-8 offset-md-1">
+      <h4 class="page-title"><%= @user.name %>さんのいいね履歴一覧</h4>
+      <% if @combined_records.present? %>
+        <table class="table">
+          <thead>
+            <tr>
+              <th style="width: 10%">ID</th>
+              <th style="width: 40%">content</th>
+              <th style="width: 10%">作成者</th>
+            </tr>
+          </thead>
+        <% @combined_records.each do |record| %>
+          <% if record.is_a?(Tweet) %>
+          <tbody>
+            <tr>
+              <td><%= record.id %></td>
+              <td><%= record.tweet_content %></td>
+              <td>
+                <%= link_to mypage_path(name: record.user.name) do %>
+                  <%= record.user.name %>
+                <% end %>
+              </td>
+              <td><%= link_to "tweet", tweet_path(record.id) %></td>
+            </tr>
+        <% elsif record.is_a?(Review) %>
+            <tr>
+              <td><%= record.id %></td>
+              <td><%= record.content %></td>
+              <td>
+                <%= link_to mypage_path(name: record.user.name) do %>
+                  <%= record.user.name %>
+                <% end %>
+              </td>
+              <td><%= link_to "review", review_path(record.id) %></td>
+            </tr>
+          </tbody>
+          <% end %>
+        <% end %>
+        </table>
+      
+      <% else %>
+        <p>いいね履歴がありません</p>
+      <% end %>
+    </div>
+  </div>
+</div>
