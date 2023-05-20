@@ -63,6 +63,12 @@
                 <% end %>
               </td>
             </tr>
+            <tr>
+              <th></th>
+              <td class=<%= "like-" + tweet.id.to_s %> >
+                <%= render "public/likes/tweetbtn", tweet: tweet %>
+              </td>
+            </tr>
           </table>
         <% end %>
       
