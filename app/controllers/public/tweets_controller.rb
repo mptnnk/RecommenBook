@@ -48,6 +48,7 @@ class Public::TweetsController < ApplicationController
     @tweet = Tweet.find(params[:id])
     if @tweet.isbn.present?
       @book = RakutenWebService::Books::Book.search(isbn: @tweet.isbn).first
+      @book_favorites = FavoriteBook.where(isbn: @book.isbn)
     end
       
   end
