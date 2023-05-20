@@ -2,21 +2,57 @@ class Public::BooksController < ApplicationController
   
   def search
     genre_id = params[:book_genre_id]
-    keyword = params[:keyword]
+    title = params[:title]
+    author = params[:author]
     page = params[:page] || 1
     per = 30
     @books = []
 
-    if genre_id.present? && keyword.present?
+    if genre_id.present? && title.present? && author.present?
       @books = RakutenWebService::Books::Book.search({
         books_genre_id: genre_id,
-        title: keyword,
+        title: title,
+        author: author,
         page: page,
         hits: per,
         sort: '-releaseDate'
       })
       @books_page = Kaminari.paginate_array([], total_count: @books.response['count'] ).page(page).per(per)
       p search_results
+      
+    elsif genre_id.present? && title.present?
+      @books = RakutenWebService::Books::Book.search({
+        books_genre_id: genre_id,
+        title: title,
+        page: page,
+        hits: per,
+        sort: '-releaseDate'
+      })
+      @books_page = Kaminari.paginate_array([], total_count: @books.response['count'] ).page(page).per(per)
+      p search_results
+      
+    elsif genre_id.present? && author.present?
+      @books = RakutenWebService::Books::Book.search({
+        books_genre_id: genre_id,
+        author: author,
+        page: page,
+        hits: per,
+        sort: '-releaseDate'
+      })
+      @books_page = Kaminari.paginate_array([], total_count: @books.response['count'] ).page(page).per(per)
+      p search_results
+      
+    elsif title.present? && author.present?
+      @books = RakutenWebService::Books::Book.search({
+        title: title,
+        author: author,
+        page: page,
+        hits: per,
+        sort: '-releaseDate'
+      })
+      @books_page = Kaminari.paginate_array([], total_count: @books.response['count'] ).page(page).per(per)
+      p search_results
+      
     elsif genre_id.present?
       @books = RakutenWebService::Books::Book.search({
         books_genre_id: genre_id,
@@ -26,9 +62,20 @@ class Public::BooksController < ApplicationController
       })
       @books_page = Kaminari.paginate_array([], total_count: @books.response['count'] ).page(page).per(per)
       p search_results
-    elsif keyword.present?
+      
+    elsif title.present?
       @books = RakutenWebService::Books::Book.search({
-        title: keyword,
+        title: title,
+        page: page,
+        hits: per,
+        sort: '-releaseDate'
+      })
+      @books_page = Kaminari.paginate_array([], total_count: @books.response['count'] ).page(page).per(per)
+      p search_results
+    
+    elsif author.present?
+      @books = RakutenWebService::Books::Book.search({
+        author: author,
         page: page,
         hits: per,
         sort: '-releaseDate'
