@@ -14,6 +14,9 @@ class Public::FavoriteBooksController < ApplicationController
     @user = User.find(user_id)
     @favorite_books = FavoriteBook.where(user_id: @user.id).page(params[:page]).per(10)
   end
+  
+  def update
+  end
 
   def destroy
     @book = RakutenWebService::Books::Book.search(isbn: params[:book_id]).first

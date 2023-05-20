@@ -34,7 +34,10 @@
               <td><%= book['author'] %></td>
               <td><%= book['item_caption'].truncate(55) %></td>
               <td>
-                  <%= link_to "お気に入り解除", book_favorite_book_path(id: favorite_book.id, book_id: favorite_book.isbn), method: :delete, class: "btn btn-danger btn-sm" %>
+                <%= link_to "お気に入り解除", book_favorite_book_path(id: favorite_book.id, book_id: favorite_book.isbn), method: :delete, class: "btn btn-danger btn-sm" %>
+              </td>
+              <td>
+                
               </td>
             </tr>
           </tbody>
