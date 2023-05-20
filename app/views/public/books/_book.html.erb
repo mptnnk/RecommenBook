@@ -1,12 +1,12 @@
 <!--検索結果の本一覧-->
   <table class="table table-hover table-inverse">
     
-    <thead>
+    <thead class="text-center">
       <tr>
-        <th></th>
-        <th>タイトル</th>
-        <th>著者</th>
-        <th>本の概要</th>
+        <th style="width: 10%"></th>
+        <th style="width: 20%">タイトル</th>
+        <th style="width: 20%">著　者</th>
+        <th>説　明</th>
       </tr>
     </thead>
     
@@ -24,7 +24,7 @@
           <% end %>
           </td>
         <td><%= book['author'] %></td>
-        <td><%= book['item_caption'] %></td>
+        <td><%= book['item_caption'].truncate(170) %></td>
       </tr>
     </tbody>
     <% end %>

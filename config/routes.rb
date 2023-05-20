@@ -49,6 +49,7 @@ Rails.application.routes.draw do
     resources :tweets, only: [:new, :create, :index, :show, :destroy] do
       resource :likes, only: [:create, :destroy]
     end
+    resources :likes, only: [:index]
   end
   
   namespace :admin do
