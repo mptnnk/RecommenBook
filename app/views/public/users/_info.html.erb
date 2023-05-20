@@ -33,6 +33,18 @@
     </td>
   </tr>
   <tr>
+    <th>RecommenBook</th>
+    <td>
+      <% if @recommenbook.present? %>
+        <%= link_to book_path(id: book.isbn) do %>
+          <%= book['title'] %>
+        <% end %>
+      <% else %>
+        <p>nothing</p>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
     <th>ReadedBooks</th>
     <td>
       <%= link_to readed_books_path(user_id: user.id) do %>
@@ -51,7 +63,9 @@
   <tr>
     <th>Likes</th>
     <td>
-      <%= link_to "likes", likes_path(user_id: user.id) %>
+      <%= link_to likes_path(user_id: user.id) do %>
+        <%= user.likes.count %>likes
+      <% end %>
     </td>
   </tr>
   <tr>

@@ -13,12 +13,16 @@ class Public::FavoriteBooksController < ApplicationController
     user_id = params[:user_id]
     @user = User.find(user_id)
     @favorite_books = FavoriteBook.where(user_id: @user.id).page(params[:page]).per(10)
+    @recommenbook = @user.favorite_books.find_by(recommenbook: true)
+    if @recommenbook.present?
+      @book = RakutenWebService::Books::Book.search(isbn: @recommenbook.isbn).first
+    end
   end
   
   def update
     @favorite_book = FavoriteBook.find(params[:id])
     @favorite_book.recommenbook = params[:recommenbook] == "true"
-    if @favorite_book.update(recommenbook: @favorite_book.recommenbook)
+    if @favorite_book.update_columns(recommenbook: @favorite_book.recommenbook)
       redirect_to request.referer, notice: 'おすすめの本を登録しました'
     end
   end
