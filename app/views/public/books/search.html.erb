@@ -2,9 +2,9 @@
 <div class="search-box">
   <%= form_with url: books_search_path, method: :get do |book| %>
     <div class="form-group">
-      <%= book.text_field :keyword, :placeholder =>"キーワードを入力", class:"form-control mt-2 mb-2 col-md-8" %>
+      <%= book.text_field :keyword, :placeholder =>"タイトル検索", class:"mt-2 mb-2", size: "26x1" %><br>
       <%= book.collection_select(:book_genre_id, Genre.all, :book_genre_id, :name, include_blank: "ジャンルを選ぶ") %><br>
-      <%= book.submit '検索', class:"form-control btn btn-success mt-2 col-md-3" %>
+      <%= book.submit '検索', class:"btn btn-success mt-2 col-md-2" %>
     </div>
     
   <% end %>

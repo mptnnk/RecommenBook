@@ -1,0 +1,1 @@
+$('.like-<%= @review_like.review_id %>').html("<%= j(render 'public/likes/reviewbtn',  review: @review_like.review ) %>")

@@ -11,7 +11,10 @@
     <% end %>
   </div>
     <th>name</th>
-    <td><%= user.name %></td>
+    <td>
+      <%= link_to mypage_path(name: user.name) do %>
+        <%= user.name %>
+      <% end %></td>
   </tr>
   <tr>
     <th>Reviews</th>

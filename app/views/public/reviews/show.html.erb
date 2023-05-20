@@ -1,8 +1,9 @@
 <!--レビュー詳細画面-->
 <div class="container">
   <div class="row">
-    <%= render 'public/books/show', book: @book %>
+    <%= render 'public/books/show', book: @book, book_favorites: @book_favorites %>
   </div>
+  <h4 class="page-title mt-3">レビュー詳細</h4>
   <div class="row">
     <div class="col">
       <table class="table table-borderless">
@@ -27,6 +28,12 @@
               <%= link_to "削除する", review_path(@review.id), method: :delete, "data-confirm" => "レビューを削除しますか？", class:"btn btn-danger btn-sm" %>
             <% end %>
           </td>
+        </tr>
+          <th></th>
+          <td class=<%= "like-" + @review.id.to_s %> >
+            <%= render "public/likes/reviewbtn", review: @review %>
+          </td>
+        <tr>
         </tr>
       </table>
     </div>

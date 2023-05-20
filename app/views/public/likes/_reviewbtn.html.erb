@@ -1,0 +1,11 @@
+<% if review.liked_by?(current_user) %>
+  <%= link_to review_likes_path(review), method: :delete, remote: true do %>
+    <i class="fas fa-heart" aria-hidden="true" style="color: red;"></i>
+    <%= review.likes.count %>いいね
+  <% end %>
+<% else %>
+  <%= link_to review_likes_path(review), method: :post, remote: true do %>
+    <i class="fas fa-heart" aria-hidden="true"></i>
+    <%= review.likes.count %>いいね
+  <% end %>
+<% end %>
