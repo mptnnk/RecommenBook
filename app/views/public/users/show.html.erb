@@ -1,5 +1,5 @@
 <!--mypage-->
-<div class="container">
+<div class="container-fluid">
   <div class="row">
     <div class="col-md-3">
       <%= render 'info', user: @user %>
@@ -12,7 +12,7 @@
           <%= @user.name %>さんのプロフィール
         <% end %>
       </h2>
-      <p><%= link_to "いいね一覧仮置き場", likes_path %></p>
+      
     </div>
     
   </div>
