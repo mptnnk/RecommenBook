@@ -1,12 +1,11 @@
 class Public::LikesController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, only: [:create, :destroy]
   
   def create
     if params[:review_id]
       review = Review.find(params[:review_id])
       @review_like = current_user.likes.new(review_id: review.id)
       @review_like.save
-      p @review_like.errors.full_messages
       render 'review_replace_btn'
     elsif params[:tweet_id]
       tweet = Tweet.find(params[:tweet_id])
@@ -20,7 +19,11 @@ class Public::LikesController < ApplicationController
     # if params[:user_id]
       @user = User.find(params[:user_id])
       tweet_likes = Like.where(user_id: @user.id).where.not(tweet_id: nil)
+      # likeテーブルの中でtweet_idがnilでないものを「tweet_likes」として抽出する。
       @tweets = Tweet.joins(:likes).where(likes: { id: tweet_likes.pluck(:id) })
+      # TweetモデルにLikeモデルを結合させ、両テーブルが関連づいたTweetの情報を取得する。
+      # tweet_likes.pluck(:id)は、tweet_likes（＝likeのうちtweet_idが含まれている配列）から各likeのIDを抽出した配列を作成する。
+      # where(likes: {id :pluckの配列})は、likeのIDがpluckの配列に含まれているツイートをフィルタリングする。
       review_likes = Like.where(user_id: @user.id).where.not(review_id: nil)
       @reviews = Review.joins(:likes).where(likes: { id: review_likes.pluck(:id)})
       @combined_records = @tweets + @reviews

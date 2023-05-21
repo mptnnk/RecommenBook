@@ -1,0 +1,3 @@
+<!--review-->
+$('.comment-textarea').val("")
+$('.review-comments-index').html("<%= j(render 'public/review_comments/index', review: @comment.review) %>")

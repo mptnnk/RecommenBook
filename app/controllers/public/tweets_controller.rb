@@ -49,7 +49,7 @@ class Public::TweetsController < ApplicationController
       @book = RakutenWebService::Books::Book.search(isbn: @tweet.isbn).first
       @book_favorites = FavoriteBook.where(isbn: @book.isbn)
     end
-      
+    @tweet_comment = TweetComment.new
   end
   
   def destroy

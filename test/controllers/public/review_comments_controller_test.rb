@@ -1,6 +1,6 @@
 require "test_helper"
 
-class TweetLikeTest < ActiveSupport::TestCase
+class Public::ReviewCommentsControllerTest < ActionDispatch::IntegrationTest
   # test "the truth" do
   #   assert true
   # end

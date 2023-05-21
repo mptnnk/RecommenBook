@@ -33,6 +33,7 @@ class Public::ReviewsController < ApplicationController
   def show
     @book = RakutenWebService::Books::Book.search(isbn: @review.isbn).first
     @book_favorites = FavoriteBook.where(isbn: @book.isbn)
+    @review_comment = ReviewComment.new
   end
 
   def edit
