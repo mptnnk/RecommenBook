@@ -16,7 +16,12 @@
             <%= user.name %>
           <% end %>
         </td>
-        <td style="width: 23%"><%= render "public/relationships/btn", user: user %></td>
+        <td>
+          <%= link_to reviews_path(user_id: user.id) do %>
+            <%= user.reviews.count %>reviews
+          <% end %>
+        </td>
+        <td><%= render "public/relationships/btn", user: user %></td>
       </tr>
     <% end %>
   </tbody>

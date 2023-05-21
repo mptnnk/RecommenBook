@@ -16,10 +16,18 @@ class Public::RelationshipsController < ApplicationController
   def followings
     @user = User.find(params[:user_id])
     @users = @user.followings
+    @recommenbook = @user.favorite_books.find_by(recommenbook: true)
+    if @recommenbook.present?
+      @book = RakutenWebService::Books::Book.search(isbn: @recommenbook.isbn).first
+    end
   end
   
   def followers
     @user = User.find(params[:user_id])
     @users = @user.followers
+    @recommenbook = @user.favorite_books.find_by(recommenbook: true)
+    if @recommenbook.present?
+      @book = RakutenWebService::Books::Book.search(isbn: @recommenbook.isbn).first
+    end
   end
 end

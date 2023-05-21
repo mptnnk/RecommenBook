@@ -5,7 +5,9 @@
   </div>
   <div class="row mt-2 mb-2">
     <% if current_user !=  user %>
-      <%= render "public/relationships/btn", user: user %>
+      <div class="mx-auto">
+        <%= render "public/relationships/btn", user: user %>
+      </div>
     <% else %>
       <%= link_to "編集する", users_information_edit_path, class:"btn btn-outline-secondary btn-block"%>
     <% end %>

@@ -28,6 +28,10 @@ class Public::LikesController < ApplicationController
       @reviews = Review.joins(:likes).where(likes: { id: review_likes.pluck(:id)})
       @combined_records = @tweets + @reviews
       @combined_records = @combined_records.sort_by { |record| -record.likes.count }
+      @recommenbook = @user.favorite_books.find_by(recommenbook: true)
+      if @recommenbook.present?
+        @book = RakutenWebService::Books::Book.search(isbn: @recommenbook.isbn).first
+      end
     # else
     #   tweet_likes = Like.where.not(tweet_id: nil)
     #   @tweets = Tweet.joins(:likes).where(likes: { id: tweet_likes.pluck(:id) })
