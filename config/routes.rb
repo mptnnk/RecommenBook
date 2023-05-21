@@ -27,7 +27,7 @@ Rails.application.routes.draw do
     get 'users/information/edit' => 'users#edit'
     patch 'users/information' => 'users#update'
     
-    resources :users, only:[:index] do
+    resources :users, only:[] do
       resource :relationships, only: [:create, :destroy]
       get 'followings' => 'relationships#followings', as: 'followings'
       get 'followers' => 'relationships#followers', as: 'followers'
@@ -52,6 +52,7 @@ Rails.application.routes.draw do
       resources :tweet_comments, only: [:create, :destroy]
     end
     resources :likes, only: [:index]
+    resources :review_comments, only: [:index], as: "comments"
   end
   
   namespace :admin do

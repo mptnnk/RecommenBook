@@ -71,6 +71,14 @@
     </td>
   </tr>
   <tr>
+    <th>Comments</th>
+    <td>
+      <%= link_to comments_path(user_id: user.id) do %>
+        <%= user.review_comments.count + user.tweet_comments.count %>comments
+      <% end %>
+    </td>
+  </tr>
+  <tr>
     <th>Follows</th>
     <td>
       <%= link_to user_followings_path(user_id: user.id) do %>

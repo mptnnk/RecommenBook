@@ -10,8 +10,7 @@ class Public::FavoriteBooksController < ApplicationController
   end
   
   def index
-    user_id = params[:user_id]
-    @user = User.find(user_id)
+    @user = User.find(params[:user_id])
     @favorite_books = FavoriteBook.where(user_id: @user.id).page(params[:page]).per(10)
     @recommenbook = @user.favorite_books.find_by(recommenbook: true)
     if @recommenbook.present?

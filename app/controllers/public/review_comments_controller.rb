@@ -8,6 +8,14 @@ class Public::ReviewCommentsController < ApplicationController
     @comment.save
   end
   
+  def index
+    @user = User.find(params[:user_id])
+    @review_comments = ReviewComment.where(user_id: @user.id)
+    @tweet_comments = TweetComment.where(user_id: @user.id)
+    @comments = @review_comments + @tweet_comments
+    @comments = @comments.sort_by { |comment| comment.created_at }.reverse
+  end
+  
   def destroy
     @comment = ReviewComment.find(params[:id])
     @comment.destroy
