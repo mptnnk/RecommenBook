@@ -10,11 +10,12 @@
         <table class="table table-sm mt-2">
           <thead class="text-center">
             <tr>
-              <th style="width:10%"></th>
-              <th style="width:10%">タイトル</th>
-              <th style="width:10%">著　者</th>
-              <th style="width:40%">説　明</th>
-              <th colspan="2"></th>
+              <th style="width: 10%"></th>
+              <th style="width: 20%">タイトル</th>
+              <th style="width: 10%">著　者</th>
+              <th style="width: 30%">説　明</th>
+              <th>おすすめ本</th>
+              <th>お気に入り登録</th>
             </tr>
           </thead>
           <% @favorite_books.each do |favorite_book|%>
@@ -33,24 +34,23 @@
               </td>
               <td><%= book['author'] %></td>
               <td><%= book['item_caption'].truncate(55) %></td>
-              <td>
-                <%= link_to "お気に入り解除", book_favorite_book_path(id: favorite_book.id, book_id: favorite_book.isbn), method: :delete, class: "btn btn-danger btn-sm" %>
-              </td>
-              <td>
+              <td class="text-center">
                 <% if current_user.favorite_books.where(recommenbook: true).exists? %>
                   <% if favorite_book.recommenbook %>
                     <%= form_with model: @favorite_book, url: favorite_book_path(favorite_book.id), method: :patch, local: true do |rmbook| %>
                       <%= rmbook.hidden_field :recommenbook, value: false %>
-                      <%= rmbook.submit "おすすめ本解除", class: "btn btn-sm btn-danger" %>
+                      <%= rmbook.submit "解除", class: "btn btn-sm btn-danger" %>
                     <% end %>
                   <% end %>
                 <% else %>
                   <%= form_with model: @favorite_book, url: favorite_book_path(favorite_book.id), method: :patch, local: true do |addbook| %>
                     <%= addbook.hidden_field :recommenbook, value: true %>
-                    <%= addbook.submit "おすすめ本登録", class: "btn btn-sm btn-primary" %>
+                    <%= addbook.submit "登録", class: "btn btn-sm btn-primary" %>
                   <% end %>
                 <% end %>
-
+              </td>
+              <td class="text-center">
+                <%= link_to "解除", book_favorite_book_path(id: favorite_book.id, book_id: favorite_book.isbn), method: :delete, class: "btn btn-danger btn-sm" %>
               </td>
             </tr>
           </tbody>

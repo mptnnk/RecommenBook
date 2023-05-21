@@ -23,7 +23,7 @@ class Public::FavoriteBooksController < ApplicationController
     @favorite_book = FavoriteBook.find(params[:id])
     @favorite_book.recommenbook = params[:recommenbook] == "true"
     if @favorite_book.update_columns(recommenbook: @favorite_book.recommenbook)
-      redirect_to request.referer, notice: 'おすすめの本を登録しました'
+      redirect_to request.referer
     end
   end
 
