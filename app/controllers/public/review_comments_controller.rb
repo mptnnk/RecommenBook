@@ -10,6 +10,10 @@ class Public::ReviewCommentsController < ApplicationController
   
   def index
     @user = User.find(params[:user_id])
+    @recommenbook = @user.favorite_books.find_by(recommenbook: true)
+    if @recommenbook.present?
+      @book = RakutenWebService::Books::Book.search(isbn: @recommenbook.isbn).first
+    end
     @review_comments = ReviewComment.where(user_id: @user.id)
     @tweet_comments = TweetComment.where(user_id: @user.id)
     @comments = @review_comments + @tweet_comments

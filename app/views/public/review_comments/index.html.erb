@@ -1,0 +1,51 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-3">
+      <%= render 'public/users/info', user: @user, book: @book %>
+    </div>
+    
+    <div class="col-md-8 offset-md-1">
+      <h4 class="page-title"><%= @user.name %>さんのコメント履歴一覧</h4>
+      <% if @comments.present? %>
+        <table class="table table-borderless">
+          <thead>
+            <tr>
+              <th style="width: 10%">ID</th>
+              <th style="width: 40%">comment</th>
+              <th style="width: 10%">投稿者</th>
+            </tr>
+          </thead>
+          <% @comments.each do |comment| %>
+            <tbody>
+              <% if comment.is_a?(ReviewComment) %>
+                <tr>
+                  <td><%= comment.id %></td>
+                  <td><%= comment.comment %></td>
+                  <td>
+                    <%= link_to mypage_path(name: comment.user.name) do %>
+                      <%= comment.user.name %>
+                    <% end %>
+                  </td>
+                  <td><%= link_to "review", review_path(comment.review_id) %></td>
+                </tr>
+              <% elsif comment.is_a?(TweetComment) %>
+                <tr>
+                  <td><%= comment.id %></td>
+                  <td><%= comment.comment %></td>
+                  <td>
+                    <%= link_to mypage_path(name: comment.user.name) do %>
+                      <%= comment.user.name %>
+                    <% end %>
+                  </td>
+                  <td><%= link_to "tweet", tweet_path(comment.tweet_id) %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          <% end %>
+        </table>
+      <% else %>
+        <p>コメントはありません</p>
+      <% end %>
+    </div>
+  </div>
+</div>
