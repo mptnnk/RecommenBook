@@ -19,8 +19,8 @@
       </a>
       <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
         <%= link_to "マイページ", mypage_path(current_user.name), class: "dropdown-item", style:"color:gray" %>
-        <%= link_to "レビュー", reviews_path, class: "dropdown-item", style:"color:gray" %>
-        <%= link_to "つぶやき", tweets_path, class: "dropdown-item", style:"color:gray" %>
+        <%= link_to "レビューを見る", reviews_path, class: "dropdown-item", style:"color:gray" %>
+        <%= link_to "つぶやきを見る", tweets_path, class: "dropdown-item", style:"color:gray" %>
       </div>
     </li>
     <li class="nav-link">
@@ -33,16 +33,14 @@
     <li class="nav-link">
       <%= link_to "About", about_path, style:"color:gray", class:"border border-secondary rounded p-2" %>
     </li>
-    <li class="nav-link">
-      <%= link_to "本を探す", books_search_path, style:"color:gray", class:"border border-secondary rounded p-2" %>
-    </li>
     <li class="nav-item dropdown border border-secondary rounded">
       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Menu
       </a>
       <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-        <%= link_to "レビュー", reviews_path, class: "dropdown-item", style:"color:gray" %>
-        <%= link_to "つぶやき", tweets_path, class: "dropdown-item", style:"color:gray" %>
+        <%= link_to "本を探す", books_search_path, class: "dropdown-item", style:"color:gray" %>
+        <%= link_to "レビューを見る", reviews_path, class: "dropdown-item", style:"color:gray" %>
+        <%= link_to "つぶやきを見る", tweets_path, class: "dropdown-item", style:"color:gray" %>
       </div>
     </li>
     <li class="nav-link">

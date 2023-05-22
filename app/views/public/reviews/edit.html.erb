@@ -19,6 +19,20 @@
           <td colspan="3"><%= review.text_area :content, size:'80x5' %></td>
         </tr>
         <tr>
+          <th>公開ステータス</th>
+          <td>
+            <%= review.radio_button :in_release, true %>
+            <%= review.label :in_release, "公開する", { value:"true", style:"display: inline-block;"} %>
+            <%= review.radio_button :in_release, false %>
+            <%= review.label :in_release, "下書きにする", { value:"false", style:"display: inline-block;"} %><br>
+          </td>
+          <th>ネタバレチェック</th>
+          <td>
+            <%= review.check_box :spoiler %>
+            <%= review.label :spoiler, "ネタバレを含む" %><br>
+          </td>
+        </tr>
+        <tr>
           <th></th>
           <td>
             <%= review.submit "内容を変更する", class:"btn btn-success mt-2" %>

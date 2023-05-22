@@ -11,21 +11,30 @@
   </h4>
   <div class="row">
     <div class="col mt-3">
-      <!--# ユーザーIDの受け渡しがあって、かつIDがcurrent_userのもので、かつreviewが存在する場合-->
-      <% if params[:user_id].present? && params[:user_id] == current_user.id && @my_reviews.present? %>
-        <%= render 'reviews', reviews: @my_reviews %>
+      <!--# ユーザーIDの受け渡しがあって、かつIDがcurrent_userのもの-->
+      <% if params[:user_id].present? && params[:user_id].to_i == current_user.id %>
+        <% if @my_reviews.present? %>
+          <%= render 'reviews', reviews: @my_reviews %>
+        <% else %>
+          <p>レビューがありません</p>
+        <% end %>
         
-      <!--# ユーザーIDの受け渡しがあって、かつIDがcurrent_userのものではなくて、かつreviewが存在する場合-->
-      <% elsif params[:user_id].present? && params[:user_id] != current_user.id && @user_reviews.present? %>
-        <%= render 'reviews', reviews: @user_reviews %>
+      <!--# ユーザーIDの受け渡しがあって、かつIDがcurrent_userのものではない-->
+      <% elsif params[:user_id].present? && params[:user_id].to_i != current_user.id %>
+        <% if @user_reviews.present? %>
+          <%= render 'reviews', reviews: @user_reviews %>
+        <% else %>
+          <p>レビューがありません</p>
+        <% end %>
         
-      <!--# ユーザーIDの受け渡しがなく、かつreviewが存在する場合の処理-->
-      <% elsif params[:user_id].blank? && @reviews.present? %>
-        <%= render 'reviews', reviews: @reviews %>
-        
-      <!--# reviewが存在しない場合の処理-->
-      <% else %>
-        <p>レビューがありません</p>
+      <!--# ユーザーIDの受け渡しがない-->
+      <% elsif params[:user_id].blank? %>
+        <% if @reviews.present? %>
+          <%= render 'reviews', reviews: @reviews %>
+        <% else %>
+          <p>レビューがありません</p>
+        <% end %>
+          
       <% end %>
     </div>
   </div>

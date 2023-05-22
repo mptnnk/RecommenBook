@@ -22,15 +22,14 @@ class Public::ReviewsController < ApplicationController
   end
 
   def index
-    if params[:user_id].present? && params[:user_id].to_i == current_user.id
-    # ユーザーIDの受け渡しがあり、かつそれがcurrent_userのものである
-      @my_reviews = Review.where(user_id: current_user.id).page(params[:page]).per(10).order(created_at: :DESC)
-    elsif params[:user_id].present? && params[:user_id].to_i != current_user.id
-    # ユーザーIDの受け渡しがあり、かつそれがcurrent_userのものではない
+    if params[:user_id].present?
       @user = User.find(params[:user_id])
-      @user_reviews = Review.where(user_id: @user.id).where(in_release: true).page(params[:page]).per(10).order(created_at: :DESC)
-    else
-    # ユーザーIDの受け渡しがない
+      if @user == current_user
+        @my_reviews = Review.where(user_id: current_user.id).page(params[:page]).per(10).order(created_at: :DESC)
+      elsif @user != current_user
+        @user_reviews = Review.where(user_id: @user.id).where(in_release: true).page(params[:page]).per(10).order(created_at: :DESC)
+      end
+    elsif params[:user_id].blank?
       @reviews = Review.page(params[:page]).where(in_release: true).per(10).order(created_at: :DESC)
     end
   end
