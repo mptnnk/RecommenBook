@@ -62,6 +62,8 @@
         <td class=<%= "like-" + review.id.to_s %> >
           <%= render "public/likes/reviewbtn", review: review %>
         </td>
+      <% else %>
+        <td><i class="fas fa-heart" aria-hidden="true" style="color: red;"></i><%= review.likes.count %>いいね</td>
       <% end %>
       <td>
         <% if review.review_comments.present? %>

@@ -65,9 +65,13 @@
             </tr>
             <tr>
               <th></th>
-              <td class=<%= "like-" + tweet.id.to_s %> >
-                <%= render "public/likes/tweetbtn", tweet: tweet %>
-              </td>
+              <% if user_signed_in? %>
+                <td class=<%= "like-" + tweet.id.to_s %> >
+                  <%= render "public/likes/tweetbtn", tweet: tweet %>
+                </td>
+              <% else %>
+                <td><i class="fas fa-heart" aria-hidden="true" style="color: red;"></i><%= tweet.likes.count %>いいね</td>
+              <% end %>
             </tr>
           </table>
         <% end %>

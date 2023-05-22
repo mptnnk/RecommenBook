@@ -25,9 +25,13 @@
         </tr>
         <tr>
           <th></th>
-          <td class=<%= "like-" + @review.id.to_s %> >
-            <%= render "public/likes/reviewbtn", review: @review %>
-          </td>
+          <% if user_signed_in? %>
+            <td class=<%= "like-" + @review.id.to_s %> >
+              <%= render "public/likes/reviewbtn", review: @review %>
+            </td>
+          <% else %>
+            <td><i class="fas fa-heart" aria-hidden="true" style="color: red;"></i><%= @review.likes.count %>いいね</td>
+          <% end %>
           <td>
             <% if @review.user == current_user %>
               <%= link_to "編集する", edit_review_path(@review.id), class:"btn btn-primary btn-sm"%>
@@ -40,7 +44,9 @@
       <div class="review-comments-index">
         <%= render "public/review_comments/index", review: @review %>
       </div>
-      <%= render "public/review_comments/form", review: @review, review_comment: @review_comment %>
+      <% if user_signed_in? %>
+        <%= render "public/review_comments/form", review: @review, review_comment: @review_comment %>
+      <% end %>
       
     </div>
   </div>
