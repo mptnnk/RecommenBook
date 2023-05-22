@@ -17,6 +17,8 @@
     </div>
   </div>
   
+  <%= render 'public/reviews/reviews', reviews: @reviews %>
+  
   <!--その書籍に関するレビューの一覧-->
   <h5 class="page-title mt-5">この本のレビュー</h5>
   <% if @reviews.present? %>
