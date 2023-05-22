@@ -38,6 +38,7 @@ class Public::ReviewsController < ApplicationController
 
   def edit
     @book = RakutenWebService::Books::Book.search(isbn: @review.isbn).first
+    @book_favorites = FavoriteBook.where(isbn: @book.isbn)
   end
   
   def update
@@ -59,7 +60,7 @@ class Public::ReviewsController < ApplicationController
   private
   
   def review_params
-    params.require(:review).permit(:isbn, :content, :readed_at, :in_release).merge(user_id:current_user.id)
+    params.require(:review).permit(:isbn, :content, :readed_at, :in_release, :spoiler).merge(user_id:current_user.id)
   end
   
   def submitted_review

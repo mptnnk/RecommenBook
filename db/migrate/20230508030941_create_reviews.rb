@@ -5,7 +5,7 @@ class CreateReviews < ActiveRecord::Migration[6.1]
       t.string :isbn, null: false
       t.text :content, null: false
       t.datetime :readed_at
-      t.boolean :in_release, default: false
+      t.boolean :in_release, default: true
       t.boolean :spoiler, default: false
 
       t.timestamps

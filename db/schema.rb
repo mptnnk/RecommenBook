@@ -103,7 +103,7 @@ ActiveRecord::Schema.define(version: 2023_05_21_063155) do
     t.string "isbn", null: false
     t.text "content", null: false
     t.datetime "readed_at"
-    t.boolean "in_release", default: false
+    t.boolean "in_release", default: true
     t.boolean "spoiler", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -120,7 +120,7 @@ ActiveRecord::Schema.define(version: 2023_05_21_063155) do
   create_table "tweets", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "isbn"
-    t.text "tweet_content"
+    t.text "tweet_content", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

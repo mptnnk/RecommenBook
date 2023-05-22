@@ -22,17 +22,17 @@
         <tr>
           <th>レビュー</th>
           <td colspan="3"><%= @review.content %></td>
-          <td>
-            <% if @review.user == current_user %>
-              <%= link_to "編集する", edit_review_path(@review.id), class:"btn btn-primary btn-sm"%>
-              <%= link_to "削除する", review_path(@review.id), method: :delete, "data-confirm" => "レビューを削除しますか？", class:"btn btn-danger btn-sm" %>
-            <% end %>
-          </td>
         </tr>
         <tr>
           <th></th>
           <td class=<%= "like-" + @review.id.to_s %> >
             <%= render "public/likes/reviewbtn", review: @review %>
+          </td>
+          <td>
+            <% if @review.user == current_user %>
+              <%= link_to "編集する", edit_review_path(@review.id), class:"btn btn-primary btn-sm"%>
+              <%= link_to "削除する", review_path(@review.id), method: :delete, "data-confirm" => "レビューを削除しますか？", class:"btn btn-danger btn-sm" %>
+            <% end %>
           </td>
         </tr>
       </table>

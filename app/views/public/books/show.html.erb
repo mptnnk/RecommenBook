@@ -6,13 +6,13 @@
   </div>
   <div class="row mt-3">
     <div class="col">
-      <%= link_to "レビューを投稿する／読んだ本に登録する", new_book_review_path(@book.isbn), class:"btn btn-success" %>
-      <%= link_to "この本についてつぶやく", new_tweet_path(book_id: @book.isbn), class:"btn btn-primary" %>
+      <%= link_to "レビュー投稿／読んだ本登録", new_book_review_path(@book.isbn), class:"btn btn-success" %>
+      <%= link_to "つぶやく", new_tweet_path(book_id: @book.isbn), class:"btn btn-primary" %>
       
       <% if current_user.favorite_books.exists?(isbn: @book.isbn) %>
-        <%= link_to "お気に入り登録を解除する", book_favorite_book_path(@book.isbn), method: :delete, class:"btn btn-danger" %>
+        <%= link_to "お気に入り解除", book_favorite_book_path(@book.isbn), method: :delete, class:"btn btn-danger" %>
       <% else %>
-        <%= link_to "お気に入りの本に登録する", book_favorite_books_path(@book.isbn), method: :post, class:"btn btn-primary" %>
+        <%= link_to "お気に入り登録", book_favorite_books_path(@book.isbn), method: :post, class:"btn btn-primary" %>
       <% end %>
     </div>
   </div>
@@ -39,20 +39,23 @@
           </tr>
           <tr>
             <th>レビュー</th>
-            <td colspan="3"><%= review.content.truncate(50) %></td>
+            <td colspan="5"><%= review.content.truncate(150) %></td>
             <!--長文の場合の省略方法と、「ネタバレを読む」の場合の編みかけ方法を後で設定する-->
+          </tr>
+          <tr>
+            <th></th>
+            <td class=<%= "like-" + review.id.to_s %> >
+              <%= render "public/likes/reviewbtn", review: review %>
+            </td>
+            <td>
+              <%= link_to "コメント数",
+            </td>
             <td colspan="2">
               <%= link_to "詳細を見る", review_path(review.id), style:"display: inline-block", class:"btn btn-primary btn-sm" %>
               <% if review.user == current_user %>
                 <%= link_to "編集する", edit_review_path(review.id), class:"btn btn-success btn-sm" %>
                 <%= link_to "削除する", review_path(review.id), method: :delete, "data-confirm" => "レビューを削除しますか？", class:"btn btn-danger btn-sm" %>
               <% end %>
-            </td>
-          </tr>
-          <tr>
-            <th></th>
-            <td class=<%= "like-" + review.id.to_s %> >
-              <%= render "public/likes/reviewbtn", review: review %>
             </td>
           </tr>
           

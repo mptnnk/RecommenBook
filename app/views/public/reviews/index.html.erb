@@ -12,7 +12,7 @@
       <% if @reviews.present? %>
         <% @reviews.each do |review| %>
           <% book = RakutenWebService::Books::Book.search(isbn: review.isbn).first %>
-          <table class="table table-sm">
+          <table class="table table-sm" style="text-align: left;">
             <tr>
               <td style="width: 8%" rowspan="2">
                 <%= link_to book_path(book.isbn) do %>
@@ -38,20 +38,26 @@
             </tr>
             <tr>
               <th>レビュー</th>
-              <td colspan="4"><%= review.content.truncate(50) %></td>
+              <td colspan="7">
+                <% if review.spoiler == false %>
+                  <%= review.content.truncate(140) %>
+                <% else %>
+                  <p>ネタバレを含みます（読む場合は「詳細を見る」をクリック）</p>
+                <% end %>
+              </td>
               <!--長文の場合の省略方法と、「ネタバレを読む」の場合の編みかけ方法を後で設定する-->
+            </tr>
+            <tr>
+              <td></td>
+              <td class=<%= "like-" + review.id.to_s %> >
+                <%= render "public/likes/reviewbtn", review: review %>
+              </td>
               <td colspan="3">
                 <%= link_to "詳細を見る", review_path(review.id), style:"display: inline", class:"btn btn-primary btn-sm" %>
                 <% if review.user == current_user %>
                  <%= link_to "編集する", edit_review_path(review.id), style:"display: inline", class:"btn btn-success btn-sm"%>
                  <%= link_to "削除する", review_path(review.id), method: :delete, "data-confirm" => "レビューを削除しますか？", style:"display: inline", class:"btn btn-danger btn-sm" %>
                 <% end %>
-              </td>
-            </tr>
-            <tr>
-              <th></th>
-              <td class=<%= "like-" + review.id.to_s %> >
-                <%= render "public/likes/reviewbtn", review: review %>
               </td>
             </tr>
           </table>
