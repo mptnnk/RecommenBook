@@ -1,0 +1,55 @@
+<ul class="navbar-nav navbar-expand-lg ml-auto mb-2">
+  <% if admin_signed_in? %>
+  <!--管理者ログインのとき。レビュー一覧、つぶやき一覧、会員一覧は後で作る-->
+    <li class="nav-link">
+      <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, style:"color:gray", class:"border border-secondary rounded p-2" %>
+    </li>
+    
+  <% elsif user_signed_in? %>
+  <!--ユーザーログイン時-->
+    <li class="nav-link">
+      <%= link_to "About", about_path, style:"color:gray", class:"border border-secondary rounded p-2" %>
+    </li>
+    <li class="nav-link">
+      <%= link_to "本を探す", books_search_path, style:"color:gray", class:"border border-secondary rounded p-2" %>
+    </li>
+    <li class="nav-item dropdown border border-secondary rounded">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Menu
+      </a>
+      <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+        <%= link_to "マイページ", mypage_path(current_user.name), class: "dropdown-item", style:"color:gray" %>
+        <%= link_to "レビュー", reviews_path, class: "dropdown-item", style:"color:gray" %>
+        <%= link_to "つぶやき", tweets_path, class: "dropdown-item", style:"color:gray" %>
+      </div>
+    </li>
+    <li class="nav-link">
+      <%= link_to "ログアウト", destroy_user_session_path, method: :delete, style:"color:gray", class:"border border-secondary rounded p-2" %>
+    </li>
+    
+  <% else %>
+  
+  <!--どちらもログインしていないとき-->
+    <li class="nav-link">
+      <%= link_to "About", about_path, style:"color:gray", class:"border border-secondary rounded p-2" %>
+    </li>
+    <li class="nav-link">
+      <%= link_to "本を探す", books_search_path, style:"color:gray", class:"border border-secondary rounded p-2" %>
+    </li>
+    <li class="nav-item dropdown border border-secondary rounded">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Menu
+      </a>
+      <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+        <%= link_to "レビュー", reviews_path, class: "dropdown-item", style:"color:gray" %>
+        <%= link_to "つぶやき", tweets_path, class: "dropdown-item", style:"color:gray" %>
+      </div>
+    </li>
+    <li class="nav-link">
+      <%= link_to "新規登録", new_user_registration_path, style:"color:gray", class:"border border-secondary rounded p-2" %>
+    </li>
+    <li class="nav-link">
+      <%= link_to "ログイン", new_user_session_path, style:"color:gray", class:"border border-secondary rounded p-2" %>
+    </li>
+  <% end %>
+</ul>

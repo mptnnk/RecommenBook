@@ -58,10 +58,11 @@
          <%= link_to "削除する", review_path(review.id), method: :delete, "data-confirm" => "レビューを削除しますか？", style:"display: inline", class:"btn btn-danger btn-sm" %>
         <% end %>
       </td>
-      
-      <td class=<%= "like-" + review.id.to_s %> >
-        <%= render "public/likes/reviewbtn", review: review %>
-      </td>
+      <% if user_signed_in? %>
+        <td class=<%= "like-" + review.id.to_s %> >
+          <%= render "public/likes/reviewbtn", review: review %>
+        </td>
+      <% end %>
       <td>
         <% if review.review_comments.present? %>
           <% review.review_comments.count %>コメント
