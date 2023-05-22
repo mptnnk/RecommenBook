@@ -1,7 +1,9 @@
 <!--reviewの一覧-->
 <div class="container">
   <h4 class="page-title">
-    <% if params[:user_id] %>
+    <% if params[:user_id].present? && params[:user_id].to_i == current_user.id %>
+      あなたのレビュー
+    <% elsif params[:user_id].present? && params[:user_id].to_i != current_user.id %>
       <%= @user.name %>さんのレビュー（新着順）
     <% else %>
       レビュー（新着順）
@@ -9,59 +11,10 @@
   </h4>
   <div class="row">
     <div class="col mt-3">
-      <% if @reviews.present? %>
-        <% @reviews.each do |review| %>
-          <% book = RakutenWebService::Books::Book.search(isbn: review.isbn).first %>
-          <table class="table table-sm" style="text-align: left;">
-            <tr>
-              <td style="width: 8%" rowspan="2">
-                <%= link_to book_path(book.isbn) do %>
-                  <%= image_tag(book['small_image_url']) %>
-                <% end %>
-              </td>
-              <th style="width: 10%">タイトル</th>
-              <td style="width: 30%">
-                <%= link_to book_path(book.isbn) do %>
-                  <%= book['title'].truncate(30) %>
-                <% end %>
-              </td>
-              <th style="width: 10%">投稿者</th>
-              <td style="width: 10%">
-                <%= link_to mypage_path(name: review.user.name) do %>
-                  <%= review.user.name %>
-                <% end %>
-              </td>
-              <th style="width: 10%">投稿日</th>
-              <td><%= review.created_at.strftime('%Y/%m/%d') %></td>
-              <th style="width: 15%">読み終わった日</th>
-              <td><%= review.readed_at&.strftime("%Y/%m/%d") %></td>
-            </tr>
-            <tr>
-              <th>レビュー</th>
-              <td colspan="7">
-                <% if review.spoiler == false %>
-                  <%= review.content.truncate(140) %>
-                <% else %>
-                  <p>ネタバレを含みます（読む場合は「詳細を見る」をクリック）</p>
-                <% end %>
-              </td>
-              <!--長文の場合の省略方法と、「ネタバレを読む」の場合の編みかけ方法を後で設定する-->
-            </tr>
-            <tr>
-              <td></td>
-              <td class=<%= "like-" + review.id.to_s %> >
-                <%= render "public/likes/reviewbtn", review: review %>
-              </td>
-              <td colspan="3">
-                <%= link_to "詳細を見る", review_path(review.id), style:"display: inline", class:"btn btn-primary btn-sm" %>
-                <% if review.user == current_user %>
-                 <%= link_to "編集する", edit_review_path(review.id), style:"display: inline", class:"btn btn-success btn-sm"%>
-                 <%= link_to "削除する", review_path(review.id), method: :delete, "data-confirm" => "レビューを削除しますか？", style:"display: inline", class:"btn btn-danger btn-sm" %>
-                <% end %>
-              </td>
-            </tr>
-          </table>
-        <% end %>
+      <% if @reviews.present? && params[:user_id].to_i == current_user.id %>
+        <%= render 'reviews', reviews: @my_reviews %>
+      <% elsif @reviews.present? && params[:user_id].to_i != current_user.id %>
+        <%= render 'reviews', reviews: @reviews %>
       <% else %>
         <p>レビューがありません</p>
       <% end %>

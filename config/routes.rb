@@ -33,8 +33,8 @@ Rails.application.routes.draw do
       get 'followers' => 'relationships#followers', as: 'followers'
     end
     
-    # booksコントローラ
     get 'books/search' => "books#search"
+    
     
     resources :books, only: [:show] do
       resources :reviews, only: [:new, :create]

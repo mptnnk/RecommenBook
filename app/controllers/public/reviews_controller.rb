@@ -24,9 +24,10 @@ class Public::ReviewsController < ApplicationController
   def index
     if params[:user_id]
       @user = User.find(params[:user_id])
-      @reviews = Review.where(user_id: @user.id).page(params[:page]).per(10).order(created_at: :DESC)
+      @reviews = Review.where(user_id: @user.id).where(in_release: true).page(params[:page]).per(10).order(created_at: :DESC)
+      @my_reviews = Review.where(user_id: current_user).page(params[:page]).per(10).order(created_at: :DESC)
     else
-      @reviews = Review.page(params[:page]).per(10).order(created_at: :DESC)
+      @reviews = Review.page(params[:page]).where(in_release: true).per(10).order(created_at: :DESC)
     end
   end
 

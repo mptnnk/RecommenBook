@@ -22,7 +22,11 @@
     <th>Reviews</th>
     <td>
       <%= link_to reviews_path(user_id: user.id) do %>
-        <%= user.reviews.count %>reviews
+        <% if user == current_user %>
+          <%= user.reviews.count %>reviews
+        <% else %>
+          <%= in_release_reviews %>reviews
+        <% end %>
       <% end %>
     </td>
   </tr>
@@ -96,4 +100,3 @@
   </tr>
   <!--いちおし本、いいね履歴、コメント履歴、フォロー、フォロワー、好きなジャンルを後で追加-->
 </table>
-

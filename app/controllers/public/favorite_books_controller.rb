@@ -4,7 +4,7 @@ class Public::FavoriteBooksController < ApplicationController
   def create
     @book = RakutenWebService::Books::Book.search(isbn: params[:book_id]).first
     @favorite_book = current_user.favorite_books.build(isbn: @book.isbn)
-    if @favorite_book.save
+    if @favorite_book.save!
       redirect_to book_path(@book.isbn), notice: 'お気に入りの本に登録しました'
     end
   end
@@ -38,6 +38,6 @@ class Public::FavoriteBooksController < ApplicationController
   private
   
   def favorite_book_params
-    params.require(:favorite_book).permit(:isbn, :recommenbook).merge(user_id :current_user.id)
+    params.require(:favorite_book).permit(:isbn, :recommenbook).merge(user_id: current_user.id)
   end
 end

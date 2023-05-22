@@ -8,6 +8,7 @@ class Public::UsersController < ApplicationController
 
   def show
     @user = User.find_by(name: params[:name])
+    @in_release_reviews = Review.where(user_id: @user.id, in_release: true).count
     # ルーティングでURLに:nameを渡すことを指定しているので、キー=>カラムに当てはめて、nameがキーとなる場合はparamの中身のカラムは:nameが正しい。
     @recommenbook = @user.favorite_books.find_by(recommenbook: true)
     if @recommenbook.present?

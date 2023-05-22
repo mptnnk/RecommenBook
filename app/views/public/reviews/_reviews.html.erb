@@ -1,0 +1,74 @@
+<% reviews.each do |review| %>
+  <% book = RakutenWebService::Books::Book.search(isbn: review.isbn).first %>
+  <table class="table table-sm table-light lists">
+    <tr>
+      <td style="width: 8%; padding: 20px" rowspan="2">
+        <%= link_to book_path(book.isbn) do %>
+          <%= image_tag(book['small_image_url']) %>
+        <% end %>
+      </td>
+      <th style="width: 10%">タイトル</th>
+      <td style="width: 30%">
+        <%= link_to book_path(book.isbn) do %>
+          <%= book['title'].truncate(30) %>
+        <% end %>
+      </td>
+      <th style="width: 10%">投稿者</th>
+      <td style="width: 10%">
+        <%= link_to mypage_path(name: review.user.name) do %>
+          <%= review.user.name %>
+        <% end %>
+      </td>
+      <th style="width: 10%">投稿日</th>
+      <td><%= review.created_at.strftime('%Y/%m/%d') %>　</td>
+      <th style="width: 15%">読み終わった日</th>
+      <td><%= review.readed_at&.strftime("%Y/%m/%d") %> </td>
+    </tr>
+    <tr>
+      <th>レビュー</th>
+      <td colspan="7">
+        <% if review.spoiler == false %>
+          <%= review.content.truncate(130) %>
+          <%= link_to "（続きはクリック）", review_path(review.id), style: "color: gray" %>
+        <% else %>
+          <%= link_to review_path(review.id) do %>
+            <p class="spoiler">ネタバレを含みます（クリックして読む）</p>
+          <% end %>
+        <% end %>
+      </td>
+      <!--長文の場合の省略方法と、「ネタバレを読む」の場合の編みかけ方法を後で設定する-->
+    </tr>
+    <tr>
+      <% if review.user == current_user %>
+        <td colspan="3"></td>
+        <th>ステータス</th>
+        <td>
+          <% if review.in_release == true %>
+            <p class="text-success">公開</p>
+          <% else %>
+            <p class="text-info">下書き</p>
+          <% end %>
+        </td>
+      <% else %>
+        <td colspan="5"></td>
+      <% end %>
+      <td colspan="2" class="pb-2">
+        <% if review.user == current_user %>
+         <%= link_to "編集する", edit_review_path(review.id), style:"display: inline", class:"btn btn-success btn-sm"%>
+         <%= link_to "削除する", review_path(review.id), method: :delete, "data-confirm" => "レビューを削除しますか？", style:"display: inline", class:"btn btn-danger btn-sm" %>
+        <% end %>
+      </td>
+      
+      <td class=<%= "like-" + review.id.to_s %> >
+        <%= render "public/likes/reviewbtn", review: review %>
+      </td>
+      <td>
+        <% if review.review_comments.present? %>
+          <% review.review_comments.count %>コメント
+        <% else %>
+          0コメント
+        <% end %>
+      </td>
+    </tr>
+  </table>
+<% end %>

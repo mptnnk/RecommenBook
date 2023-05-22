@@ -19,11 +19,11 @@
       <!--@tweetsが存在するとき-->
       <% if @tweets.present? %>
         <% @tweets.each do |tweet| %>
-          <table class="table table-sm">
+          <table class="table table-sm table-light lists">
             <tr>　<!--1行目--> 
               <% if tweet.isbn.present? %>
                 <% book = RakutenWebService::Books::Book.search(isbn: tweet.isbn).first %>
-                <td rowspan="2" style="width: 8%">
+                <td rowspan="2" style="width: 8%; padding: 20px">
                   <%= link_to book_path(book.isbn) do %>
                     <%= image_tag(book['small_image_url']) %>
                   <% end %>
