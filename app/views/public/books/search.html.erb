@@ -1,17 +1,31 @@
 <!--検索画面（検索結果一覧表示もあり）-->
-<div class="search-box">
-  <%= form_with url: books_search_path, method: :get do |book| %>
-    <div class="form-group text-center">
-      <%= book.text_field :title, :placeholder =>"タイトル検索", class:"mt-2 mb-2", size: "26x1" %>
-      <%= book.text_field :author, :placeholder =>"著者検索", class:"mb-2", size: "26x1" %>
-      <%= book.collection_select(:book_genre_id, Genre.all, :book_genre_id, :name, include_blank: "ジャンルを選ぶ") %>
-      <%= book.submit '検索', class:"btn btn-success btn-sm" %>
+<div class="container-fluid">
+  <h4 class="page-title">本を検索する</h4>
+  <div class="row">
+    <div class="col search-box">
+      <%= form_with url: books_search_path, method: :get do |book| %>
+        <div class="form-group text-center">
+          <%= book.text_field :title, :placeholder =>"タイトル検索", class:"mt-2 mb-2", size: "26x1" %>
+          <%= book.text_field :author, :placeholder =>"著者検索", class:"mb-2", size: "26x1" %>
+          <%= book.collection_select(:book_genre_id, Genre.all, :book_genre_id, :name, include_blank: "ジャンルを選ぶ") %>
+          <%= book.submit '検索', class:"btn btn-success btn-sm" %>
+        </div>
+      <% end %>
     </div>
-  <% end %>
-  
-  
-  <% if @books.present? %>
-    
-    <%= render 'book', books: @books, books_page: @books_page %>
-  <% end %>
+  </div>
+  <div class="row">
+    <div class="col">
+      <% if @books.present? %>
+        <h3>キーワードとジャンルで検索</h3>
+        <%= render 'book', books: @books, books_page: @books_page %>
+      <% else %>
+        <p>ランキング挿入</p>
+        <h3>あなたの最近の好きなジャンルからおすすめ</h3>
+        <%= render 'book', books: @random_books, books_page: @random_page %>
+      <% end %>
+    </div>
+  </div>
 </div>
+  
+  
+

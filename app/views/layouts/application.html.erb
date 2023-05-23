@@ -26,7 +26,7 @@
           
           <% if user_signed_in? %>
             <span class="helloname ml-5">Hello, 
-              <%= link_to mypage_path(name: current_user.name) do %>
+              <%= link_to mypage_path(name: current_user.name), style: "color: green" do %>
                 <%= current_user.name %>
               <% end %>
               !

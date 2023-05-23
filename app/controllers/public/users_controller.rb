@@ -15,11 +15,9 @@ class Public::UsersController < ApplicationController
     end
     favorite_isbns = current_user.favorite_books.pluck(:isbn)
     recent_favorite_isbns = current_user.favorite_books.order(created_at: :DESC).limit(30).pluck(:isbn)
-    # favorite_genres = []
     genre_ids = []
     recent_favorite_isbns.each do |isbn|
       books = RakutenWebService::Books::Book.search(isbn: isbn).first
-      # responseに、お気に入り本のisbnから順に本の情報を取り出して格納
       genre_ids << books.books_genre_id
     end
     favorite_genre_ids = genre_ids.map { |id| id[0,6] }
