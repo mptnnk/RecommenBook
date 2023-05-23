@@ -27,7 +27,7 @@
           <p>レビューがありません</p>
         <% end %>
         
-      <!--# ユーザーIDの受け渡しがない-->
+      <!--# ユーザーIDの受け渡しがない = 未ログインユーザー-->
       <% elsif params[:user_id].blank? %>
         <% if @reviews.present? %>
           <%= render 'reviews', reviews: @reviews %>

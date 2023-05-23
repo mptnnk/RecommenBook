@@ -3,7 +3,6 @@ class Public::UsersController < ApplicationController
   before_action :set_current_user, only: [:edit, :update, :unsubscribe]
   
   def index
-    
   end
 
   def show
@@ -14,6 +13,26 @@ class Public::UsersController < ApplicationController
     if @recommenbook.present?
       @book = RakutenWebService::Books::Book.search(isbn: @recommenbook.isbn).first
     end
+    favorite_isbns = current_user.favorite_books.pluck(:isbn)
+    recent_favorite_isbns = current_user.favorite_books.order(created_at: :DESC).limit(30).pluck(:isbn)
+    # favorite_genres = []
+    genre_ids = []
+    recent_favorite_isbns.each do |isbn|
+      books = RakutenWebService::Books::Book.search(isbn: isbn).first
+      # responseに、お気に入り本のisbnから順に本の情報を取り出して格納
+      genre_ids << books.books_genre_id
+    end
+    favorite_genre_ids = genre_ids.map { |id| id[0,6] }
+    most_favorite_id = favorite_genre_ids.group_by(&:itself).max_by{ |_,count| count }.first
+    # @genreid_count = @favorite_genre_ids.group_by(&:itself).map{ |key,value| [key, value.count] }.to_h
+    # @most_favorite_genre_id = @genreid_count.max_by{ |_,count| count }&.first
+    related_books = RakutenWebService::Books::Book.search({
+      books_genre_id: most_favorite_id,
+      sort: 'sales',
+      hits: 15
+    })
+    related_books = related_books.reject{ |book| favorite_isbns.include?(book.isbn) }
+    @random_book = related_books.sample
   end
 
   def edit

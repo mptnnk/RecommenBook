@@ -25,7 +25,12 @@
           </button>
           
           <% if user_signed_in? %>
-            <span class="helloname ml-5">Hello, <%= current_user.name %> !</span>
+            <span class="helloname ml-5">Hello, 
+              <%= link_to mypage_path(name: current_user.name) do %>
+                <%= current_user.name %>
+              <% end %>
+              !
+            </span>
           <% end %>
           
           <div class="collapse navbar-collapse flex-column" id="navbarNavDropdown">
