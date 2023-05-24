@@ -2,12 +2,16 @@
   <h4 class="page-title">ハッシュ検索＃<%= @tag.name %></h4>
   <div class="row">
     <div class="col mt-3">
-      <%= render 'public/reviews/reviews', reviews: @reviews %>
+      <% @posts.each do |post| %>
+        <%= post.user.name %>
+        <%= post.created_at %>
+      <% end %>
     </div>
   </div>
 </div>
 
 
+<%= render 'public/reviews/reviews', reviews: @reviews %>
 <ul>
   <% @tweets.each do |tweet| %>
     <li>

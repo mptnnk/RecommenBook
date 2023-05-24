@@ -13,7 +13,7 @@
         <% end %>
       </h2>
       
-      <% if @user == current_user %>
+      <% if @user == current_user && @user.favorite_books.present? %>
         <%= link_to book_path(@random_book.isbn) do %>
           <p>あなたへのランダムおすすめ本</p>
         <% end %>

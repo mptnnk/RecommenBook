@@ -2,7 +2,7 @@
 <% book = RakutenWebService::Books::Book.search(isbn: review.isbn).first %>
   <table class="table table-sm table-light lists">
     <tr>
-      <% if current_page?(reviews_path) %>
+      <% unless current_page?(book_path(book.isbn)) %>
         <td style="width: 8%; padding: 20px" rowspan="2">
           <%= link_to book_path(book.isbn) do %>
             <%= image_tag(book['small_image_url']) %>
@@ -42,8 +42,24 @@
       <!--長文の場合の省略方法と、「ネタバレを読む」の場合の編みかけ方法を後で設定する-->
     </tr>
     <tr>
+      <td></td>
+      <% if user_signed_in? %>
+        <td class=<%= "like-" + review.id.to_s %> >
+          <%= render "public/likes/reviewbtn", review: review %>
+        </td>
+      <% else %>
+        <td><i class="fas fa-heart" aria-hidden="true" style="color: red;"></i><%= review.likes.count %>いいね</td>
+      <% end %>
+      
+      <td>
+        <% if review.review_comments.present? %>
+          <% review.review_comments.count %>コメント
+        <% else %>
+          0コメント
+        <% end %>
+      </td>
       <% if review.user == current_user && current_page?(reviews_path) %>
-        <td colspan="3"></td>
+        
         <th>ステータス</th>
         <td>
           <% if review.in_release == true %>
@@ -64,21 +80,7 @@
         <% end %>
       </td>
       
-      <% if user_signed_in? %>
-        <td class=<%= "like-" + review.id.to_s %> >
-          <%= render "public/likes/reviewbtn", review: review %>
-        </td>
-      <% else %>
-        <td><i class="fas fa-heart" aria-hidden="true" style="color: red;"></i><%= review.likes.count %>いいね</td>
-      <% end %>
-      
-      <td>
-        <% if review.review_comments.present? %>
-          <% review.review_comments.count %>コメント
-        <% else %>
-          0コメント
-        <% end %>
-      </td>
+
     </tr>
     <tr>
     </tr>
