@@ -39,6 +39,12 @@ class Public::ReviewsController < ApplicationController
     @book_favorites = FavoriteBook.where(isbn: @book.isbn)
     @review_comment = ReviewComment.new
   end
+  
+  def hashtag
+    @user = current_user
+    @tag = Hashtag.find_by(name: params[:name])
+    @reviews = @tag.reviews
+  end
 
   def edit
     @book = RakutenWebService::Books::Book.search(isbn: @review.isbn).first
@@ -58,7 +64,11 @@ class Public::ReviewsController < ApplicationController
   def destroy
     @review.destroy if @review
     @book = RakutenWebService::Books::Book.search(isbn: @review.isbn).first
-    redirect_to book_path(@book.isbn), alert: 'レビューを削除しました'
+    if request.referer == review_path(@review)
+      redirect_to reviews_path, alert: 'レビューを削除しました'
+    else
+      redirect_to request.referer, alert: 'レビューを削除しました'
+    end
   end
   
   private

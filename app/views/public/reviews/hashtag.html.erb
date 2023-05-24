@@ -1,0 +1,12 @@
+<h2>ハッシュタグ＃<%= @tag.name %></h2>
+<ul>
+  <% @reviews.each do |review| %>
+    <li>
+      <%= link_to review_path(review.id) do %>
+        <%= review.content %><br>
+        <%= review.content.gsub(/#[\w\p{Han}ぁ-ヶｦ-ﾟー]+/, '') %><br>
+         <%= review.content.gsub(/[＃#][\w\p{Han}ぁ-ヶｦ-ﾟー]+/, '') %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>

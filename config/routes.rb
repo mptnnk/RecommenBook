@@ -34,7 +34,7 @@ Rails.application.routes.draw do
     end
     
     get 'books/search' => "books#search"
-    
+    get 'hashtag/:name' => "reviews#hashtag"
     
     resources :books, only: [:show] do
       resources :reviews, only: [:new, :create]
@@ -42,14 +42,14 @@ Rails.application.routes.draw do
       resources :readed_books, only: [:destroy, :create]
     end
     resources :reviews, only: [:index, :show, :edit, :update, :destroy] do
-      resource :likes, only: [:create, :destroy]
       resources :review_comments, only: [:create, :destroy]
+      resource :likes, only: [:create, :destroy]
     end
     resources :favorite_books, only: [:index, :update]
     resources :readed_books, only: [:index]
     resources :tweets, only: [:new, :create, :index, :show, :destroy] do
-      resource :likes, only: [:create, :destroy]
       resources :tweet_comments, only: [:create, :destroy]
+      resource :likes, only: [:create, :destroy]
     end
     resources :likes, only: [:index]
     resources :review_comments, only: [:index], as: "comments"

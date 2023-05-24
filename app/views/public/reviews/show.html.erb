@@ -21,7 +21,7 @@
         </tr>
         <tr>
           <th>レビュー</th>
-          <td colspan="5"><%= @review.content %></td>
+          <td colspan="5"><%= render_with_hashtags(@review.content) %></td>
         </tr>
         <tr>
           <th></th>
@@ -40,6 +40,8 @@
           </td>
         </tr>
       </table>
+      
+      
       
       <div class="review-comments-index">
         <%= render "public/review_comments/index", review: @review %>

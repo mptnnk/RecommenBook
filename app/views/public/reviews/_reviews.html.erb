@@ -31,7 +31,7 @@
       <th>レビュー</th>
       <td colspan="7">
         <% if review.spoiler == false %>
-          <%= review.content.truncate(130) %>
+          <%= render_with_hashtags(review.content).truncate(130) %>
           <%= link_to "（続きはクリック）", review_path(review.id)  %>
         <% else %>
           <%= link_to review_path(review.id) do %>
@@ -56,6 +56,7 @@
         <td colspan="4"></td>
       <% end %>
       
+      
       <td colspan="2" class="pb-2">
         <% if review.user == current_user %>
          <%= link_to "編集する", edit_review_path(review.id), style:"display: inline", class:"btn btn-success btn-sm"%>
@@ -79,5 +80,8 @@
         <% end %>
       </td>
     </tr>
+    <tr>
+    </tr>
   </table>
+  
 <% end %>

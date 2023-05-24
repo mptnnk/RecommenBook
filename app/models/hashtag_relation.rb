@@ -1,5 +1,5 @@
 class HashtagRelation < ApplicationRecord
   belongs_to :hashtag
-  belongs_to :review, optional: true
-  belongs_to :twett, optional: true
+  belongs_to :review
+  validates :hashtag_id, presence: true
 end
