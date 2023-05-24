@@ -22,7 +22,7 @@
         </tr>
         <tr>
           <th>つぶやき</th>
-          <td><%= @tweet.tweet_content %></td>
+          <td><%= render_tweet_with_hashtags(@tweet.tweet_content, 50) %></td>
           <td>
             <% if @tweet.user == current_user %>
               <%= link_to "削除する", tweet_path(@tweet.id), method: :delete, "data-confirm" => "つぶやきを削除しますか？", class:"btn btn-danger btn-sm" %>

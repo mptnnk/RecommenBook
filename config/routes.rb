@@ -34,7 +34,7 @@ Rails.application.routes.draw do
     end
     
     get 'books/search' => "books#search"
-    get 'hashtag/:name' => "reviews#hashtag", as: 'hashtag'
+    get 'hashtag/:name' => "hashtags#index", as: 'hashtag'
     
     resources :books, only: [:show] do
       resources :reviews, only: [:new, :create]

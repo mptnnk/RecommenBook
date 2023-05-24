@@ -18,7 +18,7 @@ class Review < ApplicationRecord
     review.hashtags = []
     hashtags.uniq.map do |hashtag|
       #ハッシュタグは先頭の'#'を外した上で保存
-      tag = Hashtag.find_or_create_by(name: hashtag.downcase.delete('#'))
+      tag = Hashtag.find_or_create_by(name: hashtag.downcase.delete('#＃'))
       review.hashtags << tag
     end
   end
@@ -30,7 +30,7 @@ class Review < ApplicationRecord
     hashtags = self.content.scan(/[#＃][\w\p{Han}ぁ-ヶｦ-ﾟー]+/)
     # caption = caption要素を生成　scan = selfに対してパターンを繰り返しマッチし、マッチした部分の文字列の配列を返す
     hashtags.uniq.map do |hashtag|
-      tag = Hashtag.find_or_create_by(name: hashtag.downcase.delete('#'))
+      tag = Hashtag.find_or_create_by(name: hashtag.downcase.delete('#＃'))
       review.hashtags << tag
     end
   end

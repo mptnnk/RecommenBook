@@ -31,7 +31,7 @@
       <th>レビュー</th>
       <td colspan="7">
         <% if review.spoiler == false %>
-          <%= render_review_with_hashtags(review.content).truncate(130) %>
+          <%= render_review_with_hashtags(review.content, 130) %>
           <%= link_to "（続きはクリック）", review_path(review.id)  %>
         <% else %>
           <%= link_to review_path(review.id) do %>
