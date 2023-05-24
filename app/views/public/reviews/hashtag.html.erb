@@ -1,12 +1,22 @@
-<h2>ハッシュタグ＃<%= @tag.name %></h2>
-<ul>
-  <% @reviews.each do |review| %>
-    <li>
-      <%= link_to review_path(review.id) do %>
-        <%= review.content %><br>
-        <%= review.content.gsub(/#[\w\p{Han}ぁ-ヶｦ-ﾟー]+/, '') %><br>
-         <%= review.content.gsub(/[＃#][\w\p{Han}ぁ-ヶｦ-ﾟー]+/, '') %>
-      <% end %>
-    </li>
-  <% end %>
-</ul>
+<div class="container">
+  <h4 class="page-title">ハッシュ検索＃<%= @tag.name %></h4>
+  <div class="row">
+    <div class="col mt-3">
+      <%= render 'reviews', reviews: @reviews %>
+    </div>
+  </div>
+</div>
+
+<!--<h2>ハッシュ検索＃<%= @tag.name %></h2>-->
+<!--<ul>-->
+<!--  <% @reviews.each do |review| %>-->
+<!--    <li>-->
+<!--      <%= link_to review_path(review.id) do %>-->
+<!--         <%= review.content.gsub(/[＃#][\w\p{Han}ぁ-ヶｦ-ﾟー]+/, '') %>-->
+<!--      <% end %>-->
+<!--      <% review.content.scan(/[#＃][\w\p{Han}ぁ-ヶｦ-ﾟー]+/).each do |hashtag| %>-->
+<!--        <%= link_to hashtag, hashtag_path(hashtag.delete('#')) %>-->
+<!--      <% end %>-->
+<!--    </li>-->
+<!--  <% end %>-->
+<!--</ul>-->

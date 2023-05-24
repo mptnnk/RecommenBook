@@ -2,7 +2,8 @@
   <% book = RakutenWebService::Books::Book.search(isbn: review.isbn).first %>
   <table class="table table-sm table-light lists">
     <tr>
-      <% if current_page?(reviews_path) %>
+      <% if %w[reviews hashtag].any? { |name| current_page?(send("#{name}_path"))} %>
+      
         <td style="width: 8%; padding: 20px" rowspan="2">
           <%= link_to book_path(book.isbn) do %>
             <%= image_tag(book['small_image_url']) %>
