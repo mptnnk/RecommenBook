@@ -52,6 +52,12 @@ class Public::TweetsController < ApplicationController
     @tweet_comment = TweetComment.new
   end
   
+  def hashtag
+    @user = current_user
+    @tag = Hashtag.find_by(name: params[:name])
+    @tweets = @tag.tweets
+  end
+  
   def destroy
     @tweet = Tweet.find(params[:id])
     if @tweet.destroy

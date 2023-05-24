@@ -36,11 +36,6 @@
         <% end %>
           
       <% end %>
-      <% if @hashtags.present? %>
-        <% @hashtags.each do |hashtag| %>
-          <%= link_to "##{hashtag.name}",hashtags_path(hashtag_id: hashtag.id) %>
-        <% end %>
-      <% end %>
     </div>
   </div>
 </div>

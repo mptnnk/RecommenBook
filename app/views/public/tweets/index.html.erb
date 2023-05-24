@@ -55,7 +55,7 @@
             
             <tr>　<!--2行目-->
               <th>つぶやき</th>
-              <td colspan="3"><%= tweet.tweet_content.truncate(50) %></td>
+              <td colspan="3"><%= render_tweet_with_hashtags(tweet.tweet_content).truncate(50) %></td>
               <td colspan="2">
                 <%= link_to "詳細を見る", tweet_path(tweet.id), style:"display: inline-block", class:"btn btn-primary btn-sm" %>
                 <% if tweet.user == current_user %>

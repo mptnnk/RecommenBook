@@ -97,6 +97,7 @@ class Public::BooksController < ApplicationController
     @tweet = Tweet.new
     @tweets = Tweet.where(isbn: @book.isbn).order(created_at: :DESC)
     @book_favorites = FavoriteBook.where(isbn: @book.isbn)
+    @tag = Hashtag.find_by(name: params[:name])
   end
 
   private

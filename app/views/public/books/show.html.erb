@@ -22,7 +22,7 @@
   <% if @reviews.present? %>
     <div class="row">
       <div class="col mt-3">
-        <%= render 'public/reviews/reviews', reviews: @reviews %>
+        <%= render 'public/reviews/reviews', reviews: @reviews, tag: @tag %>
       </div>
     </div>
   <% else %>
@@ -48,7 +48,7 @@
           </tr>
           <tr>
             <th>つぶやき</th>
-            <td colspan="2"><%= tweet.tweet_content.truncate(50) %></td>
+            <td colspan="2"><%= render_tweet_with_hashtags(tweet.tweet_content, 50) %></td>
             <td>
               <%= link_to "詳細を見る", tweet_path(tweet.id),style:"display: inline-block", class:"btn btn-primary btn-sm" %>
               <% if tweet.user == current_user %>
