@@ -9,9 +9,9 @@
       <%= link_to "レビュー投稿／読んだ本登録", new_book_review_path(@book.isbn), class:"btn btn-success" %>
       <%= link_to "つぶやく", new_tweet_path(book_id: @book.isbn), class:"btn btn-primary" %>
       
-      <% if current_user.favorite_books.exists?(isbn: @book.isbn) %>
+      <% if user_signed_in? && current_user.favorite_books.exists?(isbn: @book.isbn) %>
         <%= link_to "お気に入り解除", book_favorite_book_path(@book.isbn), method: :delete, class:"btn btn-danger" %>
-      <% else %>
+      <% elsif user_signed_in? %>
         <%= link_to "お気に入り登録", book_favorite_books_path(@book.isbn), method: :post, class:"btn btn-primary" %>
       <% end %>
     </div>
@@ -21,8 +21,8 @@
   <h5 class="page-title mt-5">この本のレビュー</h5>
   <% if @reviews.present? %>
     <div class="row">
-      <div class="col mt-3">
-        <%= render 'public/reviews/reviews', reviews: @reviews, tag: @tag %>
+      <div class="col mt-3 table-responsive">
+        <%= render 'public/partial/lists', objects: @reviews %>
       </div>
     </div>
   <% else %>
@@ -34,36 +34,7 @@
   <% if @tweets.present? %>
     <div class="row">
       <div class="col mt-3">
-        <% @tweets.each do |tweet| %>
-        <table class="table table-sm table-borderless">
-          <tr>
-            <th style="width: 5%">投稿者</th>
-            <td style="width: 10%">
-              <%= link_to mypage_path(name: tweet.user.name) do %>
-                <%= tweet.user.name %>
-              <% end %>
-            </td>
-            <th style="width: 10%">投稿日</th>
-            <td style="width: 20%"><%= tweet.created_at.strftime('%Y/%m/%d') %></td>
-          </tr>
-          <tr>
-            <th>つぶやき</th>
-            <td colspan="2"><%= render_tweet_with_hashtags(tweet.tweet_content, 50) %></td>
-            <td>
-              <%= link_to "詳細を見る", tweet_path(tweet.id),style:"display: inline-block", class:"btn btn-primary btn-sm" %>
-              <% if tweet.user == current_user %>
-                <%= link_to "削除する", tweet_path(tweet.id), method: :delete, "data-confirm" => "つぶやきを削除しますか？", class:"btn btn-danger btn-sm" %>
-              <% end %>
-            </td>
-          </tr>
-          <tr>
-            <th></th>
-            <td class=<%= "like-" + tweet.id.to_s %> >
-              <%= render "public/likes/tweetbtn", tweet: tweet %>
-            </td>
-          </tr>
-        </table>
-        <% end %>
+        <%= render 'public/partial/lists', objects: @tweets %>
       </div>
     </div>
   <% else %>

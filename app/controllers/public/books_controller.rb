@@ -86,8 +86,10 @@ class Public::BooksController < ApplicationController
     # pp @books.response['pageCount']　#,page,@books_page
     # response['']とすると、楽天ブックスAPIの出力パラメータで「全体情報」とされている部分についての情報が取れる
     
-    @random_books = user_random_books
-    @random_page = Kaminari.paginate_array([], total_count: @random_books.count ).page(page).per(per)
+    if user_signed_in?
+      @random_books = user_random_books
+      @random_page = Kaminari.paginate_array([], total_count: @random_books.count ).page(page).per(per)
+    end
   end
   
   def show

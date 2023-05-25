@@ -4,11 +4,11 @@
   <tr>
   </div>
   <div class="row mt-2 mb-2">
-    <% if current_user !=  user %>
+    <% if user_signed_in? && user !=  current_user %>
       <div class="mx-auto">
         <%= render "public/relationships/btn", user: user %>
       </div>
-    <% else %>
+    <% elsif user == current_user %>
       <%= link_to "編集する", users_information_edit_path, class:"btn btn-outline-secondary btn-block"%>
     <% end %>
   </div>

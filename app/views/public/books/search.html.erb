@@ -16,12 +16,12 @@
   <div class="row">
     <div class="col">
       <% if @books.present? %>
-        <h3>キーワードとジャンルで検索</h3>
-        <%= render 'book', books: @books, books_page: @books_page %>
-      <% else %>
+        <h3>キーワード/ジャンル検索結果</h3>
+        <%= render 'search', books: @books, books_page: @books_page %>
+      <% elsif @random_books.present? %>
         <p>ランキング挿入</p>
         <h3>あなたの最近の好きなジャンルからおすすめ</h3>
-        <%= render 'book', books: @random_books, books_page: @random_page %>
+        <%= render 'search', books: @random_books, books_page: @random_page %>
       <% end %>
     </div>
   </div>

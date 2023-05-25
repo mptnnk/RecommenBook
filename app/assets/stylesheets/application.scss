@@ -59,7 +59,10 @@ footer{
 }
 
 .lists {
-  border: 2px solid #dcdcdc;
+  border: 2px dotted #dcdcdc;
+  border-radius: 20px;
+  border-collapse: separate;
+  
 }
 
 th {
@@ -68,4 +71,8 @@ th {
 
 .lists-image {
   padding: 10px;
+}
+
+.spoiler {
+  color: #ff7f50;
 }

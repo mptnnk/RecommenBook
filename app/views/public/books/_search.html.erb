@@ -1,0 +1,36 @@
+<!--検索結果の本一覧-->
+  <table class="table table-hover table-inverse">
+    
+    
+    <thead class="text-center">
+      <tr>
+        <th style="width: 10%"></th>
+        <th style="width: 20%">タイトル</th>
+        <th style="width: 20%">著　者</th>
+        <th>説　明</th>
+      </tr>
+    </thead>
+    
+    <% if books.present? %>
+      <% books.each do |book| %>
+      <tbody>
+        <tr>
+          <td>
+            <%= link_to book_path(book.isbn) do %>
+              <%= image_tag(book['medium_image_url']) %>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to book_path(book.isbn) do %>
+              <%= book['title'] %>
+            <% end %>
+            </td>
+          <td><%= book['author'] %></td>
+          <td><%= book['item_caption'].truncate(170) %></td>
+        </tr>
+      </tbody>
+      <% end %>
+  </table>
+  
+  <%= paginate books_page %>
+  <% end %>

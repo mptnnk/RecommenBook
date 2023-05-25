@@ -10,11 +10,11 @@
     <% end %>
   </h4>
   <div class="row">
-    <div class="col mt-3">
+    <div class="col mt-3 table-responsive">
       <!--# ユーザーIDの受け渡しがあって、かつIDがcurrent_userのもの-->
       <% if params[:user_id].present? && params[:user_id].to_i == current_user.id %>
         <% if @my_reviews.present? %>
-          <%= render 'reviews', reviews: @my_reviews %>
+          <%= render 'public/partial/lists', objects: @my_reviews %>
         <% else %>
           <p>レビューがありません</p>
         <% end %>
@@ -22,7 +22,7 @@
       <!--# ユーザーIDの受け渡しがあって、かつIDがcurrent_userのものではない-->
       <% elsif params[:user_id].present? && params[:user_id].to_i != current_user.id %>
         <% if @user_reviews.present? %>
-          <%= render 'reviews', reviews: @user_reviews %>
+          <%= render 'public/partial/lists', objects: @user_reviews %>
         <% else %>
           <p>レビューがありません</p>
         <% end %>
@@ -30,7 +30,7 @@
       <!--# ユーザーIDの受け渡しがない = 未ログインユーザー-->
       <% elsif params[:user_id].blank? %>
         <% if @reviews.present? %>
-          <%= render 'reviews', reviews: @reviews %>
+          <%= render 'public/partial/lists', objects: @reviews %>
         <% else %>
           <p>レビューがありません</p>
         <% end %>
