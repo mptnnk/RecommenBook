@@ -99,7 +99,7 @@ class Public::BooksController < ApplicationController
     @review = Review.new
     @reviews = Review.where(isbn: @book.isbn).where(in_release: true).limit(4).order(created_at: :DESC)
     @tweet = Tweet.new
-    @tweets = Tweet.where(isbn: @book.isbn).order(created_at: :DESC).limit(4).order(created_at: :DESC)
+    @tweets = Tweet.where(isbn: @book.isbn).limit(4).order(created_at: :DESC)
     @book_favorites = FavoriteBook.where(isbn: @book.isbn)
     @tag = Hashtag.find_by(name: params[:name])
   end

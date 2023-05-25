@@ -15,14 +15,11 @@ Rails.application.routes.draw do
   # end
   
   scope module: :public do
-    # controller :homes
     root to:'homes#top'
     get '/about' => 'homes#about', as:"about"
     
-    # controller :users
     get 'users/unsubscribe' => 'users#unsubscribe'
     patch 'users/withdraw' => 'users#withdraw'
-    # idつきのものが上にあると先に読んでしまってunsubscribeに遷移できなかったので上に出した
     get 'users/:name' => 'users#show', as: 'mypage'
     get 'users/information/edit' => 'users#edit'
     patch 'users/information' => 'users#update'

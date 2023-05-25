@@ -20,6 +20,10 @@
           </td>
         </tr>
         <tr>
+          <th>パスワード</th>
+          <td><%= user.password_field :encrypted_password, class: "form-control" %></td>
+        </tr>
+        <tr>
           <th></th>
           <td>
             <%= user.submit "変更を保存", class: "btn btn-success" %>

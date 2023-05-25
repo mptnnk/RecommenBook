@@ -17,6 +17,7 @@
       <% if params[:user_id].present? && params[:user_id].to_i == current_user.id %>
         <% if @my_reviews.present? %>
           <%= render 'public/partial/lists', objects: @my_reviews %>
+          <%= paginate @my_reviews, theme: 'twitter-bootstrap-4' %>
         <% else %>
           <p>レビューがありません</p>
         <% end %>
@@ -25,17 +26,20 @@
       <% elsif params[:user_id].present? && params[:user_id].to_i != current_user.id %>
         <% if @user_reviews.present? %>
           <%= render 'public/partial/lists', objects: @user_reviews %>
+          <%= paginate @user_reviews, theme: 'twitter-bootstrap-4' %>
         <% else %>
           <p>レビューがありません</p>
         <% end %>
         
       <% elsif params[:user_id].blank? && params[:book_id].present? %>
         <%= render 'public/partial/lists', objects: @book_reviews %>
+        <%= paginate @book_reviews, theme: 'twitter-bootstrap-4' %>
         
       <!--# ユーザーIDの受け渡しがない = 未ログインユーザー-->
       <% elsif params[:user_id].blank? %>
         <% if @reviews.present? %>
           <%= render 'public/partial/lists', objects: @reviews %>
+          <%= paginate @reviews, theme: 'twitter-bootstrap-4' %>
         <% else %>
           <p>レビューがありません</p>
         <% end %>

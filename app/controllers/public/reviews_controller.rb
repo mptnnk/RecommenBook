@@ -1,7 +1,6 @@
 class Public::ReviewsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :destroy]
   before_action :submitted_review, only: [:show, :edit, :update, :destroy]
-  # before_action :book_isbn, only: [:new, :create, :edit, :destroy]
   
   def new
     @book = RakutenWebService::Books::Book.search(isbn: params[:book_id]).first

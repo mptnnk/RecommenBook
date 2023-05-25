@@ -12,6 +12,11 @@
           <%= @user.name %>さんのプロフィール
         <% end %>
       </h2>
+      最近のレビュー・つぶやき
+      最近登録したお気に入り
+      <% @reviews.each do |review| %>
+        <%= review.content %>
+      <% end %>
     </div>
     
   </div>
