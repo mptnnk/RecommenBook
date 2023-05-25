@@ -30,7 +30,7 @@ class Public::RelationshipsController < ApplicationController
     @in_release_reviews = Review.where(user_id: @user.id, in_release: true).count
     @followers = @user.followers
     @followers.each do |follower|
-      @recommebook = follower.favorite_books.find_by(recommenbook: true)
+      @recommenbook = follower.favorite_books.find_by(recommenbook: true)
       if @recommenbook.present?
         @book = RakutenWebService::Books::Book.search(isbn: @recommenbook.isbn).first
       end
