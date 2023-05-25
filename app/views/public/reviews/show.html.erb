@@ -41,7 +41,8 @@
         </tr>
       </table>
       
-      <div class="review-comments-index">
+      <div class="comments-index">
+        <h3>コメント（<%= @comments.count %>件）</h3>
         <%= render "public/partial/comments", review: @review, comments: @comments %>
       </div>
       <% if user_signed_in? %>
