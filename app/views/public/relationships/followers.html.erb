@@ -1,16 +1,18 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-3">
-      <%= render 'public/users/info', user: @user, book: @book, in_release_reviews: @in_release_reviews %>
+      <%= render 'public/users/info', user: @user, book: @book, recommenbook: @recommenbook, in_release_reviews: @in_release_reviews %>
     </div>
     
     <div class="col-md-8 offset-md-1">
       <h4 class="page-title"><%= @user.name %>さんのフォロワー</h4>
-      <% if @users.exists? %>
-        <%= render 'public/users/index', users: @users %>
+      <% if @followers.exists? %>
+        <%= render 'public/partial/follows', users: @followers, book: @book, recommenbook: @recommenbook %>
       <% else %>
         <p>ユーザーはいません</p>
       <% end %>
+      
+     <%= @recommenbook %>
     </div>
   </div>
 </div>

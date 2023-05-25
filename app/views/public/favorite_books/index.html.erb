@@ -2,10 +2,17 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-3">
-      <%= render 'public/users/info', user: @user, book: @book, in_release_reviews: @in_release_reviews %>
+      <%= render 'public/users/info', user: @user, book: @book, recommenbook: @recommenbook, in_release_reviews: @in_release_reviews %>
     </div>
     <div class="col-md-8 offset-md-1">
-      <h4 class="page-title"><%= @user.name %>さんのお気に入りの本一覧</h4>
+      <h4 class="page-title">
+        <% if @user == current_user %>
+          あなたのお気に入りの本一覧
+          <p class="favorite-explain">お気に入りの本の中から1冊、おすすめ本を選択することができます。</p>
+        <% else %>
+          <%= @user.name %>さんのお気に入りの本一覧
+        <% end %>
+      </h4>
       <% if @favorite_books.present? %>
         <table class="table table-sm mt-2">
           <thead class="text-center">

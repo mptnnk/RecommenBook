@@ -18,11 +18,12 @@
   </div>
 
   <!--その書籍に関するレビューの一覧-->
-  <h5 class="page-title mt-5">この本のレビュー</h5>
+  <h5 class="page-title mt-5">この本の新着レビュー</h5>
   <% if @reviews.present? %>
     <div class="row">
       <div class="col mt-3 table-responsive">
         <%= render 'public/partial/lists', objects: @reviews %>
+        <%= link_to "この本のレビュー一覧を見る", reviews_path(book_id: @book.isbn) %>
       </div>
     </div>
   <% else %>
@@ -30,7 +31,7 @@
   <% end %>
   
   <!--その書籍に関するつぶやきの一覧-->
-  <h5 class="page-title mt-5">この本のつぶやき</h5>
+  <h5 class="page-title mt-5">この本の新着つぶやき</h5>
   <% if @tweets.present? %>
     <div class="row">
       <div class="col mt-3">

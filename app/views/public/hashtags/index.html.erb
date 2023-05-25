@@ -3,6 +3,7 @@
   <div class="row">
     <div class="col mt-3">
       <%= render 'public/partial/lists', objects: @posts %>
+      <%= paginate @posts, theme: 'twitter-bootstrap-4' %>
     </div>
   </div>
 </div>

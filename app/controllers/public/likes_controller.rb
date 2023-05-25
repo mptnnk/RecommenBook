@@ -29,6 +29,7 @@ class Public::LikesController < ApplicationController
       @reviews = Review.joins(:likes).where(likes: { id: review_likes.pluck(:id)})
       @combined_records = @tweets + @reviews
       @combined_records = @combined_records.sort_by { |record| -record.likes.count }
+      @combined_records = Kaminari.paginate_array(@combined_records).page(params[:page]).per(10)
       @recommenbook = @user.favorite_books.find_by(recommenbook: true)
       if @recommenbook.present?
         @book = RakutenWebService::Books::Book.search(isbn: @recommenbook.isbn).first

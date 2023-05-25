@@ -5,6 +5,8 @@
       あなたのレビュー
     <% elsif params[:user_id].present? && params[:user_id].to_i != current_user.id %>
       <%= @user.name %>さんのレビュー（新着順）
+    <% elsif params[:user_id].blank? && params[:book_id].present? %>
+      <%= @book['title'].truncate(20) %>のレビュー（新着順）
     <% else %>
       レビュー（新着順）
     <% end %>
@@ -26,6 +28,9 @@
         <% else %>
           <p>レビューがありません</p>
         <% end %>
+        
+      <% elsif params[:user_id].blank? && params[:book_id].present? %>
+        <%= render 'public/partial/lists', objects: @book_reviews %>
         
       <!--# ユーザーIDの受け渡しがない = 未ログインユーザー-->
       <% elsif params[:user_id].blank? %>

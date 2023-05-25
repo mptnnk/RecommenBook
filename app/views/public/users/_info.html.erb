@@ -41,9 +41,9 @@
   <tr>
     <th>RecommenBook</th>
     <td>
-      <% if @recommenbook.present? %>
+      <% if recommenbook.present? %>
         <%= link_to book_path(id: book.isbn) do %>
-          <%= book['title'] %>
+          <%= book['title'].truncate(28) %>
         <% end %>
       <% else %>
         <p>nothing</p>

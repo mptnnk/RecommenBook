@@ -23,14 +23,12 @@ class Public::FavoriteBooksController < ApplicationController
     @favorite_book = FavoriteBook.find(params[:id])
     @favorite_book.recommenbook = params[:recommenbook] == "true"
     if @favorite_book.update_columns(recommenbook: @favorite_book.recommenbook)
-      redirect_to request.referer
+      redirect_to request.referer, notice: 'おすすめ本の登録を変更しました'
     end
   end
 
   def destroy
     @favorite_book = FavoriteBook.find(params[:id])
-    # @book = RakutenWebService::Books::Book.search(isbn: params[:book_id]).first
-    # @favorite_book = current_user.favorite_books.find_by(isbn: @book.isbn)
     if @favorite_book.destroy
       redirect_to request.referer, alert: 'お気に入りから削除しました'
     end

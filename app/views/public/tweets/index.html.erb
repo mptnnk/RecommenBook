@@ -1,26 +1,28 @@
 <!--tweetの一覧-->
-<div class="container">
-  <h4 class="page-title">
-    <% if params[:user_id] %>
-     <%= @user.name %>さんのつぶやき（新着順）
-    <% else %>
-     つぶやき（新着順）
-    <% end %>
-  </h4>
-  <h3 class="text-right">
-    <%= link_to new_tweet_path do %>
-      <i class="fa-solid fa-pen-to-square"></i>
-    <% end %>
-  </h3>
-  
+<div class="container-fluid">
   <div class="row">
-    <div class="col">
-      <!--user_idの受け渡しの有無の@tweetsの条件はコントローラで設定済み-->
+    <% if params[:user_id] %>
+      <div class="col-md-3">
+        <%= render 'public/users/info', user: @user, book: @book, recommenbook: @recommenbook, in_release_reviews: @in_release_reviews %>
+      </div>
+    <% end %>
+    <div class="col-md-8 offset-md-1">
+      <h4 class="page-title">
+        <% if params[:user_id] %>
+         <%= @user.name %>さんのつぶやき（新着順）
+        <% else %>
+         つぶやき（新着順）
+        <% end %>
+      </h4>
+      <h3 class="text-right">
+        <%= link_to new_tweet_path do %>
+          <i class="fa-solid fa-pen-to-square"></i>
+        <% end %>
+      </h3>
       <% if @tweets.present? %>
         <%= render 'public/partial/lists', objects: @tweets %>
       <% else %>
         <p>つぶやきがありません</p>
-      
       <% end %>
     </div>
   </div>
