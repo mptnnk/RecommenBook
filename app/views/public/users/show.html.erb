@@ -2,7 +2,7 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-3">
-      <%= render 'info', user: @user, book: @book, recommenbook: @recommenbook, in_release_reviews: @in_release_reviews %>
+      <%= render 'public/partial/userinfo', user: @user, book: @book, recommenbook: @recommenbook, in_release_reviews: @in_release_reviews %>
     </div>
     <div class="col-md-8 offset-md-1">
       <h2 class="page-title">
@@ -12,11 +12,14 @@
           <%= @user.name %>さんのプロフィール
         <% end %>
       </h2>
-      最近のレビュー・つぶやき
-      最近登録したお気に入り
-      <% @reviews.each do |review| %>
-        <%= review.content %>
-      <% end %>
+      <h4>最近のレビュー</h4>
+        <% if @reviews.present? %>
+          <%= render 'public/partial/profileinfo', objects: @reviews %>
+        <% else %>
+          投稿がありません
+        <% end %>
+      <h4>最近のつぶやき</h4>
+      <h4>最近登録</h4>
     </div>
     
   </div>
