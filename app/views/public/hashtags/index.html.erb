@@ -2,24 +2,7 @@
   <h4 class="page-title">ハッシュ検索＃<%= @tag.name %></h4>
   <div class="row">
     <div class="col mt-3">
-      <% @posts.each do |post| %>
-        
-      <% end %>
+      <%= render 'public/partial/lists', objects: @posts %>
     </div>
   </div>
 </div>
-
-
-<%= render 'public/reviews/reviews', reviews: @reviews %>
-<ul>
-  <% @tweets.each do |tweet| %>
-    <li>
-      <%= link_to tweet_path(tweet.id) do %>
-         <%= tweet.tweet_content.gsub(/[＃#][\w\p{Han}ぁ-ヶｦ-ﾟー]+/, '') %>
-      <% end %>
-      <% tweet.tweet_content.scan(/[#＃][\w\p{Han}ぁ-ヶｦ-ﾟー]+/).each do |hashtag| %>
-        <%= link_to hashtag, hashtag_path(hashtag.delete('#')) %>
-      <% end %>
-    </li>
-  <% end %>
-</ul>
