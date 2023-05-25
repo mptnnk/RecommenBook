@@ -16,6 +16,7 @@ class Public::RelationshipsController < ApplicationController
   def followings
     @user = User.find(params[:user_id])
     @users = @user.followings
+    @in_release_reviews = Review.where(user_id: @user.id, in_release: true).count
     @recommenbook = @user.favorite_books.find_by(recommenbook: true)
     if @recommenbook.present?
       @book = RakutenWebService::Books::Book.search(isbn: @recommenbook.isbn).first
@@ -25,6 +26,7 @@ class Public::RelationshipsController < ApplicationController
   def followers
     @user = User.find(params[:user_id])
     @users = @user.followers
+    @in_release_reviews = Review.where(user_id: @user.id, in_release: true).count
     @recommenbook = @user.favorite_books.find_by(recommenbook: true)
     if @recommenbook.present?
       @book = RakutenWebService::Books::Book.search(isbn: @recommenbook.isbn).first

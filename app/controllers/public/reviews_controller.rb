@@ -38,10 +38,7 @@ class Public::ReviewsController < ApplicationController
     @book = RakutenWebService::Books::Book.search(isbn: @review.isbn).first
     @book_favorites = FavoriteBook.where(isbn: @book.isbn)
     @review_comment = ReviewComment.new
-  end
-  
-  def hashtag
-
+    @comments = @review.review_comments.all
   end
 
   def edit

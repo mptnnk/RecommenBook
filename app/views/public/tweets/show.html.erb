@@ -37,7 +37,7 @@
         </tr>
       </table>
       <div class="tweet-comments-index">
-        <%= render "public/tweet_comments/index", tweet: @tweet %>
+        <%= render "public/partial/comments", tweet: @tweet, comments: @comments %>
       </div>
       <%= render "public/tweet_comments/form", tweet: @tweet, tweet_comment: @tweet_comment %>
     </div>

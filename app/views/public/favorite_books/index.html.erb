@@ -2,7 +2,7 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-3">
-      <%= render 'public/users/info', user: @user, book: @book%>
+      <%= render 'public/users/info', user: @user, book: @book, in_release_reviews: @in_release_reviews %>
     </div>
     <div class="col-md-8 offset-md-1">
       <h4 class="page-title"><%= @user.name %>さんのお気に入りの本一覧</h4>

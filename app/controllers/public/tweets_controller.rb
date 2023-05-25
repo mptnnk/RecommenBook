@@ -45,17 +45,12 @@ class Public::TweetsController < ApplicationController
 
   def show
     @tweet = Tweet.find(params[:id])
+    @comments = @tweet.tweet_comments.all
     if @tweet.isbn.present?
       @book = RakutenWebService::Books::Book.search(isbn: @tweet.isbn).first
       @book_favorites = FavoriteBook.where(isbn: @book.isbn)
     end
     @tweet_comment = TweetComment.new
-  end
-  
-  def hashtag
-    @user = current_user
-    @tag = Hashtag.find_by(name: params[:name])
-    @tweets = @tag.tweets
   end
   
   def destroy
