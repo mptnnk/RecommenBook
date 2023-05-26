@@ -17,7 +17,7 @@ class Tweet < ApplicationRecord
     hashtags  = self.tweet_content.scan(/[#＃][\w\p{Han}ぁ-ヶｦ-ﾟー]+/)
     tweet.hashtags = []
     hashtags.uniq.map do |hashtag|
-      tag = Hashtag.find_or_create_by(name: hashtag.downcase.delete('#＃'))
+      tag = Hashtag.find_or_create_by(name: hashtag.delete('#＃'))
       tweet.hashtags << tag
     end
   end
@@ -27,7 +27,7 @@ class Tweet < ApplicationRecord
     tweet.hashtags.clear
     hashtags = self.tweet_content.scan(/[#＃][\w\p{Han}ぁ-ヶｦ-ﾟー]+/)
     hashtags.uniq.map do |hashtag|
-      tag = Hashtag.find_or_create_by(name: hashtag.downcase.delete('#＃'))
+      tag = Hashtag.find_or_create_by(name: hashtag.delete('#＃'))
       tweet.hashtags << tag
     end
   end

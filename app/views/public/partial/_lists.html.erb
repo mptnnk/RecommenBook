@@ -2,7 +2,7 @@
   <table class="table table-sm table-light lists" style="width: 100%">
     <tr>　<!--1行目 isbnを所持している場合のみ本情報表示-->
       <% if obj.isbn.present? %>
-        <% book = RakutenWebService::Books::Book.search(isbn: obj.isbn).first%>
+        <% book = RakutenWebService::Books::Book.search(isbn: obj.isbn).first %>
         <% unless current_page?(book_path(book.isbn)) %>
           <td colspan="1", style="width: 10%; padding: 20px" rowspan="2">
             <%= link_to book_path(book.isbn) do %>
@@ -27,7 +27,7 @@
           <%= link_to mypage_path(name: obj.user.name) do %>
             <%= obj.user.name %>
           <% end %>
-          さんのつぶやき
+          さんのツイート
         <% end %>
       </td>
       <td colspan="2" style="width: 20%"><%= obj.created_at.strftime('%Y/%m/%d') %></td>
@@ -38,7 +38,7 @@
         <% if obj.is_a?(Review) %>
           <% if obj.spoiler == false %>
             <%= render_review_with_hashtags(obj.content, 130) %>
-            <%= link_to "（続きを見る）", review_path(obj.id), style: "color: #ff7f50" %>
+            <%= link_to "（クリックしてくわしく読む）", review_path(obj.id), style: "color: #ff7f50" %>
           <% else %>
             <%= link_to review_path(obj.id) do %>
               <p class="spoiler">ネタバレを含みます（クリックして読む）</p>
@@ -47,7 +47,7 @@
           
         <% elsif obj.is_a?(Tweet) %>
           <%= render_tweet_with_hashtags(obj.tweet_content, 130) %>
-          <%= link_to "（続きを見る）", tweet_path(obj.id), style: "color: #ff7f50" %>
+          <%= link_to "（クリックしてくわしく読む）", tweet_path(obj.id), style: "color: #ff7f50" %>
         <% end %>
       </td>
     </tr>

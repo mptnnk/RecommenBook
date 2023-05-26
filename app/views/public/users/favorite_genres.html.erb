@@ -1,0 +1,10 @@
+<div class="container-fluid">
+  <div class="row">
+    <% if params[:user_id] %>
+      <div class="col-md-3">
+        <%= render 'public/partial/userinfo', user: @user, book: @book, recommenbook: @recommenbook, in_release_reviews: @in_release_reviews %>
+      </div>
+    <% end %>
+  </div>
+  
+</div>

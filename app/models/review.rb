@@ -14,11 +14,13 @@ class Review < ApplicationRecord
   
   after_create do
     review = Review.find_by(id: self.id)
-    hashtags  = self.content.scan(/[#＃][\w\p{Han}ぁ-ヶｦ-ﾟー]+/)
+    hashtags = self.content.scan(/[#＃][\w\p{Han}ぁ-ヶｦ-ﾟー]+/)
+    puts self.content
+    puts hashtags.inspect
     review.hashtags = []
     hashtags.uniq.map do |hashtag|
       #ハッシュタグは先頭の'#'を外した上で保存
-      tag = Hashtag.find_or_create_by(name: hashtag.downcase.delete('#＃'))
+      tag = Hashtag.find_or_create_by(name: hashtag.delete('#＃'))
       review.hashtags << tag
     end
   end
@@ -30,7 +32,7 @@ class Review < ApplicationRecord
     hashtags = self.content.scan(/[#＃][\w\p{Han}ぁ-ヶｦ-ﾟー]+/)
     # 正規表現にマッチする該当モデルのcontentカラムを配列してhashtagsに格納
     hashtags.uniq.map do |hashtag|
-      tag = Hashtag.find_or_create_by(name: hashtag.downcase.delete('#＃'))
+      tag = Hashtag.find_or_create_by(name: hashtag.delete('#＃'))
       review.hashtags << tag
     end
   end
