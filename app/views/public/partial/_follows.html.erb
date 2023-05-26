@@ -1,0 +1,44 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th></th>
+      <th>name</th>
+      <th>おすすめ本</th>
+      <th>レビュー</th>
+      <th>つぶやき</th>
+      <th></th>
+    </tr>
+  </thead>
+  
+  <tbody>
+    <% users.each do |user| %>
+      <tr>
+        <td style="width: 10%"><%= image_tag user.get_profile_image, size: '40x50' %></td>
+        <td>
+          <%= link_to mypage_path(name: user.name) do %>
+            <%= user.name %>
+          <% end %>
+        </td>
+        <td>
+          <% if recommenbook.present? %>
+            <%= link_to book_path(id: book.isbn) do %>
+              <%= book['title'].truncate(20) %>
+            <% end %>
+          <% end %>
+          
+        </td>
+        <td>
+          <%= link_to reviews_path(user_id: user.id) do %>
+            <%= user.reviews.count %>reviews
+          <% end %>
+        </td>
+        <td>
+          <%= link_to tweets_path(user_id: user.id) do %>
+            <%= user.tweets.count %>tweets
+          <% end %>
+        </td>
+        <td><%= render "public/relationships/btn", user: user %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

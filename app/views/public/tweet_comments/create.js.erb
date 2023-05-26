@@ -1,0 +1,3 @@
+<!--tweet-->
+$('.comment-textarea').val("")
+$('.tweet-comments-index').html("<%= j(render 'public/tweet_comments/index', tweet: @comment.tweet) %>")

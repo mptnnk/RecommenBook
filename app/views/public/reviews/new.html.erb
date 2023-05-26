@@ -13,13 +13,21 @@
         <%= review.text_area :content, size:'100x5' %><br>
         <%= review.label :"読み終わった日" %>
         <%= review.date_field :readed_at %><br>
-        <%= review.submit "レビューを投稿", class:"btn btn-success mt-2" %>
+        
+        <%= review.radio_button :in_release, true %>
+        <%= review.label :in_release, "公開する", { value:"true", style:"display: inline-block;"} %>
+        <%= review.radio_button :in_release, false %>
+        <%= review.label :in_release, "下書きにする", { value:"false", style:"display: inline-block;"} %><br>
+        
+        <%= review.check_box :spoiler %>
+        <%= review.label :spoiler, "ネタバレを含む" %><br>
+        <%= review.submit "レビューを投稿", class:"btn btn-success mt-2" %><p>※レビューを投稿すると、自動的に読んだ本リストにも登録されます。</p>
       <% end %>
     </div>
   </div>
   <div class="row mt-5">
     <div class="col">
-      <p class="border border-primary p-2" style="display:inline-block">読んだ本登録（レビューなし）<i class="fas fa-book"></i></p><br>
+      <p class="border border-primary rounded p-2" style="display:inline-block">読んだ本登録（レビューなし）<i class="fas fa-book"></i></p><br>
       <% if current_user.readed_books.exists?(isbn: @book.isbn) %>
         <p>読み終わった日（登録済み）：<%= @readed_book.readed_at&.strftime("%Y/%m/%d") %></p>
         <%= link_to "読んだ本登録を解除する", book_readed_book_path(id: @book.isbn), method: :delete, style:"display: inline-block", class:"btn btn-danger p-2"%>

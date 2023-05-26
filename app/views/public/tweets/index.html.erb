@@ -1,81 +1,28 @@
 <!--tweetの一覧-->
-<div class="container">
-  <h4 class="page-title">
-    <% if params[:user_id] %>
-     <%= @user.name %>さんのつぶやき（新着順）
-    <% else %>
-     つぶやき（新着順）
-    <% end %>
-  </h4>
-  <h3 class="text-right">
-    <%= link_to new_tweet_path do %>
-      <i class="fa-solid fa-pen-to-square"></i>
-    <% end %>
-  </h3>
-  
+<div class="container-fluid">
   <div class="row">
-    <div class="col">
-      <!--user_idの受け渡しがあるとき・ないときの@tweetsの条件はコントローラで設定済み-->
-      <!--@tweetsが存在するとき-->
-      <% if @tweets.present? %>
-        <% @tweets.each do |tweet| %>
-          <table class="table table-sm">
-            <tr>　<!--1行目--> 
-              <% if tweet.isbn.present? %>
-                <% book = RakutenWebService::Books::Book.search(isbn: tweet.isbn).first %>
-                <td rowspan="2" style="width: 8%">
-                  <%= link_to book_path(book.isbn) do %>
-                    <%= image_tag(book['small_image_url']) %>
-                  <% end %>
-                </td>
-                
-                <th style="width: 10%">タイトル</th>
-                <td style="width: 30%">
-                  <%= link_to book_path(book.isbn) do %>
-                    <%= book['title'].truncate(30) %>
-                  <% end %>
-                </td>
-                
-              <% else%>
-                <td rowspan="2" style="width: 10%"></td>
-                <th style="width: 10%"></th>
-                <td style="width: 30%"></td>
-                
-              <% end %>
-              
-              <th style="width: 10%">投稿者</th>
-              <td style="width: 10%">
-                <%= link_to mypage_path(name: tweet.user.name) do %>
-                  <%= tweet.user.name %>
-                <% end %>
-              </td>
-              <th style="width: 10%">投稿日</th>
-              <td style="width: 15%"><%= tweet.created_at.strftime('%Y/%m/%d') %></td>
-            </tr>
-            
-            <tr>　<!--2行目-->
-              <th>つぶやき</th>
-              <td colspan="3"><%= tweet.tweet_content.truncate(50) %></td>
-              <td colspan="2">
-                <%= link_to "詳細を見る", tweet_path(tweet.id), style:"display: inline-block", class:"btn btn-primary btn-sm" %>
-                <% if tweet.user == current_user %>
-                  <%= link_to "削除する", tweet_path(tweet.id), method: :delete, "data-confirm" => "つぶやきを削除しますか？", style:"display: inline-block", class:"btn btn-danger btn-sm" %>
-                <% end %>
-              </td>
-            </tr>
-            <tr>
-              <th></th>
-              <td class=<%= "like-" + tweet.id.to_s %> >
-                <%= render "public/likes/tweetbtn", tweet: tweet %>
-              </td>
-            </tr>
-          </table>
+    <% if params[:user_id] %>
+      <div class="col-md-3">
+        <%= render 'public/users/info', user: @user, book: @book, recommenbook: @recommenbook, in_release_reviews: @in_release_reviews %>
+      </div>
+    <% end %>
+    <div class="col-md-8 offset-md-1">
+      <h4 class="page-title">
+        <% if params[:user_id] %>
+         <%= @user.name %>さんのつぶやき（新着順）
+        <% else %>
+         つぶやき（新着順）
         <% end %>
-      
-      <!--@tweetsが存在しないとき-->
+      </h4>
+      <h3 class="text-right">
+        <%= link_to new_tweet_path do %>
+          <i class="fa-solid fa-pen-to-square"></i>
+        <% end %>
+      </h3>
+      <% if @tweets.present? %>
+        <%= render 'public/partial/lists', objects: @tweets %>
       <% else %>
         <p>つぶやきがありません</p>
-      
       <% end %>
     </div>
   </div>

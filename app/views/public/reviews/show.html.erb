@@ -21,7 +21,17 @@
         </tr>
         <tr>
           <th>レビュー</th>
-          <td colspan="3"><%= @review.content %></td>
+          <td colspan="5"><%= render_review_with_hashtags(@review.content) %></td>
+        </tr>
+        <tr>
+          <th></th>
+          <% if user_signed_in? %>
+            <td class=<%= "like-" + @review.id.to_s %> >
+              <%= render "public/likes/reviewbtn", review: @review %>
+            </td>
+          <% else %>
+            <td><i class="fas fa-heart" aria-hidden="true" style="color: red;"></i><%= @review.likes.count %>いいね</td>
+          <% end %>
           <td>
             <% if @review.user == current_user %>
               <%= link_to "編集する", edit_review_path(@review.id), class:"btn btn-primary btn-sm"%>
@@ -29,13 +39,16 @@
             <% end %>
           </td>
         </tr>
-        <tr>
-          <th></th>
-          <td class=<%= "like-" + @review.id.to_s %> >
-            <%= render "public/likes/reviewbtn", review: @review %>
-          </td>
-        </tr>
       </table>
+      
+      <div class="comments-index">
+        <h3>コメント（<%= @comments.count %>件）</h3>
+        <%= render "public/partial/comments", review: @review, comments: @comments %>
+      </div>
+      <% if user_signed_in? %>
+        <%= render "public/review_comments/form", review: @review, review_comment: @review_comment %>
+      <% end %>
+      
     </div>
   </div>
 </div>

@@ -26,7 +26,6 @@
 }
 
 .page-title{
-  font-family: 'Yusei Magic', sans-serif;
   // background-color: #ddd;
   display: inline-block;
   // padding: 5px;
@@ -59,3 +58,27 @@ footer{
   justify-content: center;
 }
 
+.lists {
+  border: 2px dotted #dcdcdc;
+  border-radius: 20px;
+  border-collapse: separate;
+  
+}
+
+th {
+  color: #006400;
+}
+
+.lists-image {
+  padding: 10px;
+}
+
+.spoiler {
+  color: #ff7f50;
+}
+
+.favorite-explain{
+  font-size: 20px;
+  padding-left: 20px;
+  color: green;
+}

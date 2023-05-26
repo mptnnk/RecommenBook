@@ -2,23 +2,35 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-3">
-      <%= render 'public/users/info', user: @user %>
+      <%= render 'public/partial/userinfo', user: @user, book: @book, recommenbook: @recommenbook, in_release_reviews: @in_release_reviews %>
     </div>
     <div class="col-md-8 offset-md-1">
-      <h4 class="page-title"><%= @user.name %>さんのお気に入りの本一覧</h4>
+      <h4 class="page-title">
+        <% if @user == current_user %>
+          あなたのお気に入りの本一覧
+          <p class="favorite-explain">お気に入りの本の中から1冊、おすすめ本を選択することができます。</p>
+        <% else %>
+          <%= @user.name %>さんのお気に入りの本一覧
+        <% end %>
+      </h4>
+      
       <% if @favorite_books.present? %>
-        <table class="table table-sm">
-          <thead>
+        <table class="table table-sm mt-2">
+          <thead class="text-center">
             <tr>
-              <th style="width:10%"></th>
-              <th style="width:30%">タイトル</th>
-              <th style="width:10%">著者</th>
-              <th style="width:40%">本の概要</th>
+              <th style="width: 10%"></th>
+              <th style="width: 20%">タイトル</th>
+              <th style="width: 10%">著　者</th>
+              <th style="width: 30%">説　明</th>
+              <% if @user == current_user %>
+                <th>おすすめ本</th>
+                <th>お気に入り登録</th>
+              <% end %>
             </tr>
           </thead>
+          
           <% @favorite_books.each do |favorite_book|%>
-          <% isbn = favorite_book.isbn %>
-          <% book = RakutenWebService::Books::Book.search(isbn: isbn).first %>
+          <% book = RakutenWebService::Books::Book.search(isbn: favorite_book.isbn).first %>
           <tbody>
             <tr>
               <td class="text-center">
@@ -28,18 +40,41 @@
               </td>
               <td>
                 <%= link_to book_path(book.isbn) do %>
-                  <%= book['title'] %>
+                  <%= book['title'].truncate(30) %>
                 <% end %>
               </td>
               <td><%= book['author'] %></td>
-              <td><%= book['item_caption'].truncate(80) %></td>
+              <td><%= book['item_caption'].truncate(55) %></td>
+              <% if @user == current_user && current_user.favorite_books.where(recommenbook: true).exists? %>
+              <!--ユーザーのお気に入り本登録が存在する場合-->
+              <td class="text-center">
+                  <!--お気に入り登録がtrueの本にのみ表示-->
+                  <% if favorite_book.recommenbook %>
+                    <%= form_with model: @favorite_book, url: favorite_book_path(favorite_book.id), method: :patch, local: true do |rmbook| %>
+                      <%= rmbook.hidden_field :recommenbook, value: false %>
+                      <%= rmbook.submit "解除", class: "btn btn-sm btn-danger" %>
+                    <% end %>
+                  <% end %>
+              <% elsif @user == current_user && current_user.favorite_books.where(recommenbook:true).nil? %>
+                <!--ユーザーのお気に入り本登録が存在しない場合-->
+                  <%= form_with model: @favorite_book, url: favorite_book_path(favorite_book.id), method: :patch, local: true do |addbook| %>
+                    <%= addbook.hidden_field :recommenbook, value: true %>
+                    <%= addbook.submit "登録", class: "btn btn-sm btn-primary" %>
+                  <% end %>
+              </td>
+              <% end %>
+              <% if @user == current_user %>
+                <td class="text-center">
+                  <%= link_to "解除", book_favorite_book_path(id: favorite_book.id, book_id: favorite_book.isbn), method: :delete, class: "btn btn-danger btn-sm" %>
+                </td>
+              <% end %>
             </tr>
           </tbody>
-          <% end %>
+          <% end %> <!--favorite_books.each done-->
         </table>
-      <% else %>
+      <% else %> <!--if favorite_books.present else-->
         <p>お気に入りの本がありません</p>
-      <% end %>
+      <% end %> <!--if favorite_books.present end-->
       <%= paginate @favorite_books, theme: 'twitter-bootstrap-4' %>
     </div>
   </div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_18_120546) do
+ActiveRecord::Schema.define(version: 2023_05_24_071541) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -52,20 +52,6 @@ ActiveRecord::Schema.define(version: 2023_05_18_120546) do
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
   end
 
-  create_table "books", force: :cascade do |t|
-    t.string "isbn", null: false
-    t.string "title", null: false
-    t.string "author"
-    t.string "url"
-    t.string "image_url"
-    t.string "item_caption"
-    t.string "book_genre_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["isbn"], name: "index_books_on_isbn"
-    t.index ["title"], name: "index_books_on_title"
-  end
-
   create_table "favorite_books", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "isbn", null: false
@@ -77,6 +63,20 @@ ActiveRecord::Schema.define(version: 2023_05_18_120546) do
   create_table "genres", force: :cascade do |t|
     t.string "name"
     t.string "book_genre_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "hashtag_relations", force: :cascade do |t|
+    t.integer "hashtag_id"
+    t.integer "review_id"
+    t.integer "tweet_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "hashtags", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -104,13 +104,29 @@ ActiveRecord::Schema.define(version: 2023_05_18_120546) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "review_comments", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "review_id"
+    t.text "comment", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "reviews", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "isbn", null: false
     t.text "content", null: false
     t.datetime "readed_at"
-    t.boolean "in_release", default: false
+    t.boolean "in_release", default: true
     t.boolean "spoiler", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "tweet_comments", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "tweet_id"
+    t.text "comment", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -118,7 +134,7 @@ ActiveRecord::Schema.define(version: 2023_05_18_120546) do
   create_table "tweets", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "isbn"
-    t.text "tweet_content"
+    t.text "tweet_content", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

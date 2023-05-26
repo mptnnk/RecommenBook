@@ -38,6 +38,10 @@ class Public::TweetsController < ApplicationController
     if params[:user_id]
       @user = User.find(params[:user_id])
       @tweets = Tweet.where(user_id: @user.id).page(params[:page]).per(10).order(created_at: :DESC)
+      @recommenbook = @user.favorite_books.find_by(recommenbook: true)
+      if @recommenbook.present?
+        @book = RakutenWebService::Books::Book.search(isbn: @recommenbook.isbn).first
+      end
     else
       @tweets = Tweet.page(params[:page]).per(10).order(created_at: :DESC)
     end
@@ -45,11 +49,12 @@ class Public::TweetsController < ApplicationController
 
   def show
     @tweet = Tweet.find(params[:id])
+    @comments = @tweet.tweet_comments.all
     if @tweet.isbn.present?
       @book = RakutenWebService::Books::Book.search(isbn: @tweet.isbn).first
       @book_favorites = FavoriteBook.where(isbn: @book.isbn)
     end
-      
+    @tweet_comment = TweetComment.new
   end
   
   def destroy

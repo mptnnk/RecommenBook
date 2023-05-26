@@ -15,26 +15,23 @@ Rails.application.routes.draw do
   # end
   
   scope module: :public do
-    # controller :homes
     root to:'homes#top'
     get '/about' => 'homes#about', as:"about"
     
-    # controller :users
     get 'users/unsubscribe' => 'users#unsubscribe'
     patch 'users/withdraw' => 'users#withdraw'
-    # idつきのものが上にあると先に読んでしまってunsubscribeに遷移できなかったので上に出した
     get 'users/:name' => 'users#show', as: 'mypage'
     get 'users/information/edit' => 'users#edit'
     patch 'users/information' => 'users#update'
     
-    resources :users, only:[:index] do
+    resources :users, only:[] do
       resource :relationships, only: [:create, :destroy]
       get 'followings' => 'relationships#followings', as: 'followings'
       get 'followers' => 'relationships#followers', as: 'followers'
     end
     
-    # booksコントローラ
     get 'books/search' => "books#search"
+    get 'hashtag/:name' => "hashtags#index", as: 'hashtag'
     
     resources :books, only: [:show] do
       resources :reviews, only: [:new, :create]
@@ -42,14 +39,17 @@ Rails.application.routes.draw do
       resources :readed_books, only: [:destroy, :create]
     end
     resources :reviews, only: [:index, :show, :edit, :update, :destroy] do
+      resources :review_comments, only: [:create, :destroy]
       resource :likes, only: [:create, :destroy]
     end
-    resources :favorite_books, only: [:index]
+    resources :favorite_books, only: [:index, :update]
     resources :readed_books, only: [:index]
     resources :tweets, only: [:new, :create, :index, :show, :destroy] do
+      resources :tweet_comments, only: [:create, :destroy]
       resource :likes, only: [:create, :destroy]
     end
     resources :likes, only: [:index]
+    resources :review_comments, only: [:index], as: "comments"
   end
   
   namespace :admin do

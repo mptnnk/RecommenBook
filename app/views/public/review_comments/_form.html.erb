@@ -1,0 +1,5 @@
+<!--review-->
+<%= form_with(model:[review, review_comment], local: false) do |r_comment| %>
+  <%= r_comment.text_area :comment, rows: '3', placeholder: "コメントを投稿する", class: "w-100 comment-textarea" %>
+  <%= r_comment.submit "投稿", class: "btn btn-success pull-right" %>
+<% end %>
