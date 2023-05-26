@@ -46,7 +46,7 @@
           <% end %>
           
         <% elsif obj.is_a?(Tweet) %>
-          <%= render_tweet_with_hashtags(obj.tweet_content, 50) %>
+          <%= render_tweet_with_hashtags(obj.tweet_content, 130) %>
           <%= link_to "（続きを見る）", tweet_path(obj.id), style: "color: #ff7f50" %>
         <% end %>
       </td>
@@ -70,7 +70,7 @@
         <% if obj.is_a?(Review) && obj.review_comments.present? %>
           <%= obj.review_comments.count %>コメント
         <% elsif obj.is_a?(Tweet) && obj.tweet_comments.present? %>
-          <% obj.tweet_comments.count %>コメント
+          <%= obj.tweet_comments.count %>コメント
         <% else %>
           0コメント
         <% end %>

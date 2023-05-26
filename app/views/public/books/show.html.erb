@@ -39,6 +39,9 @@
     <div class="row">
       <div class="col mt-3">
         <%= render 'public/partial/lists', objects: @tweets %>
+        <div class="text-right">
+          <%= link_to "この本のツイートー一覧を見る", tweets_path(book_id: @book.isbn), style:"color: #ff7f50" %>
+        </div>
       </div>
     </div>
   <% else %>

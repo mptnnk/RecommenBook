@@ -21,14 +21,19 @@ class Public::ReviewsController < ApplicationController
   end
 
   def index
-    if params[:user_id].present?
+    if params[:user_id]
       @user = User.find(params[:user_id])
+      @in_release_reviews = Review.where(user_id: @user.id, in_release: true).count
       if @user == current_user
         @my_reviews = Review.where(user_id: current_user.id).page(params[:page]).per(10).order(created_at: :DESC)
       elsif @user != current_user
         @user_reviews = Review.where(user_id: @user.id).where(in_release: true).page(params[:page]).per(10).order(created_at: :DESC)
       end
-    elsif params[:book_id].present?
+      @recommenbook = @user.favorite_books.find_by(recommenbook: true)
+      if @recommenbook.present?
+        @book = RakutenWebService::Books::Book.search(isbn: @recommenbook.isbn).first
+      end
+    elsif params[:book_id]
       @book = RakutenWebService::Books::Book.search(isbn: params[:book_id]).first
       @book_reviews = Review.where(isbn: params[:book_id]).page(params[:page]).per(10).order(created_at: :DESC)
     elsif params[:user_id].blank? && params[:book_id].blank?

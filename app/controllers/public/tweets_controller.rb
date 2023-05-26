@@ -37,12 +37,19 @@ class Public::TweetsController < ApplicationController
   def index
     if params[:user_id]
       @user = User.find(params[:user_id])
-      @tweets = Tweet.where(user_id: @user.id).page(params[:page]).per(10).order(created_at: :DESC)
+      if @user == current_user
+        @my_tweets = Tweet.where(user_id: current_user.id).page(params[:page]).per(10).order(created_at: :DESC)
+      elsif @user != current_user
+        @user_tweets = Tweet.where(user_id: @user.id).page(params[:page]).per(10).order(created_at: :DESC)
+      end
       @recommenbook = @user.favorite_books.find_by(recommenbook: true)
       if @recommenbook.present?
         @book = RakutenWebService::Books::Book.search(isbn: @recommenbook.isbn).first
       end
-    else
+    elsif params[:book_id]
+      @book = RakutenWebService::Books::Book.search(isbn: params[:book_id]).first
+      @book_tweets = Tweet.where(isbn: params[:book_id]).page(params[:page]).per(10).order(created_at: :DESC)
+    elsif params[:user_id].blank? && params[:book_id].blank?
       @tweets = Tweet.page(params[:page]).per(10).order(created_at: :DESC)
     end
   end

@@ -1,18 +1,25 @@
 <!--reviewの一覧-->
-<div class="container">
-  <h4 class="page-title">
-    <% if params[:user_id].present? && params[:user_id].to_i == current_user.id %>
-      あなたのレビュー
-    <% elsif params[:user_id].present? && params[:user_id].to_i != current_user.id %>
-      <%= @user.name %>さんのレビュー（新着順）
-    <% elsif params[:user_id].blank? && params[:book_id].present? %>
-      <%= @book['title'].truncate(20) %>のレビュー（新着順）
-    <% else %>
-      レビュー（新着順）
-    <% end %>
-  </h4>
+<div class="container-fluid">
   <div class="row">
-    <div class="col mt-3 table-responsive">
+    <% if params[:user_id] %>
+      <div class="col-md-3">
+        <%= render 'public/partial/userinfo', user: @user, book: @book, recommenbook: @recommenbook, in_release_reviews: @in_release_reviews %>
+      </div>
+    <% end %>
+    
+  <div class="col-md-8 offset-md-1">
+    <h4 class="page-title">
+      <% if params[:user_id].present? && params[:user_id].to_i == current_user.id %>
+        あなたのレビュー
+      <% elsif params[:user_id].present? && params[:user_id].to_i != current_user.id %>
+        <%= @user.name %>さんのレビュー（新着順）
+      <% elsif params[:user_id].blank? && params[:book_id].present? %>
+        <%= @book['title'].truncate(20) %>のレビュー（新着順）
+      <% else %>
+        レビュー（新着順）
+      <% end %>
+    </h4>
+    <div class="table-responsive">
       <!--# ユーザーIDの受け渡しがあって、かつIDがcurrent_userのもの-->
       <% if params[:user_id].present? && params[:user_id].to_i == current_user.id %>
         <% if @my_reviews.present? %>
@@ -30,7 +37,7 @@
         <% else %>
           <p>レビューがありません</p>
         <% end %>
-        
+      
       <% elsif params[:user_id].blank? && params[:book_id].present? %>
         <%= render 'public/partial/lists', objects: @book_reviews %>
         <%= paginate @book_reviews, theme: 'twitter-bootstrap-4' %>
