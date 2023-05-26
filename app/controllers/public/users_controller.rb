@@ -7,8 +7,9 @@ class Public::UsersController < ApplicationController
 
   def show
     @user = User.find_by(name: params[:name])
+    redirect_to root_path if @user.nil?
     # ルーティングでURLに:nameを渡すことを指定しているので、キー=>カラムで考えて、nameがキーとなる場合はparamの中身のカラムは:nameが正しい。
-    @in_release_reviews = Review.where(user_id: @user.id, in_release: true).count
+    @in_release_reviews = Review.where(user_id: @user.id, in_release: true)
     @recommenbook = @user.favorite_books.find_by(recommenbook: true)
     if @recommenbook.present?
       @book = RakutenWebService::Books::Book.search(isbn: @recommenbook.isbn).first
@@ -16,6 +17,12 @@ class Public::UsersController < ApplicationController
     @reviews = @user.reviews.where(in_release: true).limit(4).order(created_at: :DESC)
     @tweets = @user.tweets.limit(4).order(created_at: :DESC)
     @favorite_books = @user.favorite_books.limit(4).order(created_at: :DESC)
+    @favorite_genres = @user.favorite_genres.all
+  end
+  
+  def favorite_genres
+    @user = User.find(params[:user_id])
+    @favorite_genres = @user.favorite_genres.all
   end
 
   def edit
@@ -37,7 +44,7 @@ class Public::UsersController < ApplicationController
   private
   
   def user_params
-    params.require(:user).permit(:book_id, :name, :email, :is_active, :profile_image)
+    params.require(:user).permit(:book_id, :name, :email, :is_active, :profile_image, genre_ids: [] )
   end
   
   def set_current_user

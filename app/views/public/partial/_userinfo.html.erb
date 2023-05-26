@@ -23,23 +23,39 @@
     <td>
       <%= link_to reviews_path(user_id: user.id) do %>
         <% if user == current_user %>
-          <%= user.reviews.count %>reviews
+          <%= user.reviews.count %> reviews
         <% else %>
-          <%= in_release_reviews %>reviews
+          <%= in_release_reviews.count %> reviews
         <% end %>
       <% end %>
     </td>
   </tr>
   <tr>
-    <th>FavoriteBooks</th>
+    <th>Tweets</th>
     <td>
-      <%= link_to favorite_books_path(user_id: user.id) do %>
-        <%= user.favorite_books.count %>books
+      <%= link_to tweets_path(user_id: user.id) do %>
+        <%= user.tweets.count %> tweets
       <% end %>
     </td>
   </tr>
   <tr>
-    <th>RecommenBook</th>
+    <th>Favorite Books</th>
+    <td>
+      <%= link_to favorite_books_path(user_id: user.id) do %>
+        <%= user.favorite_books.count %> books
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <th>Favorite Genres</th>
+    <td>
+      <%= link_to users_favorite_genres_path(user_id: user.id) do %>
+        <%= user.favorite_genres.count %> genres
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <th>Recommend Book</th>
     <td>
       <% if recommenbook.present? %>
         <%= link_to book_path(id: book.isbn) do %>
@@ -51,18 +67,10 @@
     </td>
   </tr>
   <tr>
-    <th>ReadedBooks</th>
+    <th>Readed Books</th>
     <td>
       <%= link_to readed_books_path(user_id: user.id) do %>
-        <%= user.readed_books.count %>books
-      <% end %>
-    </td>
-  </tr>
-  <tr>
-    <th>Tweets</th>
-    <td>
-      <%= link_to tweets_path(user_id: user.id) do %>
-        <%= user.tweets.count %>tweets
+        <%= user.readed_books.count %> books
       <% end %>
     </td>
   </tr>
@@ -70,7 +78,7 @@
     <th>Likes</th>
     <td>
       <%= link_to likes_path(user_id: user.id) do %>
-        <%= user.likes.count %>likes
+        <%= user.likes.count %> likes
       <% end %>
     </td>
   </tr>
@@ -78,7 +86,7 @@
     <th>Comments</th>
     <td>
       <%= link_to comments_path(user_id: user.id) do %>
-        <%= user.review_comments.count + user.tweet_comments.count %>comments
+        <%= user.review_comments.count + user.tweet_comments.count %> comments
       <% end %>
     </td>
   </tr>
@@ -86,7 +94,7 @@
     <th>Follows</th>
     <td>
       <%= link_to user_followings_path(user_id: user.id) do %>
-        <%= user.followings.count %>follows
+        <%= user.followings.count %> follows
       <% end %>
     </td>
   </tr>
@@ -94,9 +102,8 @@
     <th>Followers</th>
     <td>
       <%= link_to user_followers_path(user_id: user.id) do %>
-        <%= user.followers.count %>followers
+        <%= user.followers.count %> followers
       <% end %>
     </td>
   </tr>
-  <!--いちおし本、いいね履歴、コメント履歴、フォロー、フォロワー、好きなジャンルを後で追加-->
 </table>

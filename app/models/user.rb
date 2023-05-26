@@ -10,6 +10,10 @@ class User < ApplicationRecord
   has_many :tweets, dependent: :destroy
   has_many :favorite_books, dependent: :destroy
   has_many :readed_books, dependent: :destroy
+  
+  has_many :favorite_genres
+  has_many :genres, through: :favorite_genres, dependent: :destroy
+  
   has_many :likes, dependent: :destroy
   has_many :review_comments, dependent: :destroy
   has_many :tweet_comments, dependent: :destroy

@@ -13,8 +13,8 @@
         <% end %>
       </h2>
       
-      <h4 class="mt-3">最近のレビュー</h4>
-        <div class="row">
+      <h4 class="mypage-title">最近のレビュー</h4>
+        <div class="row ml-2">
           <% if @reviews.present? %>
             <%= render 'public/partial/mypage', objects: @reviews %>
           <% else %>
@@ -26,8 +26,8 @@
             ＞＞<%= @user.name %>のレビュー一覧へ
           <% end %>
         </div>
-      <h4 class="mt-3">最近のツイート</h4>
-        <div class="row">
+      <h4 class="mypage-title">最近のツイート</h4>
+        <div class="row ml-2">
           <% if @tweets.present? %>
             <%= render 'public/partial/mypage', objects: @tweets %>
           <% else %>
@@ -39,8 +39,8 @@
             ＞＞<%= @user.name %>のツイートー一覧へ
           <% end %>
         </div>
-      <h4 class="mt-3">最近のお気に入りの本</h4>
-        <div class="row">
+      <h4 class="mypage-title">最近のお気に入りの本</h4>
+        <div class="row ml-2">
           <% if @favorite_books.present? %>
             <%= render 'public/partial/mypage', objects: @favorite_books %>
           <% else %>

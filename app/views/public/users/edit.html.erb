@@ -5,7 +5,7 @@
       <%= form_with model: @user, url: users_information_path, method: :patch, local: true do |user| %>
       <table class="table table-borderless">
         <tr>
-          <th>ユーザーネーム </th>
+          <th style="width: 20%">ユーザーネーム </th>
           <td><%= user.text_field :name, class: "form-control" %></td>
         </tr>
         <tr>
@@ -20,8 +20,15 @@
           </td>
         </tr>
         <tr>
-          <th>好きなジャンルを登録</th>
-          
+          <th>好きなジャンル登録</th>
+          <td class="checkbox">
+            <% Genre.all.each do |genre| %>
+              <label>
+                <%= user.check_box :genre_ids, { multiple: true }, genre.id, nil %>
+                <%= genre.name %>
+              </label>
+            <% end %>
+          </td>
         <tr>
           <th></th>
           <td>
