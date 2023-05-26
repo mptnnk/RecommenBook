@@ -1,13 +1,13 @@
 <% objects.each do |obj| %>
-  <div class="card mx-2" style="width: 13rem">
+  <div class="card border-light mx-2" style="width: 13rem">
     <% if obj.isbn.present? %>
       <% book = RakutenWebService::Books::Book.search(isbn: obj.isbn).first %>
-        <div class="card-img-top">
+        <div class="card-img-top text-center">
             <%= link_to book_path(book.isbn) do %>
               <%= image_tag(book['small_image_url']) %>
             <% end %>
         </div>
-        <p class="card-title">
+        <p class="card-title text-center">
           <%= link_to book_path(book.isbn) do %>
             <%= book['title'].truncate(20) %>
           <% end %>
@@ -37,8 +37,10 @@
     <div class="card-text">
       <% if user_signed_in? && obj.is_a?(Review) %>
         <%= render "public/likes/reviewbtn", review: obj %>
+        （<%= obj.review_comments.count %>）コメント
       <% elsif user_signed_in? && obj.is_a?(Tweet) %>
         <%= render "public/likes/tweetbtn", tweet: obj %>
+        （<%= obj.tweet_comments.count %>）コメント
       <% elsif !user_signed_in? && (obj.is_a?(Review) || obj.is_a?(Tweet)) %>
         <i class="fas fa-heart" aria-hidden="true" style="color: red;"></i><%= obj.likes.count %>いいね
       <% elsif obj.is_a?(FavoriteBook) %>
