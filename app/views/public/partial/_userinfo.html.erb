@@ -49,7 +49,7 @@
   <tr>
     <th>Favorite Genres</th>
     <td>
-      <%= link_to users_favorite_genres_path(user_id: user.id) do %>
+      <%= link_to users_favorite_genres_path(name: user.name) do %>
         <%= user.favorite_genres.count %> genres
       <% end %>
     </td>
