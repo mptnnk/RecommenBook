@@ -1,7 +1,7 @@
 <!--本詳細のテンプレ-->
 <div class="col-md-3 text-center">
-  <%= image_tag(book.large_image_url) %><br>
-  <%= link_to "商品購入ページ(楽天ブックス)", book.item_url, style: "display: inline-block; color: green", class: "border border-success rounded p-2 mt-3 small-text" %>
+  <%= image_tag(book['large_image_url']) %><br>
+  <%= link_to "商品購入ページ(楽天ブックス)", book['item_url'], style: "display: inline-block; color: green", class: "border border-success rounded p-2 mt-3 small-text" %>
 </div>
     
 <div class="col-md-9">
@@ -10,22 +10,22 @@
       <th style="width: 20%">タイトル</th>
       <td>
         <%= link_to book_path(book.isbn) do %>
-          <%= book.title %>
+          <%= book['title'] %>
         <% end %>
       </td>
     <tr>
       <th>著者</th>
       <td>
-        <%= book.author %>
+        <%= book['author'] %>
       </td>
     </tr>
     <tr>
       <th>本の概要</th>
-      <td><%= book.item_caption %></td>
+      <td><%= book['item_caption'] %></td>
     </tr>
     <tr>
       <th>発売日</th>
-      <td><%= book.sales_date %></td>
+      <td><%= book['sales_date'] %></td>
     </tr>
     <tr>
       <th>お気に入り登録</th>

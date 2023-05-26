@@ -28,7 +28,7 @@ class Review < ApplicationRecord
     review.hashtags.clear
     # 配列を空に（clear）
     hashtags = self.content.scan(/[#＃][\w\p{Han}ぁ-ヶｦ-ﾟー]+/)
-    # caption = caption要素を生成　scan = selfに対してパターンを繰り返しマッチし、マッチした部分の文字列の配列を返す
+    # 正規表現にマッチする該当モデルのcontentカラムを配列してhashtagsに格納
     hashtags.uniq.map do |hashtag|
       tag = Hashtag.find_or_create_by(name: hashtag.downcase.delete('#＃'))
       review.hashtags << tag
