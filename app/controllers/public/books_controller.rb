@@ -88,7 +88,6 @@ class Public::BooksController < ApplicationController
   end
   
   def user_random_books
-    # page = params[:page] || 1
     if current_user.favorite_books.present?
       recent_favorite_isbns = current_user.favorite_books.order(created_at: :DESC).limit(30).pluck(:isbn)
       genre_ids = []

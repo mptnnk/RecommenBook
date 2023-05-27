@@ -1,5 +1,6 @@
 class Public::RelationshipsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, only: [:create, :destroy]
+  before_action :set_userinfo, only: [:followings, :followers] # apprication_controller
   
   def create
     user = User.find_by(name: params[:user_name])
@@ -14,25 +15,22 @@ class Public::RelationshipsController < ApplicationController
   end
   
   def followings
-    @user = User.find_by(name: params[:user_name])
-    @in_release_reviews = Review.where(user_id: @user.id, in_release: true).count
     @followings = @user.followings
-    @followings.each do |following|
-      @recommenbook = following.favorite_books.find_by(recommenbook: true)
-      if @recommenbook.present?
-        @book = RakutenWebService::Books::Book.search(isbn: @recommenbook.isbn).first
-      end
-    end
+    users_recommenbook(@followings)
   end
   
   def followers
-    @user = User.find_by(name: params[:user_name])
-    @in_release_reviews = Review.where(user_id: @user.id, in_release: true).count
     @followers = @user.followers
-    @followers.each do |follower|
-      @recommenbook = follower.favorite_books.find_by(recommenbook: true)
-      if @recommenbook.present?
-        @book = RakutenWebService::Books::Book.search(isbn: @recommenbook.isbn).first
+    users_recommenbook(@followers)
+  end
+  
+  private
+  
+  def users_recommenbook(users)
+    users.each do |user|
+      recommenbook = user.favorite_books.find_by(recommenbook: true)
+      if recommenbook.present?
+        @book = RakutenWebService::Books::Book.search(isbn: recommenbook.isbn).first
       end
     end
   end

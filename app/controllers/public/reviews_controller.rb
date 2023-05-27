@@ -1,19 +1,14 @@
 class Public::ReviewsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :destroy]
   before_action :submitted_review, only: [:show, :edit, :update, :destroy]
+  before_action :set_userinfo, only: [:index], if: -> { params[:user_name].present? }# application_controller
   
   def index
     if params[:user_name]
-      @user = User.find_by(name: params[:user_name])
-      @in_release_reviews = Review.where(user_id: @user.id, in_release: true).count
       if @user == current_user
         @my_reviews = Review.where(user_id: current_user.id).page(params[:page]).per(10).order(created_at: :DESC)
       elsif @user != current_user
         @user_reviews = Review.where(user_id: @user.id).where(in_release: true).page(params[:page]).per(10).order(created_at: :DESC)
-      end
-      @recommenbook = @user.favorite_books.find_by(recommenbook: true)
-      if @recommenbook.present?
-        @book = RakutenWebService::Books::Book.search(isbn: @recommenbook.isbn).first
       end
       
     elsif params[:book_id]
@@ -33,7 +28,7 @@ class Public::ReviewsController < ApplicationController
   end
 
   def new
-    @book = RakutenWebService::Books::Book.search(isbn: params[:book_id]).first
+    @book = find_book(params[:book_id])
     @book_isbn = @book["isbn"]
     @book_favorites = FavoriteBook.where(isbn: @book.isbn)
     @review = Review.new
@@ -41,37 +36,30 @@ class Public::ReviewsController < ApplicationController
   end  
 
   def edit
-    @book = RakutenWebService::Books::Book.search(isbn: @review.isbn).first
+    @book = find_book(@review.isbn)
     @book_favorites = FavoriteBook.where(isbn: @book.isbn)
   end
 
   def create
-    @book = RakutenWebService::Books::Book.search(isbn: params[:book_id]).first
+    @book = find_book(params[:book_id])
     @review = Review.new(review_params)
-    if @review.save!
-      redirect_to book_path(@book.isbn), notice: 'レビューが投稿されました'
-    else
-      render :new
-    end
+    @review.save ? (redirect_to book_path(@book.isbn), notice: 'レビューが投稿されました') : (render :new)
   end
   
   def update
-    @book = RakutenWebService::Books::Book.search(isbn: @review.isbn).first
-    if @review.update(review_params)
-      flash[:notice] = "レビュー内容を更新しました"
-      redirect_to book_path(@book.isbn)
-    else
-      render :edit
-    end
+    @book = find_book(@review.isbn)
+    @review.update(review_params) ? (redirect_to book_path(@book.isbn), notice: 'レビュー内容を更新しました') : (render :edit)
   end
   
   def destroy
-    @review.destroy if @review
-    @book = RakutenWebService::Books::Book.search(isbn: @review.isbn).first
-    if request.referer == review_path(@review)
-      redirect_to reviews_path, alert: 'レビューを削除しました'
+    if @review.destroy
+      if request.referer == review_url(@review)
+        redirect_to reviews_path, alert: 'レビューを削除しました'
+      else
+        redirect_to request.referer, alert: 'レビューを削除しました'
+      end
     else
-      redirect_to request.referer, alert: 'レビューを削除しました'
+      redirect_to request.referer, alert: '削除に失敗しました'
     end
   end
   
@@ -85,9 +73,8 @@ class Public::ReviewsController < ApplicationController
     @review = Review.find(params[:id])
   end
   
-  # def book_isbn
-  #   @book = RakutenWebService::Books::Book.search(isbn: params[:book_id]).first
-  #   @book_isbn = @book["isbn"]
-  # end
+  def find_book(isbn)
+    RakutenWebService::Books::Book.search(isbn: isbn).first
+  end
 
 end

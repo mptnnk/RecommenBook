@@ -1,8 +1,8 @@
 class Public::ReadedBooksController < ApplicationController
   before_action :authenticate_user!, only: [:create, :destroy]
+  before_action :set_userinfo, only: [:index] # application_controller
   
   def index
-    @user = User.find_by(name: params[:user_name])
     @readed_books = ReadedBook.where(user_id: @user.id)
   end
 

@@ -3,16 +3,13 @@
     <div class="col-md-3">
       <%= render 'public/partial/userinfo', user: @user, book: @book, recommenbook: @recommenbook, in_release_reviews: @in_release_reviews %>
     </div>
+    
     <div class="col-md-8 offset-md-1">
       <h4 class="page-title">
         <% if params[:user_name].present? && params[:user_name] == current_user.name %>
           あなたのいいね一覧
         <% elsif params[:user_name].present? && params[:user_name] != current_user.name %>
           <%= @user.name %>さんのいいね一覧（新着順）
-        <% elsif params[:user_name].blank? && params[:book_id].present? %>
-          <%= @book['title'].truncate(20) %>のいいね一覧（新着順）
-        <% else %>
-          いいね一覧（新着順）
         <% end %>
       </h4>
       
@@ -21,6 +18,6 @@
       <% else %>
         <p>いいね履歴がありません</p>
       <% end %>
-    </div>
-  </div>
-</div>
+    </div> <!--col-md-8 end-->
+  </div> <!--row end-->
+</div> <!--container-fluid end-->
