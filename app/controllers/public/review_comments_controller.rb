@@ -2,7 +2,7 @@ class Public::ReviewCommentsController < ApplicationController
   before_action :authenticate_user!, only: [:create, :destroy]
   
   def index
-    @user = User.find(params[:user_id])
+    @user = User.find_by(name: params[:user_name])
     @in_release_reviews = Review.where(user_id: @user.id, in_release: true).count
     @recommenbook = @user.favorite_books.find_by(recommenbook: true)
     if @recommenbook.present?

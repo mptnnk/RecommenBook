@@ -37,21 +37,7 @@ class Public::UsersController < ApplicationController
     redirect_to root_path if @user.nil?
   end
   
-  def set_userinfo
-    @user = User.find_by(name: params[:name])
-    # ルーティングでURLに:nameを渡すことを指定しているので、キー=>カラムで考えて、nameがキーとなる場合はparamの中身のカラムは:nameが正しい。
-    @in_release_reviews = Review.where(user_id: @user.id, in_release: true)
-    @recommenbook = @user.favorite_books.find_by(recommenbook: true)
-    if @recommenbook.present?
-      @book = RakutenWebService::Books::Book.search(isbn: @recommenbook.isbn).first
-    end
-    @reviews = @user.reviews.where(in_release: true).limit(4).order(created_at: :DESC)
-    @tweets = @user.tweets.limit(4).order(created_at: :DESC)
-    @favorite_books = @user.favorite_books.limit(4).order(created_at: :DESC)
-    @favorite_genres = @user.favorite_genres.all
-  end
-  
-  # プロフィールにランダム表示させるとisbnループの挙動がめちゃくちゃ重いので一旦封印
+  # プロフィールにランダム表示させるとisbnループの挙動がめちゃくちゃ重いので封印
   # def user_random_books
   #   favorite_isbns = current_user.favorite_books.pluck(:isbn)
   #   recent_favorite_isbns = current_user.favorite_books.order(created_at: :DESC).limit(30).pluck(:isbn)

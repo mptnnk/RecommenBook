@@ -1,57 +1,59 @@
 <!--reviewの一覧-->
 <div class="container-fluid">
   <div class="row">
-    <% if params[:user_id] %>
+    <% if params[:user_name] %>
       <div class="col-md-3">
         <%= render 'public/partial/userinfo', user: @user, book: @book, recommenbook: @recommenbook, in_release_reviews: @in_release_reviews %>
       </div>
     <% end %>
     
-  <div class="col-md-8 offset-md-1">
-    <h4 class="page-title">
-      <% if params[:user_id].present? && params[:user_id].to_i == current_user.id %>
-        あなたのレビュー
-      <% elsif params[:user_id].present? && params[:user_id].to_i != current_user.id %>
-        <%= @user.name %>さんのレビュー（新着順）
-      <% elsif params[:user_id].blank? && params[:book_id].present? %>
-        <%= @book['title'].truncate(20) %>のレビュー（新着順）
-      <% else %>
-        レビュー（新着順）
-      <% end %>
-    </h4>
-    <div class="table-responsive">
-      <!--# ユーザーIDの受け渡しがあって、かつIDがcurrent_userのもの-->
-      <% if params[:user_id].present? && params[:user_id].to_i == current_user.id %>
-        <% if @my_reviews.present? %>
-          <%= render 'public/partial/lists', objects: @my_reviews %>
-          <%= paginate @my_reviews, theme: 'twitter-bootstrap-4' %>
+    <div class="col-md-8 offset-md-1">
+      <h4 class="page-title">
+        <% if params[:user_name].present? && params[:user_name] == current_user.name %>
+          あなたのレビュー
+        <% elsif params[:user_name].present? && params[:user_name] != current_user.name %>
+          <%= @user.name %>さんのレビュー（新着順）
+        <% elsif params[:user_name].blank? && params[:book_id].present? %>
+          <%= @book['title'].truncate(20) %>のレビュー（新着順）
         <% else %>
-          <p>レビューがありません</p>
+          レビュー（新着順）
         <% end %>
-        
-      <!--# ユーザーIDの受け渡しがあって、かつIDがcurrent_userのものではない-->
-      <% elsif params[:user_id].present? && params[:user_id].to_i != current_user.id %>
-        <% if @user_reviews.present? %>
-          <%= render 'public/partial/lists', objects: @user_reviews %>
-          <%= paginate @user_reviews, theme: 'twitter-bootstrap-4' %>
-        <% else %>
-          <p>レビューがありません</p>
-        <% end %>
+      </h4>
       
-      <% elsif params[:user_id].blank? && params[:book_id].present? %>
-        <%= render 'public/partial/lists', objects: @book_reviews %>
-        <%= paginate @book_reviews, theme: 'twitter-bootstrap-4' %>
-        
-      <!--# ユーザーIDの受け渡しがない = 未ログインユーザー-->
-      <% elsif params[:user_id].blank? %>
-        <% if @reviews.present? %>
-          <%= render 'public/partial/lists', objects: @reviews %>
-          <%= paginate @reviews, theme: 'twitter-bootstrap-4' %>
-        <% else %>
-          <p>レビューがありません</p>
-        <% end %>
+      <div class="table-responsive">
+        <!--# ユーザーIDの受け渡しがあって、かつIDがcurrent_userのもの-->
+        <% if params[:user_name].present? && params[:user_name] == current_user.name %>
+          <% if @my_reviews.present? %>
+            <%= render 'public/partial/lists', objects: @my_reviews %>
+            <%= paginate @my_reviews, theme: 'twitter-bootstrap-4' %>
+          <% else %>
+            <p>レビューがありません</p>
+          <% end %>
           
-      <% end %>
-    </div>
-  </div>
-</div>
+        <!--# ユーザーIDの受け渡しがあって、かつIDがcurrent_userのものではない-->
+        <% elsif params[:user_name].present? && params[:user_name] != current_user.name %>
+          <% if @user_reviews.present? %>
+            <%= render 'public/partial/lists', objects: @user_reviews %>
+            <%= paginate @user_reviews, theme: 'twitter-bootstrap-4' %>
+          <% else %>
+            <p>レビューがありません</p>
+          <% end %>
+        
+        <% elsif params[:user_name].blank? && params[:book_id].present? %>
+          <%= render 'public/partial/lists', objects: @book_reviews %>
+          <%= paginate @book_reviews, theme: 'twitter-bootstrap-4' %>
+          
+        <!--# ユーザーIDの受け渡しがない = 未ログインユーザー-->
+        <% elsif params[:user_name].blank? %>
+          <% if @reviews.present? %>
+            <%= render 'public/partial/lists', objects: @reviews %>
+            <%= paginate @reviews, theme: 'twitter-bootstrap-4' %>
+          <% else %>
+            <p>レビューがありません</p>
+          <% end %>
+            
+        <% end %>
+      </div> <!--table end-->
+    </div> <!--col-md-8 end-->
+  </div> <!--row end-->
+</div> <!--container-fluid end-->

@@ -1,15 +1,10 @@
 class Public::FavoriteBooksController < ApplicationController
   before_action :authenticate_user!, only: [:create, :update, :destroy]
   before_action :submitted_favorite, only: [:update, :destroy]
+  before_action :set_userinfo, only: [:index] # application_controller
   
   def index
-    @user = User.find(params[:user_id])
-    @in_release_reviews = Review.where(user_id: @user.id, in_release: true).count
     @favorite_books = FavoriteBook.where(user_id: @user.id).page(params[:page]).per(10)
-    @recommenbook = @user.favorite_books.find_by(recommenbook: true)
-    if @recommenbook.present?
-      @book = RakutenWebService::Books::Book.search(isbn: @recommenbook.isbn).first
-    end
   end
 
   def create

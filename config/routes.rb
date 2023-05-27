@@ -27,9 +27,11 @@ Rails.application.routes.draw do
     
     resources :users, only:[] do
       resource :relationships, only: [:create, :destroy]
-      get 'followings' => 'relationships#followings', as: 'followings'
-      get 'followers' => 'relationships#followers', as: 'followers'
+      # get 'followings' => 'relationships#followings', as: 'followings'
+      # get 'followers' => 'relationships#followers', as: 'followers'
     end
+    get 'followings' => 'relationships#followings', as: 'followings'
+    get 'followers' => 'relationships#followers', as: 'followers'
     
     get 'books/search' => "books#search"
     get 'hashtag/:name' => "hashtags#index", as: 'hashtag'

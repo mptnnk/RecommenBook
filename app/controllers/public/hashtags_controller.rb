@@ -1,6 +1,6 @@
 class Public::HashtagsController < ApplicationController
   def index
-    @tag = Hashtag.find_by(name: params[:name])
+    @tag = Hashtag.find_by(name: params[:user_name])
     # @tag = Hashtag.where("LOWER(name) =  ?", "%#{params[:name].downcase}%").first
     # @reviews = @tag.reviews.order(created_at: :desc)
     @reviews = Review.joins(:hashtags).where("LOWER(hashtags.name) =  ?", params[:name].downcase)

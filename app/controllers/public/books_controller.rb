@@ -119,7 +119,7 @@ class Public::BooksController < ApplicationController
   end
   
   def user_random_books
-    page = params[:page] || 1
+    # page = params[:page] || 1
     if current_user.favorite_books.present?
       favorite_isbns = current_user.favorite_books.pluck(:isbn)
       recent_favorite_isbns = current_user.favorite_books.order(created_at: :DESC).limit(30).pluck(:isbn)

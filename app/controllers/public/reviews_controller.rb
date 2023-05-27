@@ -3,8 +3,8 @@ class Public::ReviewsController < ApplicationController
   before_action :submitted_review, only: [:show, :edit, :update, :destroy]
   
   def index
-    if params[:user_id]
-      @user = User.find(params[:user_id])
+    if params[:user_name]
+      @user = User.find_by(name: params[:user_name])
       @in_release_reviews = Review.where(user_id: @user.id, in_release: true).count
       if @user == current_user
         @my_reviews = Review.where(user_id: current_user.id).page(params[:page]).per(10).order(created_at: :DESC)
@@ -15,10 +15,12 @@ class Public::ReviewsController < ApplicationController
       if @recommenbook.present?
         @book = RakutenWebService::Books::Book.search(isbn: @recommenbook.isbn).first
       end
+      
     elsif params[:book_id]
       @book = RakutenWebService::Books::Book.search(isbn: params[:book_id]).first
       @book_reviews = Review.where(isbn: params[:book_id]).page(params[:page]).per(10).order(created_at: :DESC)
-    elsif params[:user_id].blank? && params[:book_id].blank?
+      
+    elsif params[:user_name].blank? && params[:book_id].blank?
       @reviews = Review.page(params[:page]).where(in_release: true).per(10).order(created_at: :DESC)
     end
   end

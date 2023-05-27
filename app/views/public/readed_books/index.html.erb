@@ -1,8 +1,25 @@
 <!--readed_bookの一覧-->
-<div class="container">
-  <h4 class="page-title"><%= @user.name %>さんの読んだ本一覧</h4>
+<div class="container-fluid">
   <div class="row">
-    <div class="col">
+    <% if params[:user_name] %>
+      <div class="col-md-3">
+        <%= render 'public/partial/userinfo', user: @user, book: @book, recommenbook: @recommenbook, in_release_reviews: @in_release_reviews %>
+       </div>
+    <% end %>
+    
+    <div class="col-md-8 offset-md-1">
+      <h4 class="page-title">
+        <% if params[:user_name].present? && params[:user_name] == current_user.name %>
+          あなたの読んだ本一覧
+        <% elsif params[:user_name].present? && params[:user_name] != current_user.name %>
+          <%= @user.name %>さんの読んだ本一覧
+        <% elsif params[:user_name].blank? && params[:book_id].present? %>
+          <%= @book['title'].truncate(20) %>の読んだ本一覧
+        <% else %>
+          読んだ本一覧
+        <% end %>
+      </h4>
+      
       <% if @readed_books.present? %>
         <table class="table table-sm">
           <thead>
@@ -34,11 +51,11 @@
                 <td><%= readed_book.readed_at&.strftime("%Y/%m/%d") %></td>
               </tr>
             </tbody>
-          <% end %>
+          <% end %> <!--readed_books.each end-->
         </table>
-      <% else %>
+      <% else %> <!--if @readed_books.nil-->
         <p>読んだ本がありません</p>
-      <% end %>
-    </div>
-  </div>
-</div>
+      <% end %> <!--if readed_books.present? end-->
+    </div> <!--col-md-8 end-->
+  </div> <!--row end-->
+</div> <!--container-fluid end-->

@@ -2,8 +2,8 @@ class Public::TweetsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :destroy]
   
   def index
-    if params[:user_id]
-      @user = User.find(params[:user_id])
+    if params[:user_name]
+      @user = User.find_by(name: params[:user_name])
       if @user == current_user
         @my_tweets = Tweet.where(user_id: current_user.id).page(params[:page]).per(10).order(created_at: :DESC)
       elsif @user != current_user
@@ -16,7 +16,7 @@ class Public::TweetsController < ApplicationController
     elsif params[:book_id]
       @book = RakutenWebService::Books::Book.search(isbn: params[:book_id]).first
       @book_tweets = Tweet.where(isbn: params[:book_id]).page(params[:page]).per(10).order(created_at: :DESC)
-    elsif params[:user_id].blank? && params[:book_id].blank?
+    elsif params[:user_name].blank? && params[:book_id].blank?
       @tweets = Tweet.page(params[:page]).per(10).order(created_at: :DESC)
     end
   end

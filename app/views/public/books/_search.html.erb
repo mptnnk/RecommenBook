@@ -1,16 +1,19 @@
 <!--検索結果の本一覧-->
+  <% if books.present? %>
   <table class="table table-hover table-inverse">
-    
     <thead class="text-center">
       <tr>
         <th style="width: 10%"></th>
         <th style="width: 20%">タイトル</th>
         <th style="width: 20%">著　者</th>
-        <th>説　明</th>
+        <th>本の概要</th>
       </tr>
     </thead>
+  <% else %>
     
-    <% if books.present? %>
+  <% end %>
+    
+  <% if books.present? %>
       <% books.each do |book| %>
       <tbody>
         <tr>

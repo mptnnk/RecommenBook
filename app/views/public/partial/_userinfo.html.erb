@@ -21,7 +21,7 @@
   <tr>
     <th>Reviews</th>
     <td>
-      <%= link_to reviews_path(user_id: user.id) do %>
+      <%= link_to reviews_path(user_name: user.name) do %>
         <% if user == current_user %>
           <%= user.reviews.count %> reviews
         <% else %>
@@ -33,7 +33,7 @@
   <tr>
     <th>Tweets</th>
     <td>
-      <%= link_to tweets_path(user_id: user.id) do %>
+      <%= link_to tweets_path(user_name: user.name) do %>
         <%= user.tweets.count %> tweets
       <% end %>
     </td>
@@ -41,7 +41,7 @@
   <tr>
     <th>Favorite Books</th>
     <td>
-      <%= link_to favorite_books_path(user_id: user.id) do %>
+      <%= link_to favorite_books_path(user_name: user.name) do %>
         <%= user.favorite_books.count %> books
       <% end %>
     </td>
@@ -69,7 +69,7 @@
   <tr>
     <th>Readed Books</th>
     <td>
-      <%= link_to readed_books_path(user_id: user.id) do %>
+      <%= link_to readed_books_path(user_name: user.name) do %>
         <%= user.readed_books.count %> books
       <% end %>
     </td>
@@ -77,7 +77,7 @@
   <tr>
     <th>Likes</th>
     <td>
-      <%= link_to likes_path(user_id: user.id) do %>
+      <%= link_to likes_path(user_name: user.name) do %>
         <%= user.likes.count %> likes
       <% end %>
     </td>
@@ -85,7 +85,7 @@
   <tr>
     <th>Comments</th>
     <td>
-      <%= link_to comments_path(user_id: user.id) do %>
+      <%= link_to comments_path(user_name: user.name) do %>
         <%= user.review_comments.count + user.tweet_comments.count %> comments
       <% end %>
     </td>
@@ -93,7 +93,7 @@
   <tr>
     <th>Follows</th>
     <td>
-      <%= link_to user_followings_path(user_id: user.id) do %>
+      <%= link_to followings_path(user_name: user.name) do %>
         <%= user.followings.count %> follows
       <% end %>
     </td>
@@ -101,7 +101,7 @@
   <tr>
     <th>Followers</th>
     <td>
-      <%= link_to user_followers_path(user_id: user.id) do %>
+      <%= link_to followers_path(user_name: user.name) do %>
         <%= user.followers.count %> followers
       <% end %>
     </td>
