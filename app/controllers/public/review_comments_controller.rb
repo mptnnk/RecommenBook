@@ -1,13 +1,6 @@
 class Public::ReviewCommentsController < ApplicationController
   before_action :authenticate_user!, only: [:create, :destroy]
   
-  def create
-    review = Review.find(params[:review_id])
-    @comment = current_user.review_comments.new(review_comment_params)
-    @comment.review_id = review.id
-    @comment.save
-  end
-  
   def index
     @user = User.find(params[:user_id])
     @in_release_reviews = Review.where(user_id: @user.id, in_release: true).count
@@ -26,6 +19,13 @@ class Public::ReviewCommentsController < ApplicationController
     @comments = @review_comments + @tweet_comments
     @comments = @comments.sort_by { |comment| comment.created_at }.reverse
   end
+
+  def create
+    review = Review.find(params[:review_id])
+    @comment = current_user.review_comments.new(review_comment_params)
+    @comment.review_id = review.id
+    @comment.save
+  end  
   
   def destroy
     @comment = ReviewComment.find(params[:id])

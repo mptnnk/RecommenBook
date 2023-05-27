@@ -1,20 +1,6 @@
 class Public::LikesController < ApplicationController
   before_action :authenticate_user!, only: [:create, :destroy]
   
-  def create
-    if params[:review_id]
-      review = Review.find(params[:review_id])
-      @review_like = current_user.likes.new(review_id: review.id)
-      @review_like.save
-      render 'review_replace_btn'
-    elsif params[:tweet_id]
-      tweet = Tweet.find(params[:tweet_id])
-      @tweet_like = current_user.likes.new(tweet_id: tweet.id)
-      @tweet_like.save
-      render 'tweet_replace_btn'
-    end
-  end
-  
   def index
     # if params[:user_id]
       @user = User.find(params[:user_id])
@@ -45,6 +31,20 @@ class Public::LikesController < ApplicationController
     # end
     # 全体のいいね一覧を作成することがなければif~elseは不要
   end
+
+  def create
+    if params[:review_id]
+      review = Review.find(params[:review_id])
+      @review_like = current_user.likes.new(review_id: review.id)
+      @review_like.save
+      render 'review_replace_btn'
+    elsif params[:tweet_id]
+      tweet = Tweet.find(params[:tweet_id])
+      @tweet_like = current_user.likes.new(tweet_id: tweet.id)
+      @tweet_like.save
+      render 'tweet_replace_btn'
+    end
+  end  
   
   def destroy
     if params[:review_id]

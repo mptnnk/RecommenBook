@@ -2,24 +2,6 @@ class Public::ReviewsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :destroy]
   before_action :submitted_review, only: [:show, :edit, :update, :destroy]
   
-  def new
-    @book = RakutenWebService::Books::Book.search(isbn: params[:book_id]).first
-    @book_isbn = @book["isbn"]
-    @book_favorites = FavoriteBook.where(isbn: @book.isbn)
-    @review = Review.new
-    @readed_book = current_user.readed_books.find_by(isbn: @book.isbn)
-  end
-  
-  def create
-    @book = RakutenWebService::Books::Book.search(isbn: params[:book_id]).first
-    @review = Review.new(review_params)
-    if @review.save!
-      redirect_to book_path(@book.isbn), notice: 'レビューが投稿されました'
-    else
-      render :new
-    end
-  end
-
   def index
     if params[:user_id]
       @user = User.find(params[:user_id])
@@ -48,9 +30,27 @@ class Public::ReviewsController < ApplicationController
     @comments = @review.review_comments.all
   end
 
+  def new
+    @book = RakutenWebService::Books::Book.search(isbn: params[:book_id]).first
+    @book_isbn = @book["isbn"]
+    @book_favorites = FavoriteBook.where(isbn: @book.isbn)
+    @review = Review.new
+    @readed_book = current_user.readed_books.find_by(isbn: @book.isbn)
+  end  
+
   def edit
     @book = RakutenWebService::Books::Book.search(isbn: @review.isbn).first
     @book_favorites = FavoriteBook.where(isbn: @book.isbn)
+  end
+
+  def create
+    @book = RakutenWebService::Books::Book.search(isbn: params[:book_id]).first
+    @review = Review.new(review_params)
+    if @review.save!
+      redirect_to book_path(@book.isbn), notice: 'レビューが投稿されました'
+    else
+      render :new
+    end
   end
   
   def update

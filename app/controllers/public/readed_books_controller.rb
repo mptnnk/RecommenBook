@@ -1,6 +1,12 @@
 class Public::ReadedBooksController < ApplicationController
   before_action :authenticate_user!, only: [:create, :destroy]
   
+  def index
+    user_id = params[:user_id]
+    @user = User.find(user_id)
+    @readed_books = ReadedBook.where(user_id: @user.id)
+  end
+
   def create
     @book = RakutenWebService::Books::Book.search(isbn: params[:book_id]).first
     @book_isbn = @book['isbn']
@@ -11,13 +17,7 @@ class Public::ReadedBooksController < ApplicationController
     if @readed_book.save
       redirect_to book_path(@book.isbn), notice: '読んだ本に登録しました'
     end
-  end
-  
-  def index
-    user_id = params[:user_id]
-    @user = User.find(user_id)
-    @readed_books = ReadedBook.where(user_id: @user.id)
-  end
+  end  
   
   def destroy
     @book = RakutenWebService::Books::Book.search(isbn: params[:book_id]).first

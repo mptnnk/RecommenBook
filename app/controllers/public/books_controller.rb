@@ -130,8 +130,6 @@ class Public::BooksController < ApplicationController
       end
       favorite_genre_ids = genre_ids.map { |id| id[0,6] }
       most_favorite_id = favorite_genre_ids.group_by(&:itself).max_by{ |_,count| count }.first
-      # @genreid_count = @favorite_genre_ids.group_by(&:itself).map{ |key,value| [key, value.count] }.to_h
-      # @most_favorite_genre_id = @genreid_count.max_by{ |_,count| count }&.first
       related_books = RakutenWebService::Books::Book.search({
         books_genre_id: most_favorite_id,
         sort: 'sales',

@@ -2,14 +2,6 @@ class Public::FavoriteBooksController < ApplicationController
   before_action :authenticate_user!, only: [:create, :update, :destroy]
   before_action :submitted_favorite, only: [:update, :destroy]
   
-  def create
-    @book = RakutenWebService::Books::Book.search(isbn: params[:book_id]).first
-    @favorite_book = current_user.favorite_books.build(isbn: @book.isbn)
-    if @favorite_book.save!
-      redirect_to book_path(@book.isbn), notice: 'お気に入りの本に登録しました'
-    end
-  end
-  
   def index
     @user = User.find(params[:user_id])
     @in_release_reviews = Review.where(user_id: @user.id, in_release: true).count
@@ -19,6 +11,14 @@ class Public::FavoriteBooksController < ApplicationController
       @book = RakutenWebService::Books::Book.search(isbn: @recommenbook.isbn).first
     end
   end
+
+  def create
+    @book = RakutenWebService::Books::Book.search(isbn: params[:book_id]).first
+    @favorite_book = current_user.favorite_books.build(isbn: @book.isbn)
+    if @favorite_book.save!
+      redirect_to book_path(@book.isbn), notice: 'お気に入りの本に登録しました'
+    end
+  end  
   
   def update
     @favorite_book.recommenbook = params[:recommenbook] == "true"
