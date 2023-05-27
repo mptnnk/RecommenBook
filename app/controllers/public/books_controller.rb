@@ -90,12 +90,11 @@ class Public::BooksController < ApplicationController
   def user_random_books
     # page = params[:page] || 1
     if current_user.favorite_books.present?
-      favorite_isbns = current_user.favorite_books.pluck(:isbn)
       recent_favorite_isbns = current_user.favorite_books.order(created_at: :DESC).limit(30).pluck(:isbn)
       genre_ids = []
       recent_favorite_isbns.each do |isbn|
-        books = RakutenWebService::Books::Book.search(isbn: isbn).first
-        genre_ids << books.books_genre_id
+        book = RakutenWebService::Books::Book.search(isbn: isbn).first
+        genre_ids << book.genres.first['booksGenreId'] if book.present? && book.genres.present?
       end
       favorite_genre_ids = genre_ids.map { |id| id[0,6] }
       most_favorite_id = favorite_genre_ids.group_by(&:itself).max_by{ |_,count| count }.first
@@ -104,6 +103,7 @@ class Public::BooksController < ApplicationController
         sort: 'sales',
         hits: 15
       })
+      favorite_isbns = current_user.favorite_books.pluck(:isbn)
       related_books = related_books.reject{ |book| favorite_isbns.include?(book.isbn) }
       @random_books = related_books.sample(3)
     end

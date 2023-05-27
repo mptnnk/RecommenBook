@@ -1,5 +1,5 @@
 <!--検索結果の本一覧-->
-  <% if books.count > 1 %>
+  <% if books.count > 0 %>
   <table class="table table-hover table-inverse">
     <thead class="text-center">
       <tr>
@@ -9,30 +9,24 @@
         <th>本の概要</th>
       </tr>
     </thead>
-  <% else %>
-    
-  <% end %>
-    
-  <% if books.present? %>
-      <% books.each do |book| %>
-      <tbody>
-        <tr>
-          <td>
-            <%= link_to book_path(book.isbn) do %>
-              <%= image_tag(book['medium_image_url']) %>
-            <% end %>
+    <% books.each do |book| %>
+    <tbody>
+      <tr>
+        <td>
+          <%= link_to book_path(book.isbn) do %>
+            <%= image_tag(book['medium_image_url']) %>
+          <% end %>
+        </td>
+        <td>
+          <%= link_to book_path(book.isbn) do %>
+            <%= book['title'] %>
+          <% end %>
           </td>
-          <td>
-            <%= link_to book_path(book.isbn) do %>
-              <%= book['title'] %>
-            <% end %>
-            </td>
-          <td><%= book['author'] %></td>
-          <td><%= book['item_caption'].truncate(170) %></td>
-        </tr>
-      </tbody>
-      <% end %>
+        <td><%= book['author'] %></td>
+        <td><%= book['item_caption'].truncate(170) %></td>
+      </tr>
+    </tbody>
+    <% end %>
   </table>
-  
   <%= paginate books_page %>
   <% end %>
