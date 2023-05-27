@@ -15,7 +15,7 @@
   </div>
   <div class="row">
     <div class="col">
-      <% if @books.present? %>
+      <% if @books.count > 0 %>
         <h3>キーワード/ジャンル検索結果</h3>
         <%= render 'search', books: @books, books_page: @books_page %>
       <% elsif @random_books.present? %>

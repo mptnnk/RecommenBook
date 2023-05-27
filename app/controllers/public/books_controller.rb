@@ -7,82 +7,47 @@ class Public::BooksController < ApplicationController
     page = params[:page] || 1
     per = 30
     @books = []
-
+    
+    search_params = {
+      page: page,
+      hits: per,
+      sort: 'sales'
+    }
+    
     if genre_id.present? && title.present? && author.present?
-      @books = RakutenWebService::Books::Book.search({
-        books_genre_id: genre_id,
-        title: title,
-        author: author,
-        page: page,
-        hits: per,
-        sort: 'sales'
-      })
-      @books_page = Kaminari.paginate_array([], total_count: @books.response['count'] ).page(page).per(per)
-      p search_results
+      search_params[:books_genre_id] = genre_id
+      search_params[:title] = title
+      search_params[:author] = author
       
     elsif genre_id.present? && title.present?
-      @books = RakutenWebService::Books::Book.search({
-        books_genre_id: genre_id,
-        title: title,
-        page: page,
-        hits: per,
-        sort: 'sales'
-      })
-      @books_page = Kaminari.paginate_array([], total_count: @books.response['count'] ).page(page).per(per)
-      p search_results
+      search_params[:books_genre_id] = genre_id
+      search_params[:title] = title
       
     elsif genre_id.present? && author.present?
-      @books = RakutenWebService::Books::Book.search({
-        books_genre_id: genre_id,
-        author: author,
-        page: page,
-        hits: per,
-        sort: 'sales'
-      })
-      @books_page = Kaminari.paginate_array([], total_count: @books.response['count'] ).page(page).per(per)
-      p search_results
+      search_params[:books_genre_id] = genre_id
+      search_params[:author] = author
       
     elsif title.present? && author.present?
-      @books = RakutenWebService::Books::Book.search({
-        title: title,
-        author: author,
-        page: page,
-        hits: per,
-        sort: 'sales'
-      })
-      @books_page = Kaminari.paginate_array([], total_count: @books.response['count'] ).page(page).per(per)
-      p search_results
-      
+      search_params[:title] = title
+      search_params[:author] = author
+    
     elsif genre_id.present?
-      @books = RakutenWebService::Books::Book.search({
-        books_genre_id: genre_id,
-        page: page,
-        hits: per,
-        sort: 'sales'
-      })
-      @books_page = Kaminari.paginate_array([], total_count: @books.response['count'] ).page(page).per(per)
-      p search_results
+      search_params[:books_genre_id] = genre_id
       
     elsif title.present?
-      @books = RakutenWebService::Books::Book.search({
-        title: title,
-        page: page,
-        hits: per,
-        sort: 'sales'
-      })
-      @books_page = Kaminari.paginate_array([], total_count: @books.response['count'] ).page(page).per(per)
-      p search_results
-    
+      search_params[:title] = title
+      
     elsif author.present?
-      @books = RakutenWebService::Books::Book.search({
-        author: author,
-        page: page,
-        hits: per,
-        sort: 'sales'
-      })
-      @books_page = Kaminari.paginate_array([], total_count: @books.response['count'] ).page(page).per(per)
-      p search_results
+      search_params[:author] = author
+      
+    elsif search_params.except(:page, :hits, :sort).empty?
+      return
+      
     end
+    
+    @books = RakutenWebService::Books::Book.search(search_params)
+    @books_page = Kaminari.paginate_array([], total_count: @books.response['count']).page(page).per(per)
+    puts search_results
     # pp @books.response['pageCount']　#,page,@books_page
     # response['']とすると、楽天ブックスAPIの出力パラメータで「全体情報」とされている部分についての情報が取れる
     
@@ -108,6 +73,10 @@ class Public::BooksController < ApplicationController
   
   def book_params
     params.require(:book).permit(:book_genre_id, :isbn)
+  end
+  
+  def books_page
+    @books_page = Kaminari.paginate_array([], total_count: @books.response['count'] ).page(page).per(per)
   end
   
   def search_results
