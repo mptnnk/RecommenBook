@@ -8,44 +8,21 @@ class Public::BooksController < ApplicationController
     per = 30
     @books = []
     
+    if genre_id.blank? && title.blank? && author.blank?
+      return
+    end
+    
     search_params = {
       page: page,
       hits: per,
       sort: 'sales',
-      # outOfStockFlag: 1
+      outOfStockFlag: 1,
     }
     
-    if genre_id.present? && title.present? && author.present?
-      search_params[:books_genre_id] = genre_id
-      search_params[:title] = title
-      search_params[:author] = author
-      
-    elsif genre_id.present? && title.present?
-      search_params[:books_genre_id] = genre_id
-      search_params[:title] = title
-      
-    elsif genre_id.present? && author.present?
-      search_params[:books_genre_id] = genre_id
-      search_params[:author] = author
-      
-    elsif title.present? && author.present?
-      search_params[:title] = title
-      search_params[:author] = author
-    
-    elsif genre_id.present?
-      search_params[:books_genre_id] = genre_id
-      
-    elsif title.present?
-      search_params[:title] = title
-      
-    elsif author.present?
-      search_params[:author] = author
-      
-    elsif search_params.except(:page, :hits, :sort).empty?
-      return
-      
-    end
-    
+    search_params[:books_genre_id] = genre_id if genre_id.present?
+    search_params[:title] = title if title.present?
+    search_params[:author] = author if author.present?
+
     @books = RakutenWebService::Books::Book.search(search_params)
     @books_page = Kaminari.paginate_array([], total_count: @books.response['count']).page(page).per(per)
     puts search_results
@@ -61,14 +38,17 @@ class Public::BooksController < ApplicationController
   end
   
   def show
-    @book = RakutenWebService::Books::Book.search(isbn: params[:id]).first
     @review = Review.new
-    
-    @reviews = Review.where(isbn: @book.isbn).where(in_release: true).limit(4).order(created_at: :DESC)
     @tweet = Tweet.new
-    @tweets = Tweet.where(isbn: @book.isbn).limit(4).order(created_at: :DESC)
-    @book_favorites = FavoriteBook.where(isbn: @book.isbn)
     @tag = Hashtag.find_by(name: params[:name])
+    
+    isbn = params[:id]
+    
+    @book = RakutenWebService::Books::Book.search({isbn: isbn, outOfStockFlag: 1}).first
+    @reviews = Review.where(isbn: isbn).where(in_release: true).limit(4).order(created_at: :DESC)
+    @tweets = Tweet.where(isbn: isbn).limit(4).order(created_at: :DESC)
+    @book_favorites = FavoriteBook.where(isbn: isbn)
+    
   end
 
   private
