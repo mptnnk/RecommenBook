@@ -11,7 +11,8 @@ class Public::BooksController < ApplicationController
     search_params = {
       page: page,
       hits: per,
-      sort: 'sales'
+      sort: 'sales',
+      # outOfStockFlag: 1
     }
     
     if genre_id.present? && title.present? && author.present?
@@ -62,6 +63,7 @@ class Public::BooksController < ApplicationController
   def show
     @book = RakutenWebService::Books::Book.search(isbn: params[:id]).first
     @review = Review.new
+    
     @reviews = Review.where(isbn: @book.isbn).where(in_release: true).limit(4).order(created_at: :DESC)
     @tweet = Tweet.new
     @tweets = Tweet.where(isbn: @book.isbn).limit(4).order(created_at: :DESC)
