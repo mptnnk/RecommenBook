@@ -1,0 +1,48 @@
+<div class="container-fluid">
+  <h4 class="page-title">ユーザー一覧</h4>
+  <div class="row">
+    <div class="col">
+      <table class="table table-borderless">
+        <thead>
+          <tr>
+            <th></th>
+            <th>ユーザー名</th>
+            <th>メールアドレス</th>
+            <th>レビュー</th>
+            <th>ツイート</th>
+            <th>会員ステータス</th>
+            <th></th>
+          </tr>
+        </thead>
+        <% @users.each do |user| %>
+        <tbody>
+          <tr>
+            <td><%= image_tag user.get_profile_image, size: "70x80" %></td>
+            <td><%= user.name %></td>
+            <td><%= user.email %></td>
+            <td>
+              <%= link_to admin_path(user_id: user.id) do %>
+                <%= user.reviews.count %> 件
+              <% end %>
+            </td>
+            <td>
+              <%= link_to admin_tweets_path(user_id: user.id) do %>
+                <%= user.tweets.count %> 件
+              <% end %>
+            </td>
+            <td>
+              <% if user.is_active %>
+                <p class="text-success">有効</p>
+              <% else %>
+                <p class="test-secondary">退会</p>
+              <% end %>
+            </td>
+            <td><%= link_to "編集する", edit_admin_user_path(user.id) %></td>
+          </tr>
+          
+        </tbody>
+        <% end %>
+      </table>
+    </div>
+  </div>
+</div>
