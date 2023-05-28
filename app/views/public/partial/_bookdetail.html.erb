@@ -16,7 +16,9 @@
     <tr>
       <th>著者</th>
       <td>
-        <%= book['author'] %>
+        <%= link_to books_search_path(author: book['author']) do %>
+          <%= book['author'] %>
+        <% end %>
       </td>
     </tr>
     <tr>

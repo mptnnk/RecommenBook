@@ -1,7 +1,16 @@
 <ul class="navbar-nav navbar-expand-lg ml-auto mb-2">
   <% if admin_signed_in? %>
   <!--管理者ログインのとき。レビュー一覧、つぶやき一覧、会員一覧は後で作る-->
-    <li class="nav-link">
+    <li class="nav-item">
+      <%= link_to "レビュー一覧", admin_path, class: "nav-link" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to "ツイート一覧", admin_tweets_path, class: "nav-link" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to "ユーザー一覧", admin_users_path, class: "nav-link" %>
+    </li>
+    <li class="nav-item">
       <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, style:"color:gray", class:"border border-secondary rounded p-2" %>
     </li>
     
