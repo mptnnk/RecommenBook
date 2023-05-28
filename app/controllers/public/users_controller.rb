@@ -4,7 +4,7 @@ class Public::UsersController < ApplicationController
   before_action :set_userinfo, only: [:show, :favorite_genres]
 
   def show
-    redirect_to root_path if @user.nil?
+    redirect_to root_path, alert: '退会済みのユーザーです' unless @user
   end
   
   def favorite_genres
