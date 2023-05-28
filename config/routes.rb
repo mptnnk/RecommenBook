@@ -60,6 +60,15 @@ Rails.application.routes.draw do
   
   namespace :admin do
     get '/' => 'homes#top'
+    resources :tweets, only: [:index, :show]
+  end
+  
+  #   namespace :admin do
+  #   get 'tweets/index'
+  #   get 'tweets/show'
+  # end
+  namespace :admin do
+    get 'reviews/show'
   end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

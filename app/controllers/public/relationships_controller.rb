@@ -3,13 +3,13 @@ class Public::RelationshipsController < ApplicationController
   before_action :set_userinfo, only: [:followings, :followers] # apprication_controller
   
   def create
-    user = User.find_by(name: params[:user_name])
+    user = User.find(params[:user_id])
     current_user.follow(user)
     redirect_to request.referer
   end
   
   def destroy
-    user = User.find_by(name: params[:user_name])
+    user = User.find(params[:user_id])
     current_user.unfollow(user)
     redirect_to request.referer
   end
