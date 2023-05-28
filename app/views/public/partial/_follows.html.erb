@@ -28,12 +28,12 @@
           
         </td>
         <td>
-          <%= link_to reviews_path(user_id: user.id) do %>
+          <%= link_to reviews_path(user_name: user.name) do %>
             <%= user.reviews.count %>reviews
           <% end %>
         </td>
         <td>
-          <%= link_to tweets_path(user_id: user.id) do %>
+          <%= link_to tweets_path(user_name: user.name) do %>
             <%= user.tweets.count %>tweets
           <% end %>
         </td>
