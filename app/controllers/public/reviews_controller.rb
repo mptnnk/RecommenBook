@@ -16,7 +16,8 @@ class Public::ReviewsController < ApplicationController
       @book_reviews = Review.where(isbn: params[:book_id]).page(params[:page]).per(10).order(created_at: :DESC)
       
     elsif params[:user_name].blank? && params[:book_id].blank?
-      @reviews = Review.page(params[:page]).where(in_release: true).per(10).order(created_at: :DESC)
+      @reviews = Review.where(in_release: true).page(params[:page]).per(10).order(created_at: :DESC)
+      # @reviews = Review.joins(:user).where(in_release : true, users: {is_active: true}).page(params[:page]).per(10).order(created_at: :DESC)
     end
   end
 
