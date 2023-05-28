@@ -3,8 +3,12 @@
     <% comments.each do |comment| %>
       <tr>
         <td colspan="1" style:"width: 10%">
-          <%= link_to mypage_path(name: comment.user.name) do %>
-            <%= comment.user.name %>
+          <% if comment.user.is_active %>
+            <%= link_to mypage_path(name: comment.user.name) do %>
+              <%= comment.user.name %>
+            <% end %>
+          <% else %>
+            退会済みのユーザー
           <% end %>
         </td>
         

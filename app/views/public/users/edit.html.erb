@@ -5,7 +5,7 @@
       <%= form_with model: @user, url: users_information_path, method: :patch, local: true do |user| %>
       <table class="table table-borderless">
         <tr>
-          <th style="width: 20%">ユーザーネーム </th>
+          <th style="width: 25%">ユーザーネーム </th>
           <td><%= user.text_field :name, class: "form-control" %></td>
         </tr>
         <tr>
@@ -31,10 +31,10 @@
             <% end %>
           </td>
         </tr>
-        <tr>
-          <th>新しいパスワードを</th>
-          <td><%= user.password_field :password, class: "form-control" %></td>
-        </tr>
+        <!--<tr>-->
+        <!--  <th>新しいパスワードを入力</th>-->
+        <!--  <td><%= user.password_field :password, class: "form-control" %></td>-->
+        <!--</tr>-->
         <tr>
           <th></th>
           <td>
