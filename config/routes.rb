@@ -27,8 +27,6 @@ Rails.application.routes.draw do
     
     resources :users, only:[] do
       resource :relationships, only: [:create, :destroy]
-      # get 'followings' => 'relationships#followings', as: 'followings'
-      # get 'followers' => 'relationships#followers', as: 'followers'
     end
     get 'followings' => 'relationships#followings', as: 'followings'
     get 'followers' => 'relationships#followers', as: 'followers'
@@ -60,15 +58,9 @@ Rails.application.routes.draw do
   
   namespace :admin do
     get '/' => 'homes#top'
-    resources :tweets, only: [:index, :show]
-  end
-  
-  #   namespace :admin do
-  #   get 'tweets/index'
-  #   get 'tweets/show'
-  # end
-  namespace :admin do
-    get 'reviews/show'
+    resources :users, only: [:index, :edit, :update]
+    resources :reviews, only: [:show, :update, :destroy]
+    resources :tweets, only: [:index, :show, :destroy]
   end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
