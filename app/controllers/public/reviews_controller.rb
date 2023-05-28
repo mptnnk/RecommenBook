@@ -1,7 +1,7 @@
 class Public::ReviewsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :destroy]
   before_action :submitted_review, only: [:show, :edit, :update, :destroy]
-  before_action :set_userinfo, only: [:index], if: -> { params[:user_name].present? }# application_controller
+  before_action :set_userinfo, only: [:index], if: -> { params[:user_name].present? } # application_controller
   
   def index
     if params[:user_name]

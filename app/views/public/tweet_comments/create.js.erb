@@ -1,3 +1,4 @@
 <!--tweet-->
 $('.comment-textarea').val("")
-$('.tweet-comments-index').html("<%= j(render 'public/tweet_comments/index', tweet: @comment.tweet) %>")
+$('.tweet-comments-index').html("<%= j(render 'public/partial/comments', tweet: @comment.tweet, comments: @comments) %>")
+$('#tweetCommentCount').text("コメント（<%= @comments.size %>件）");

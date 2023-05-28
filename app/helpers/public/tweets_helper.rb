@@ -3,7 +3,7 @@ module Public::TweetsHelper
     if length.nil?
       tweet_content.gsub(/[#＃][\w\p{Han}ぁ-ヶｦ-ﾟー]+/){|word| link_to word, "/hashtag/#{word.delete("#＃")}"}.html_safe
     else
-      hash_tags = tweeet_content.scan(/[#＃][\w\p{Han}ぁ-ヶｦ-ﾟー]+/)
+      hash_tags = tweet_content.scan(/[#＃][\w\p{Han}ぁ-ヶｦ-ﾟー]+/)
       tweet_content.truncate(length).gsub(/[#＃][\w\p{Han}ぁ-ヶｦ-ﾟー]+/){|word| hash_tags.include?(word) ? (link_to word, "/hashtag/#{word.delete("#＃")}") : word}.html_safe
     end
   end

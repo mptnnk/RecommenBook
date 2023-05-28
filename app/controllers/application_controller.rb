@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   
-  # set controller : users, favorite_books, likes, relationships, reviews,
+  # set : users, favorite_books, likes, relationships, reviews, review_comments, tweets
   
   def set_userinfo
     if params[:name].present?
@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
       @user = User.find_by(name: params[:user_name])
     end
     
-    @in_release_reviews = Review.where(user_id: @user.id, in_release: true).count
+    @in_release_reviews = Review.where(user_id: @user.id, in_release: true)
     
     @recommenbook = @user.favorite_books.find_by(recommenbook: true)
     if @recommenbook.present?

@@ -1,2 +1,3 @@
 <!--review-->
-$('.review-comments-index').html("<%= j(render 'public/review_comments/index', review: @comment.review) %>")
+$('.review-comments-index').html("<%= j(render 'public/partial/comments', review: @comment.review, comments: @comments) %>")
+$('#reviewCommentCount').text("コメント（<%= @comments.size %>件）");

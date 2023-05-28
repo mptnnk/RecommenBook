@@ -12,6 +12,7 @@
           <th>メールアドレス</th>
           <td><%= user.email_field :email, class: "form-control" %></td>
         </tr>
+
         <tr>
           <th>プロフィール画像</th>
           <td>
@@ -29,6 +30,11 @@
               </label>
             <% end %>
           </td>
+        </tr>
+        <tr>
+          <th>新しいパスワードを</th>
+          <td><%= user.password_field :password, class: "form-control" %></td>
+        </tr>
         <tr>
           <th></th>
           <td>

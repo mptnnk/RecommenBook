@@ -36,6 +36,9 @@ Rails.application.routes.draw do
     get 'books/search' => "books#search"
     get 'hashtag/:name' => "hashtags#index", as: 'hashtag'
     
+    # get 'comments' => 'review_comments#index', as: "comments"
+    resources :review_comments, only: [:index], as: "comments"
+    
     resources :books, only: [:show] do
       resources :reviews, only: [:new, :create]
       resources :favorite_books, only: [:create, :destroy]
@@ -52,7 +55,7 @@ Rails.application.routes.draw do
       resource :likes, only: [:create, :destroy]
     end
     resources :likes, only: [:index]
-    resources :review_comments, only: [:index], as: "comments"
+    
   end
   
   namespace :admin do
