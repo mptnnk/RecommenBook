@@ -36,7 +36,7 @@
                   <%= review.user.name %>
                 <% end %>
               </td>
-              <td><%= review.content.truncate(100) %></td>
+              <td><%= render_review_with_hashtags(review.content, 100) %></td>
               <td class="text-center">
                 <% if review.in_release %>
                   <p class="text-success">公開中</p>

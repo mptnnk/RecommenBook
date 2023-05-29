@@ -33,7 +33,7 @@
                     <%= tweet.user.name %>
                   <% end %>
                 </td>
-                <td><%= tweet.tweet_content %></td>
+                <td><%= render_tweet_with_hashtags(tweet.tweet_content, 100) %></td>
                 <td class="text-center"><%= link_to "詳細を見る", admin_tweet_path(tweet.id), class: "btn btn-success" %></td>
               </tr>
             </tbody>
