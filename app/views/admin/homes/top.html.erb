@@ -8,7 +8,7 @@
   </h4>
   <div class="row">
     <div class="col">
-      <% if @reviews.present? %>
+      <% if @reviews %>
         <table class="table table-sm table-borderless">
           <thead class="text-center">
             <tr>
@@ -22,7 +22,7 @@
             </tr>
           </thead>
           <% @reviews.each do |review| %>
-          <% book = RakutenWebService::Books::Book.search(isbn: review.isbn).first %>
+          <% book = RakutenWebService::Books::Book.search(isbn: review.isbn, outOfStockFlag: 1).first %>
           <tbody>
             <tr>
               <td><%= review.created_at.strftime('%Y/%m/%d') %></td>
@@ -51,11 +51,7 @@
                   <p class="text-info">ネタバレなし</p>
                 <% end %>
               </td>
-              <td class="text-center">
-                <%= link_to admin_review_path(review.id) do %>
-                  詳細を見る
-                <% end %>
-              </td>
+              <td class="text-center"><%= link_to "詳細を見る", admin_review_path(review.id), class: "btn btn-success" %></td>
             </tr>
           </tbody>
           <% end %>
