@@ -23,7 +23,7 @@
     <td>
       <%= link_to reviews_path(user_name: user.name) do %>
         <% if user == current_user %>
-          <%= user.reviews.count %> reviews
+          <%= user.reviews.where.not(content: [nil,'']).count %> reviews
         <% else %>
           <%= in_release_reviews.count %> reviews
         <% end %>
@@ -69,6 +69,13 @@
   <tr>
     <th>Readed Books</th>
     <td>
+      <% if readed_books_count.nil? %>
+        <%= link_to "0books", readed_book_path(user_name: user.name) %>
+      <% else %>
+        <%= link_to readed_book_path(user_name: user.name) do %>
+          <%= readed_books_count %> books
+        <% end %>
+      <% end %>
     </td>
   </tr>
   <tr>

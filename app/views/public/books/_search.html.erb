@@ -13,26 +13,13 @@
     <tbody>
       <tr>
         <td>
-          <% if book['out_of_stock_flag'] == 1 %>
-            <%= link_to book_path(item_code: book['item_code']) do %>
-              <%= image_tag(book['medium_image_url']) %>
-            <% end %>
-          <% else %>
-            <%= link_to book_path(book.isbn) do %>
-              <%= image_tag(book['medium_image_url']) %>
-            <% end %>
+          <%= link_to book_path(book.isbn) do %>
+            <%= image_tag(book['medium_image_url']) %>
           <% end %>
-
         </td>
         <td>
-          <% if book['out_of_stock_flag'] == 1 %>
-            <%= link_to book_path(item_code: book['item_code']) do %>
-              <%= book['title'] %>
-            <% end %>
-          <% else %>
-            <%= link_to book_path(book.isbn) do %>
-              <%= book['title'] %>
-            <% end %>
+          <%= link_to book_path(book.isbn) do %>
+            <%= book['title'] %>
           <% end %>
           </td>
         <td><%= book['author'] %></td>

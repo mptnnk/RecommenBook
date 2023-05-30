@@ -7,11 +7,12 @@
     
   <div class="row">
     <div class="col mt-2">
-      <% if @readed_book.present? %>
+      <% if @readed.present? %>
         <p class="border border-primary rounded p-2" style="display:inline-block">再読本の投稿<i class="fas fa-book"></i></p><br>
       <% else %>
         <p class="border border-primary rounded p-2" style="display:inline-block">新規投稿<i class="fas fa-book"></i></p><br>
       <% end %>
+      
       <%= form_with model: @review, url: book_reviews_path(@book.isbn) do |review| %>
         <%= review.hidden_field :isbn, value: @book['isbn'] %>
         

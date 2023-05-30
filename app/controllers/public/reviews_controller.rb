@@ -1,23 +1,32 @@
 class Public::ReviewsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :destroy]
   before_action :submitted_review, only: [:show, :edit, :update, :destroy]
-  before_action :set_userinfo, only: [:index], if: -> { params[:user_name].present? } # application_controller
+  before_action :set_userinfo, only: [:index, :readed_book], if: -> { params[:user_name].present? } # application_controller
   
   def index
     if params[:user_name]
       if @user == current_user
-        @my_reviews = Review.where(user_id: current_user.id, content: present).page(params[:page]).per(10).order(created_at: :DESC)
+        @my_reviews = Review.where(user_id: current_user.id).where.not(content: [nil, '']).page(params[:page]).per(10).order(created_at: :DESC)
       elsif @user != current_user
-        @user_reviews = Review.where(user_id: @user.id, content: present, in_release: true).page(params[:page]).per(10).order(created_at: :DESC)
+        @user_reviews = Review.where(user_id: @user.id, in_release: true).where.not(content: [nil, '']).page(params[:page]).per(10).order(created_at: :DESC)
       end
       
     elsif params[:book_id]
       @book = RakutenWebService::Books::Book.search(isbn: params[:book_id], outOfStockFlag: 1).first
-      @book_reviews = Review.where(isbn: params[:book_id]).page(params[:page]).per(10).order(created_at: :DESC)
+      @book_reviews = Review.where(isbn: params[:book_id], in_release: true).where.not(content: [nil, '']).page(params[:page]).per(10).order(created_at: :DESC)
       
     elsif params[:user_name].blank? && params[:book_id].blank?
-      @reviews = Review.where(in_release: true).page(params[:page]).per(10).order(created_at: :DESC)
+      @reviews = Review.where(in_release: true).where.not(content: [nil, '']).page(params[:page]).per(10).order(created_at: :DESC)
       # @reviews = Review.joins(:user).where(in_release : true, users: {is_active: true}).page(params[:page]).per(10).order(created_at: :DESC)
+    end
+  end
+  
+  def readed_book
+    @user = User.find_by(name: params[:user_name])
+    if @user == current_user
+      @readed_books = Review.where(user_id: current_user.id).group(:isbn)
+    elsif @user != current_user
+      @readed_books = Review.where(user_id: @user.id).group(:isbn)
     end
   end
 
@@ -30,7 +39,7 @@ class Public::ReviewsController < ApplicationController
 
   def new
     @book = find_book(params[:book_id])
-    @readed_book = Review.where(isbn: @book.isbn)
+    @readed = Review.where(isbn: @book.isbn)
     @book_favorites = FavoriteBook.where(isbn: @book.isbn)
     @review = Review.new
   end  

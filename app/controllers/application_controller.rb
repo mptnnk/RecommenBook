@@ -10,15 +10,16 @@ class ApplicationController < ActionController::Base
     end
     
     if @user.present?
-      @in_release_reviews = Review.where(user_id: @user.id, in_release: true)
+      @in_release_reviews = Review.where(user_id: @user.id, in_release: true).where.not(content: [nil, ''])
       @recommenbook = @user.favorite_books.find_by(recommenbook: true)
       if @recommenbook.present?
         @book = RakutenWebService::Books::Book.search({isbn: @recommenbook.isbn, outOfStockFlag: 1}).first
       end
-      @reviews = @user.reviews.where(in_release: true).limit(4).order(created_at: :DESC)
+      @reviews = @user.reviews.where(in_release: true).where.not(content: [nil, '']).limit(4).order(created_at: :DESC)
       @tweets = @user.tweets.limit(4).order(created_at: :DESC)
       @favorite_books = @user.favorite_books.limit(4).order(created_at: :DESC)
       @favorite_genres = @user.favorite_genres.all
+      @readed_books_count = @user.reviews.group(:isbn).size.count
     end
   end
   

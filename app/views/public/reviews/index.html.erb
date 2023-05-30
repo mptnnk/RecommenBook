@@ -3,7 +3,7 @@
   <div class="row">
     <% if params[:user_name] %>
       <div class="col-md-3">
-        <%= render 'public/partial/userinfo', user: @user, book: @book, recommenbook: @recommenbook, in_release_reviews: @in_release_reviews %>
+        <%= render 'public/partial/userinfo', user: @user, book: @book, readed_books_count: @readed_books_count, recommenbook: @recommenbook, in_release_reviews: @in_release_reviews %>
       </div>
     <% end %>
     
@@ -21,7 +21,7 @@
       </h4>
       
       <div class="table-responsive">
-        <!--# ユーザーIDの受け渡しがあって、かつIDがcurrent_userのもの-->
+        <!-- ユーザー名の受け渡しがあって、かつcurrent_userのもの-->
         <% if params[:user_name].present? && params[:user_name] == current_user.name %>
           <% if @my_reviews.present? %>
             <%= render 'public/partial/lists', objects: @my_reviews %>
@@ -30,7 +30,7 @@
             <p>レビューがありません</p>
           <% end %>
           
-        <!--# ユーザーIDの受け渡しがあって、かつIDがcurrent_userのものではない-->
+        <!-- ユーザー名の受け渡しがあって、かつcurrent_userのものではない-->
         <% elsif params[:user_name].present? && params[:user_name] != current_user.name %>
           <% if @user_reviews.present? %>
             <%= render 'public/partial/lists', objects: @user_reviews %>
@@ -39,11 +39,12 @@
             <p>レビューがありません</p>
           <% end %>
         
+        <!--ユーザー名の受け渡しがなく、book_idの受け渡しがある-->
         <% elsif params[:user_name].blank? && params[:book_id].present? %>
           <%= render 'public/partial/lists', objects: @book_reviews %>
           <%= paginate @book_reviews, theme: 'twitter-bootstrap-4' %>
           
-        <!--# ユーザーIDの受け渡しがない = 未ログインユーザー-->
+        <!--# ユーザー名の受け渡しもbook_idの受け渡しもないー-->
         <% elsif params[:user_name].blank? %>
           <% if @reviews.present? %>
             <%= render 'public/partial/lists', objects: @reviews %>

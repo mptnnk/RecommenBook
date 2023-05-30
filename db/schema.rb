@@ -121,7 +121,7 @@ ActiveRecord::Schema.define(version: 2023_05_26_095144) do
   create_table "reviews", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "isbn", null: false
-    t.text "content", null: false
+    t.text "content"
     t.datetime "readed_at"
     t.boolean "in_release", default: true
     t.boolean "spoiler", default: false
