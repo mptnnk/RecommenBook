@@ -19,6 +19,7 @@
           <% else %>
             レビュー（新着順）
           <% end %>
+          
         <% elsif !user_signed_in? %>
           <% if params[:user_name].present? %>
             <%= @user.name %>さんのレビュー（新着順）
@@ -32,37 +33,32 @@
       
       <div class="table-responsive">
         <% if user_signed_in? %>
+        
           <% if params[:user_name].present? && params[:user_name] == current_user.name %>
+          
             <% if @my_reviews.present? %>
               <%= render 'public/partial/lists', objects: @my_reviews %>
               <%= paginate @my_reviews, theme: 'twitter-bootstrap-4' %>
             <% else %>
               <p>レビューがありません</p>
             <% end %>
+            
           <% elsif params[:user_name].present? && params[:user_name] != current_user.name %>
+          
             <% if @user_reviews.present? %>
               <%= render 'public/partial/lists', objects: @user_reviews %>
               <%= paginate @user_reviews, theme: 'twitter-bootstrap-4' %>
             <% else %>
               <p>レビューがありません</p>
             <% end %>
+            
           <% elsif params[:book_id].present? %>
+          
             <%= render 'public/partial/lists', objects: @book_reviews %>
             <%= paginate @book_reviews, theme: 'twitter-bootstrap-4' %>
-          <% end %>
-        
-        <% elsif !user_signed_in? %>
-          <% if params[:user_name].present? %>
-            <% if @user_reviews.present? %>
-              <%= render 'public/partial/lists', objects: @user_reviews %>
-              <%= paginate @user_reviews, theme: 'twitter-bootstrap-4' %>
-            <% else %>
-              <p>レビューがありません</p>
-            <% end %>
-          <% elsif params[:book_id].present? %>
-            <%= render 'public/partial/lists', objects: @book_reviews %>
-            <%= paginate @book_reviews, theme: 'twitter-bootstrap-4' %>
+          
           <% else %>
+          
             <% if @reviews.present? %>
               <%= render 'public/partial/lists', objects: @reviews %>
               <%= paginate @reviews, theme: 'twitter-bootstrap-4' %>
@@ -71,6 +67,34 @@
             <% end %>
             
           <% end %>
+        
+        <% elsif !user_signed_in? %>
+        
+          <% if params[:user_name].present? %>
+          
+            <% if @user_reviews.present? %>
+              <%= render 'public/partial/lists', objects: @user_reviews %>
+              <%= paginate @user_reviews, theme: 'twitter-bootstrap-4' %>
+            <% else %>
+              <p>レビューがありません</p>
+            <% end %>
+            
+          <% elsif params[:book_id].present? %>
+          
+            <%= render 'public/partial/lists', objects: @book_reviews %>
+            <%= paginate @book_reviews, theme: 'twitter-bootstrap-4' %>
+            
+          <% else %>
+          
+            <% if @reviews.present? %>
+              <%= render 'public/partial/lists', objects: @reviews %>
+              <%= paginate @reviews, theme: 'twitter-bootstrap-4' %>
+            <% else %>
+              <p>レビューがありません</p>
+            <% end %>
+            
+          <% end %>
+          
         <% end %>
       </div> <!--table end-->
     </div> <!--col-md-8 end-->
