@@ -8,28 +8,20 @@ class Public::ReadingListsController < ApplicationController
 
   def create
     @book = RakutenWebService::Books::Book.search(isbn: params[:book_id], outOfStockFlag: 1).first
-    @book_isbn = @book['isbn']
-    @readed_book = current_user.readed_books.build(
-      isbn: @book.isbn,
-      readed_at: params[:readed_at]
-    )
-    if @readed_book.save
-      redirect_to book_path(@book.isbn), notice: '読んだ本に登録しました'
-    end
+    @reading_list = current_user.reading_lists.build(isbn: @book.isbn)
+    @reading_list.save ? (redirect_to book_path(@book.isbn), notice: '読みたい本に登録しました') : (redirect_to request.referer, alert: '登録に失敗しました')
   end  
   
   def destroy
     @book = RakutenWebService::Books::Book.search(isbn: params[:book_id], outOfStockFlag: 1).first
-    @readed_book = current_user.readed_books.find_by(isbn: @book.isbn)
-    if @readed_book.destroy
-      redirect_to request.referer, alert: '読んだ本から削除しました'
-    end
+    @reading_list = current_user.reading_lists.find_by(isbn: @book.isbn)
+    @reading_list.destroy ? (redirect_to request.referer, alert: '読みたい本から削除しました') : (redirect_to request.regerer, alert: '削除できませんでした')
   end
   
   private
   
-  def readed_book_params
-    params.require(:readed_book).permit(:isbn, :readed_at).merge(user_id :current_user.id)
+  def reading_book_params
+    params.require(:reading_book).permit(:isbn).merge(user_id :current_user.id)
   end
 
 end

@@ -79,6 +79,15 @@
     </td>
   </tr>
   <tr>
+    <th>ReadingLists</th>
+    <td>
+      <%= link_to reading_lists_path(user_name: user.name) do %>
+        <%= reading_lists.count %> books
+      <% end %>
+    </td>
+  </tr>
+  
+  <tr>
     <th>Likes</th>
     <td>
       <%= link_to likes_path(user_name: user.name) do %>

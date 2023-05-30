@@ -41,12 +41,10 @@ class Public::BooksController < ApplicationController
     @tag = Hashtag.find_by(name: params[:name])
     
     isbn = params[:id]
-    
     @book = RakutenWebService::Books::Book.search(isbn: isbn, outOfStockFlag: 1).first
     @reviews = Review.where(isbn: isbn).where(in_release: true).where.not(content: [nil, '']).limit(4).order(created_at: :DESC)
     @tweets = Tweet.where(isbn: isbn).limit(4).order(created_at: :DESC)
     @book_favorites = FavoriteBook.where(isbn: isbn)
-    
   end
 
   private
