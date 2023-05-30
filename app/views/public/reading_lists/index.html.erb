@@ -34,8 +34,8 @@
             </tr>
           </thead>
           <% @reading_lists.each do |reading_list| %>
-            <% isbn = readed_book.isbn %>
-            <% book = RakutenWebService::Books::Book.search(isbn: isbn, outOfStockFlag: 1).first %>
+            
+            <% book = RakutenWebService::Books::Book.search(isbn: reading_list.isbn, outOfStockFlag: 1).first %>
             <tbody>
               <tr>
                 <td class="text-center">
