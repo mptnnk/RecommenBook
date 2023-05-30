@@ -2,7 +2,7 @@
   <table class="table table-sm table-light lists" style="width: 100%">
     <tr>　<!--1行目 isbnを所持している場合のみ本情報表示-->
       <% if obj.isbn.present? %>
-        <% book = RakutenWebService::Books::Book.search(isbn: obj.isbn).first %>
+        <% book = RakutenWebService::Books::Book.search(isbn: obj.isbn, outOfStockFlag: 1).first %>
         <% unless current_page?(book_path(book.isbn)) %>
           <td colspan="1", style="width: 10%; padding: 20px" rowspan="2">
             <%= link_to book_path(book.isbn) do %>

@@ -6,7 +6,8 @@ class Review < ApplicationRecord
   has_many :hashtag_relations, dependent: :destroy
   has_many :hashtags, through: :hashtag_relations
   
-  validates :content, presence: true, length: { maximum: 500 }
+  validates :content, length: { maximum: 500 }
+  validates :isbn, presence: true
   
   def liked_by?(user)
     likes.where(user_id: user.id).exists?

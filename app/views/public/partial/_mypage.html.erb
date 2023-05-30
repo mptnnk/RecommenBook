@@ -1,7 +1,7 @@
 <% objects.each do |obj| %>
   <div class="card border-light mx-2" style="width: 13rem">
     <% if obj.isbn.present? %>
-      <% book = RakutenWebService::Books::Book.search(isbn: obj.isbn).first %>
+      <% book = RakutenWebService::Books::Book.search(isbn: obj.isbn, outOfStockFlag: 1).first %>
         <div class="card-img-top text-center">
             <%= link_to book_path(book.isbn) do %>
               <%= image_tag(book['small_image_url']) %>

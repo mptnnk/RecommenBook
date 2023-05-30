@@ -6,13 +6,13 @@ class Public::ReviewsController < ApplicationController
   def index
     if params[:user_name]
       if @user == current_user
-        @my_reviews = Review.where(user_id: current_user.id).page(params[:page]).per(10).order(created_at: :DESC)
+        @my_reviews = Review.where(user_id: current_user.id, content: present).page(params[:page]).per(10).order(created_at: :DESC)
       elsif @user != current_user
-        @user_reviews = Review.where(user_id: @user.id).where(in_release: true).page(params[:page]).per(10).order(created_at: :DESC)
+        @user_reviews = Review.where(user_id: @user.id, content: present, in_release: true).page(params[:page]).per(10).order(created_at: :DESC)
       end
       
     elsif params[:book_id]
-      @book = RakutenWebService::Books::Book.search(isbn: params[:book_id]).first
+      @book = RakutenWebService::Books::Book.search(isbn: params[:book_id], outOfStockFlag: 1).first
       @book_reviews = Review.where(isbn: params[:book_id]).page(params[:page]).per(10).order(created_at: :DESC)
       
     elsif params[:user_name].blank? && params[:book_id].blank?
@@ -22,7 +22,7 @@ class Public::ReviewsController < ApplicationController
   end
 
   def show
-    @book = RakutenWebService::Books::Book.search(isbn: @review.isbn).first
+    @book = RakutenWebService::Books::Book.search(isbn: @review.isbn, outOfStockFlag: 1).first
     @book_favorites = FavoriteBook.where(isbn: @book.isbn)
     @review_comment = ReviewComment.new
     @comments = @review.review_comments.all
@@ -30,10 +30,9 @@ class Public::ReviewsController < ApplicationController
 
   def new
     @book = find_book(params[:book_id])
-    @book_isbn = @book["isbn"]
+    @readed_book = Review.where(isbn: @book.isbn)
     @book_favorites = FavoriteBook.where(isbn: @book.isbn)
     @review = Review.new
-    @readed_book = current_user.readed_books.find_by(isbn: @book.isbn)
   end  
 
   def edit
@@ -75,7 +74,7 @@ class Public::ReviewsController < ApplicationController
   end
   
   def find_book(isbn)
-    RakutenWebService::Books::Book.search(isbn: isbn).first
+    RakutenWebService::Books::Book.search(isbn: isbn, outOfStockFlag: 1).first
   end
 
 end

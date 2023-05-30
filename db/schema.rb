@@ -96,10 +96,9 @@ ActiveRecord::Schema.define(version: 2023_05_26_095144) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "readed_books", force: :cascade do |t|
+  create_table "reading_lists", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "isbn", null: false
-    t.datetime "readed_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

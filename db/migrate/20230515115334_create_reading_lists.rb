@@ -1,9 +1,8 @@
-class CreateReadedBooks < ActiveRecord::Migration[6.1]
+class CreateReadingLists < ActiveRecord::Migration[6.1]
   def change
-    create_table :readed_books do |t|
+    create_table :reading_lists do |t|
       t.integer :user_id, null: false
       t.string :isbn, null: false
-      t.datetime :readed_at
       t.timestamps
     end
   end

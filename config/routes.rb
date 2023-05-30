@@ -40,14 +40,14 @@ Rails.application.routes.draw do
     resources :books, only: [:show] do
       resources :reviews, only: [:new, :create]
       resources :favorite_books, only: [:create, :destroy]
-      resources :readed_books, only: [:destroy, :create]
+      resources :reading_lists, only: [:destroy, :create]
     end
     resources :reviews, only: [:index, :show, :edit, :update, :destroy] do
       resources :review_comments, only: [:create, :destroy]
       resource :likes, only: [:create, :destroy]
     end
     resources :favorite_books, only: [:index, :update]
-    resources :readed_books, only: [:index]
+    resources :reading_lists, only: [:index]
     resources :tweets, only: [:new, :create, :index, :show, :destroy] do
       resources :tweet_comments, only: [:create, :destroy]
       resource :likes, only: [:create, :destroy]

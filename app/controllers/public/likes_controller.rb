@@ -24,7 +24,6 @@ class Public::LikesController < ApplicationController
     #   @reviews = Review.joins(:likes).where(likes: { id: review_likes.pluck(:id)})
     #   @combined_records = @tweets + @reviews
     #   @combined_records = @combined_records.sort_by { |record| -record.likes.count }
-      
     # end
     # 全体のいいね一覧を作成することがなければ条件分岐は不要
   end

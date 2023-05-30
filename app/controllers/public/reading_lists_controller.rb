@@ -1,13 +1,13 @@
-class Public::ReadedBooksController < ApplicationController
+class Public::ReadingListsController < ApplicationController
   before_action :authenticate_user!, only: [:create, :destroy]
   before_action :set_userinfo, only: [:index] # application_controller
   
   def index
-    @readed_books = ReadedBook.where(user_id: @user.id)
+    @reading_lists = ReadingList.where(user_id: @user.id)
   end
 
   def create
-    @book = RakutenWebService::Books::Book.search(isbn: params[:book_id]).first
+    @book = RakutenWebService::Books::Book.search(isbn: params[:book_id], outOfStockFlag: 1).first
     @book_isbn = @book['isbn']
     @readed_book = current_user.readed_books.build(
       isbn: @book.isbn,
@@ -19,7 +19,7 @@ class Public::ReadedBooksController < ApplicationController
   end  
   
   def destroy
-    @book = RakutenWebService::Books::Book.search(isbn: params[:book_id]).first
+    @book = RakutenWebService::Books::Book.search(isbn: params[:book_id], outOfStockFlag: 1).first
     @readed_book = current_user.readed_books.find_by(isbn: @book.isbn)
     if @readed_book.destroy
       redirect_to request.referer, alert: '読んだ本から削除しました'
