@@ -41,18 +41,21 @@ class Public::TweetsController < ApplicationController
   def create
     if params[:book_id].present?
       @book = RakutenWebService::Books::Book.search(isbn: params[:book_id], outOfStockFlag: 1).first
+      @book_favorites = FavoriteBook.where(isbn: @book.isbn)
       @tweet = current_user.tweets.build(
         isbn: @book.isbn,
         tweet_content: params[:tweet][:tweet_content]
       )
-      if @tweet.save!
-        redirect_to book_path(@book.isbn), notice: "つぶやきを投稿しました"
+      if @tweet.save
+        redirect_to book_path(@book.isbn), notice: "ツイートを投稿しました"
       else
+        flash.now[:alert] = "ツイートを投稿できませんでした"
         render :new
       end
+
     else
       @tweet = current_user.tweets.build(tweet_content: params[:tweet][:tweet_content])
-      if @tweet.save!
+      if @tweet.save
         redirect_to tweets_path, notice: "つぶやきを投稿しました"
       else
         render :new

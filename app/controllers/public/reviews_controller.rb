@@ -52,7 +52,7 @@ class Public::ReviewsController < ApplicationController
   def create
     @book = find_book(params[:book_id])
     @review = Review.new(review_params)
-    @review.save ? (redirect_to book_path(@book.isbn), notice: 'レビューが投稿されました') : (render :new)
+    @review.save ? (redirect_to book_path(@book.isbn), notice: '登録が完了しました') : (render :new)
   end
   
   def update

@@ -11,7 +11,7 @@
       <% if @book.present? %>
         <%= form_with model: @tweet, url: tweets_path(book_id: @book.isbn), method: :post do |tweet| %>
           <%= tweet.hidden_field :isbn, value: @book_isbn %>
-          <%= tweet.label :"つぶやく", class:"border border-primary p-2 mt-2 rounded" %><br>
+          
           <p><i class="fas fa-exclamation-triangle"></i>ツイートはネタバレ投稿禁止です<i class="fas fa-exclamation-triangle"></i></p>
           <p><i class="fas fa-exclamation-triangle"></i>悪意のあるツイートを発見した場合は、管理人が削除する可能性があります<i class="fas fa-exclamation-triangle"></i></p>
           <%= tweet.text_area :tweet_content, size:"100x2" %><br>
@@ -21,7 +21,7 @@
         <%= form_with model: @tweet, url: tweets_path, method: :post do |tweet| %>
           <%= tweet.label :"つぶやく", class:"border border-primary p-2 mt-2 rounded" %><br>
           <%= tweet.text_area :tweet_content, size:"100x2" %><br>
-          <%= tweet.submit "つぶやきを投稿", class:"btn btn-success mt-2" %>
+          <%= tweet.submit "ツイートする", class:"btn btn-success mt-2" %>
         <% end %>
       <% end %>
     </div>

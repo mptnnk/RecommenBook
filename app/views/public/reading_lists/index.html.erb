@@ -14,11 +14,6 @@
         <% else %>
           <%= @user.name %>さんの読みたい本一覧
         <% end %>
-        <!--<% if params[:user_name].present? && params[:user_name] == current_user.name %>-->
-        <!--  あなたの読みたい本一覧-->
-        <!--<% elsif params[:user_name].present? && params[:user_name] != current_user.name %>-->
-        <!--  <%= @user.name %>さんの読みたい本一覧-->
-        <!--<% end %>-->
       </h4>
       
       <% if @reading_lists.present? %>
