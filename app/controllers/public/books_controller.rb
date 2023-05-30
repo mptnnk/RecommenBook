@@ -66,7 +66,7 @@ class Public::BooksController < ApplicationController
   end
   
   def user_random_books
-    if current_user.favorite_books.present?
+    if user_signed_in? && current_user.favorite_books.present?
       recent_favorite_isbns = current_user.favorite_books.order(created_at: :DESC).limit(30).pluck(:isbn)
       genre_ids = []
       recent_favorite_isbns.each do |isbn|

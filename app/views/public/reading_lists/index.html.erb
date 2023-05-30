@@ -9,7 +9,7 @@
     
     <div class="col-md-8 offset-md-1">
       <h4 class="page-title">
-        <% if @user == current_user %>
+        <% if user_signed_in? && @user == current_user %>
           あなたが読みたい本一覧
         <% else %>
           <%= @user.name %>さんの読みたい本一覧
