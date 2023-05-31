@@ -9,24 +9,26 @@
     
     <div class="col-md-8 offset-md-1">
       <% if @user == current_user %>
-        <h4 class="page-title">あなたの好きなジャンル</h4>
+        <h4 class="page-title">Your Favorite Genres</h4>
         <p>※プロフィール編集から好きなジャンルを登録できます。</p>
       <% else %>
-        <h4><%= @user.name %>さんの好きなジャンル</h4>
+        <h4><%= @user.name %>'s Favorite Genres</h4>
       <% end %>
         
         
-      
-      <div class="table-responsive">
-        <% @favorite_genres.each do |favorite_genre| %>
-        <ul>
-          <li>
-            <%= link_to favorite_genre.genre.name, books_search_path(book_genre_id: favorite_genre.genre.book_genre_id) %>
-          </li>
-        </ul>
-        <% end %>
+      <% if @favorite_genres.present? %>
+        <div class="table-responsive">
+          <% @favorite_genres.each do |favorite_genre| %>
+          <ul>
+            <li>
+              <%= link_to favorite_genre.genre.name, books_search_path(book_genre_id: favorite_genre.genre.book_genre_id) %>
+            </li>
+          </ul>
+          <% end %>
       </div>
-      
+      <% else %>
+        <h5 class="ml-2">No Favorite Genre</h5>
+      <% end %>
     </div>
   </div>  
 </div>

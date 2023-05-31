@@ -6,16 +6,16 @@
     
     <div class="col-md-8 offset-md-1">
       <h4 class="page-title">
-        <% if params[:user_name].present? && params[:user_name] == current_user.name %>
-          あなたのフォロワー一覧
-        <% elsif params[:user_name].present? && params[:user_name] != current_user.name %>
-          <%= @user.name %>さんのフォロワー一覧
+        <% if @user == current_user %>
+          Your Followers
+        <% else %>
+          <%= @user.name %>'s Followers
         <% end %>
       </h4>
       <% if @followers.exists? %>
         <%= render 'public/partial/follows', users: @followers, book: @book, recommenbook: @recommenbook %>
       <% else %>
-        <p>ユーザーはいません</p>
+        <h5 class="ml-2">No Followers</h5>
       <% end %>
     </div>
   </div>

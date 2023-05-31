@@ -22,13 +22,13 @@
         <% if obj.is_a?(Review)  && obj.user.is_active %>
           <%= link_to mypage_path(name: obj.user.name) do %>
             <%= obj.user.name %>
-          <% end %>さんのレビュー
+          <% end %>'s Reviews
         <% elsif obj.is_a?(Tweet) && obj.user.is_active %>
           <%= link_to mypage_path(name: obj.user.name) do %>
             <%= obj.user.name %>
-          <% end %>さんのツイート
+          <% end %>'s Tweets
         <% elsif !obj.user.is_active %>
-          退会済みのユーザー
+          Unsubscribed user
         <% end %>
       </td>
       <td colspan="2" style="width: 20%"><%= obj.created_at.strftime('%Y/%m/%d') %></td>
@@ -39,16 +39,16 @@
         <% if obj.is_a?(Review) %>
           <% if obj.spoiler == false %>
             <%= render_review_with_hashtags(obj.content, 130) %>
-            <%= link_to "（クリックしてくわしく読む）", review_path(obj.id), style: "color: #ff7f50" %>
+            <%= link_to "（show more）", review_path(obj.id), style: "color: #ff7f50" %>
           <% else %>
             <%= link_to review_path(obj.id) do %>
-              <p class="spoiler">ネタバレを含みます（クリックして読む）</p>
+              <p class="spoiler">ネタバレを含みます（でも見る)</p>
             <% end %>
           <% end %>
           
         <% elsif obj.is_a?(Tweet) %>
           <%= render_tweet_with_hashtags(obj.tweet_content, 130) %>
-          <%= link_to "（クリックしてくわしく読む）", tweet_path(obj.id), style: "color: #ff7f50" %>
+          <%= link_to "（show more）", tweet_path(obj.id), style: "color: #ff7f50" %>
         <% end %>
       </td>
     </tr>

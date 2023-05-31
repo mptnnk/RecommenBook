@@ -1,32 +1,41 @@
 <% objects.each do |obj| %>
   <div class="card border-light mx-2" style="width: 13rem">
+    
     <% if obj.isbn.present? %>
       <% book = RakutenWebService::Books::Book.search(isbn: obj.isbn, outOfStockFlag: 1).first %>
+        
         <div class="card-img-top text-center">
             <%= link_to book_path(book.isbn) do %>
               <%= image_tag(book['small_image_url']) %>
             <% end %>
         </div>
+        
         <p class="card-title text-center">
           <%= link_to book_path(book.isbn) do %>
             <%= book['title'].truncate(20) %>
           <% end %>
         </p>
+        
     <% end %> <!--obj.isbn.present done-->
     
     <div class="card-text">
       <% if obj.is_a?(Review) %>
+      
         <% if obj.spoiler == false %>
           <%= render_review_with_hashtags(obj.content, 50) %>
-          <%= link_to "（続きを見る）", review_path(obj.id), style: "color: #ff7f50" %>
+          <%= link_to "（Read more）", review_path(obj.id), style: "color: #ff7f50" %>
         <% else %>
           <%= link_to review_path(obj.id) do %>
-            <p class="spoiler">ネタバレを含みます（クリックして読む）</p>
+            <p class="spoiler-large"><i class="fas fa-exclamation-circle"></i>SPOILER<i class="fas fa-exclamation-circle"></i><span class="spoiler-small">click to read</span></p>
+            
           <% end %>
         <% end %>
+        
       <% elsif obj.is_a?(Tweet) %>
+      
         <%= render_tweet_with_hashtags(obj.tweet_content, 50) %>
-        <%= link_to "（続きを見る）", tweet_path(obj.id), style: "color: #ff7f50" %>
+        <%= link_to "（Read more）", tweet_path(obj.id), style: "color: #ff7f50" %>
+        
       <% elsif obj.is_a?(FavoriteBook) %>
         
       <% end %> <!--is_a?条件分岐 done-->
@@ -34,15 +43,24 @@
     <div class="card-text">
       <%= obj.created_at.strftime('%Y/%m/%d') %>
     </div>
+    
     <div class="card-text">
       <% if user_signed_in? && obj.is_a?(Review) %>
-        <%= render "public/likes/reviewbtn", review: obj %>
-        （<%= obj.review_comments.count %>）コメント
+        <span class=<%= "like-" + obj.id.to_s %> ><%= render "public/likes/reviewbtn", review: obj %></span>
+        （<%= obj.review_comments.count %>）Comments
+        
       <% elsif user_signed_in? && obj.is_a?(Tweet) %>
-        <%= render "public/likes/tweetbtn", tweet: obj %>
-        （<%= obj.tweet_comments.count %>）コメント
-      <% elsif !user_signed_in? && (obj.is_a?(Review) || obj.is_a?(Tweet)) %>
-        <i class="fas fa-heart" aria-hidden="true" style="color: red;"></i><%= obj.likes.count %>いいね
+        <span class=<%= "like-" + obj.id.to_s %> ><%= render "public/likes/tweetbtn", tweet: obj %></span>
+        （<%= obj.tweet_comments.count %>）Comments
+        
+      <% elsif !user_signed_in? && obj.is_a?(Review) %>
+        <i class="fas fa-heart" aria-hidden="true" style="color: red;"></i><%= obj.likes.count %>Likes
+        ( <%= obj.review_comments.count %> )Comments
+        
+      <% elsif !user_signed_in? && obj.is_a?(Tweet) %>
+        <i class="fas fa-heart" aria-hidden="true" style="color: red;"></i><%= obj.likes.count %>Likes
+        ( <%= obj.tweet_comments.count %> )Comments
+        
       <% elsif obj.is_a?(FavoriteBook) %>
       
       <% end %>

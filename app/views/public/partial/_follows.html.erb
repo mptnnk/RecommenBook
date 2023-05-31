@@ -2,10 +2,10 @@
   <thead>
     <tr>
       <th></th>
-      <th>name</th>
-      <th>おすすめ本</th>
-      <th>レビュー</th>
-      <th>つぶやき</th>
+      <th>User name</th>
+      <th>User recommend</th>
+      <th>reviews</th>
+      <th>tweets</th>
       <th></th>
     </tr>
   </thead>
@@ -37,7 +37,11 @@
             <%= user.tweets.count %>tweets
           <% end %>
         </td>
-        <td><%= render "public/relationships/btn", user: user %></td>
+        <td>
+          <% if user_signed_in? %>
+            <%= render "public/relationships/btn", user: user %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

@@ -86,7 +86,14 @@ th {
   padding: 10px;
 }
 
-.spoiler {
+.spoiler-large {
+  font-size: 20px;
+  font-weight: bold;
+  color: #ff7f50;
+}
+
+.spoiler-small {
+  font-size: 12px;
   color: #ff7f50;
 }
 
