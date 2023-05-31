@@ -51,23 +51,23 @@ class Public::ReviewsController < ApplicationController
   def create
     @book = find_book(params[:book_id])
     @review = Review.new(review_params)
-    @review.save ? (redirect_to book_path(@book.isbn), notice: '登録が完了しました') : (render :new)
+    @review.save ? (redirect_to book_path(@book.isbn), notice: '登録しました！') : (render :new)
   end
   
   def update
     @book = find_book(@review.isbn)
-    @review.update(review_params) ? (redirect_to book_path(@book.isbn), notice: 'レビュー内容を更新しました') : (render :edit)
+    @review.update(review_params) ? (redirect_to book_path(@book.isbn), notice: '更新しました！') : (render :edit)
   end
   
   def destroy
     if @review.destroy
       if request.referer == review_url(@review)
-        redirect_to reviews_path, alert: 'レビューを削除しました'
+        redirect_to reviews_path, alert: 'レビューを消しました、、'
       else
-        redirect_to request.referer, alert: 'レビューを削除しました'
+        redirect_to request.referer, alert: 'レビューを消しました、、'
       end
     else
-      redirect_to request.referer, alert: '削除に失敗しました'
+      redirect_to request.referer, alert: 'レビューを消せませんでした ;('
     end
   end
   
