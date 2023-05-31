@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-3">
-      <%= render 'public/partial/userinfo', user: @user, book: @book, reading_lists: @reading_lists, readed_books_count: @readed_books_count, recommenbook: @recommenbook, in_release_reviews: @in_release_reviews %>
+      <%= render 'public/partial/userinfo', user: @user, book: @book, reading_lists: @reading_lists, readed_lists_count: @readed_lists_count, recommenbook: @recommenbook, in_release_reviews: @in_release_reviews %>
     </div>
     
     <div class="col-md-8 offset-md-1">
@@ -13,7 +13,7 @@
         <% end %>
       </h2>
       
-      <% if @readed_books.present? %>
+      <% if @readed_lists.present? %>
         <table class="table table-hover table-inverse">
           <thead class="text-center">
             <tr>
@@ -23,7 +23,7 @@
               <th>読み終わった日</th>
             </tr>
           </thead>
-          <% @readed_books.each do |readed| %>
+          <% @readed_lists.each do |readed| %>
           <% book = RakutenWebService::Books::Book.search(isbn: readed.isbn, outOfStockFlag: 1).first %>
           <tbody>
             <tr>
@@ -39,10 +39,11 @@
               </td>
               <td><%= book['author'] %></td>
               <td>
-                <% if readed.readed_at.nil? %>
-                  不明
+                <% latest_readed_at = readed.latest_readed_at %>
+                <% if latest_readed_at.present? %>
+                  <%= DateTime.parse(latest_readed_at)&.strftime('%Y/%m/%d') %>
                 <% else %>
-                  <%= @user.reviews.where(isbn: readed.isbn).where.not(readed_at: nil).order(readed_at: :DESC).pluck(:readed_at).first&.strftime('%Y/%m/%d') %>
+                  不明
                 <% end %>
               </td>
             </tr>

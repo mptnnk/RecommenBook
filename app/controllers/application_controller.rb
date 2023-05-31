@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
       @tweets = @user.tweets.limit(4).order(created_at: :DESC)
       @favorite_books = @user.favorite_books.limit(4).order(created_at: :DESC)
       @favorite_genres = @user.favorite_genres.all
-      @readed_books_count = @user.reviews.group(:isbn).size.count
+      @readed_lists_count = @user.reviews.group(:isbn).size.count
       @reading_lists = @user.reading_lists.all
       
     end

@@ -1,7 +1,7 @@
 class Public::ReviewsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :destroy]
   before_action :submitted_review, only: [:show, :edit, :update, :destroy]
-  before_action :set_userinfo, only: [:index, :readed_book], if: -> { params[:user_name].present? } # application_controller
+  before_action :set_userinfo, only: [:index, :readed_list], if: -> { params[:user_name].present? } # application_controller
   
   def index
     if params[:user_name]
@@ -21,12 +21,15 @@ class Public::ReviewsController < ApplicationController
     end
   end
   
-  def readed_book
+  def readed_list
     @user = User.find_by(name: params[:user_name])
     if @user == current_user
-      @readed_books = Review.where(user_id: current_user.id).group(:isbn)
+      # @readed_books = Review.where(user_id: current_user.id).group(:isbn)
+      @readed_lists = Review.where(user_id: current_user.id).select("isbn, MAX(readed_at) as latest_readed_at").group(:isbn)
     elsif @user != current_user
-      @readed_books = Review.where(user_id: @user.id).group(:isbn)
+      @readed_lists = Review.where(user_id: @user.id).select("isbn, MAX(readed_at) as latest_readed_at").group(:isbn)
+      # @readed_books = Review.where(user_id: @user.id).group(:isbn)
+      
     end
   end
 

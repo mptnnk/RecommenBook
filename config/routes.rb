@@ -33,7 +33,7 @@ Rails.application.routes.draw do
     
     get 'books/search' => "books#search"
     get 'hashtag/:name' => "hashtags#index", as: 'hashtag'
-    get 'readed_book' => "reviews#readed_book", as: 'readed_book'
+    get 'readed_list' => "reviews#readed_list", as: 'readed_list'
     
     # get 'comments' => 'review_comments#index', as: "comments"
     resources :review_comments, only: [:index], as: "comments"
