@@ -4,7 +4,7 @@ class Public::UsersController < ApplicationController
   before_action :set_userinfo, only: [:show, :favorite_genres]
 
   def show
-    redirect_to root_path, alert: 'It is Unsubscribed Users'  unless @user
+    redirect_to root_path, alert: 'ユーザー情報が有効ではありません'  unless @user
   end
   
   def favorite_genres
@@ -14,7 +14,12 @@ class Public::UsersController < ApplicationController
   end
   
   def update
-    @user.update(user_params) ? (redirect_to mypage_path(@user), notice: '会員情報を更新しました') : (render :edit)
+    if @user.update(user_params)
+      redirect_to mypage_path(@user), notice: "ユーザー情報を更新しました"
+    else
+      flash.now[:alert] = "更新に失敗しました"
+      render :edit
+    end
   end
 
   def unsubscribe
@@ -29,7 +34,7 @@ class Public::UsersController < ApplicationController
   private
   
   def user_params
-    params.require(:user).permit(:name, :email, :is_active, :password, :profile_image, genre_ids: [] )
+    params.require(:user).permit(:name, :email, :is_active, :password, :profile_image, :introduction, genre_ids: [] )
   end
   
   def set_current_user

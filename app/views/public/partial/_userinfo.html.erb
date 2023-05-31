@@ -9,10 +9,10 @@
         <%= render "public/relationships/btn", user: user %>
       </div>
     <% elsif user == current_user %>
-      <%= link_to "edit your profile", users_information_edit_path, class:"btn btn-outline-secondary btn-block"%>
+      <%= link_to "プロフィールを編集する", users_information_edit_path, class:"btn btn-outline-secondary btn-block"%>
     <% end %>
   </div>
-    <th>なまえ</th>
+    <th style="width: 40%">なまえ</th>
     <td>
       <%= link_to mypage_path(name: user.name) do %>
         <%= user.name %>
@@ -20,6 +20,7 @@
   </tr>
   <tr>
     <th>ひとこと</th>
+    <td><%= user.introduction %></td>
   </tr>
   <tr>
     <th>レビュー</th>

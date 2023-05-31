@@ -3,24 +3,24 @@
   <div class="row">
     <%= render 'public/partial/bookdetail', book: @book, book_favorites: @book_favorites %>
   </div>
-  <h4 class="page-title mt-3">Review</h4>
+  <h4 class="page-title mt-3">レビュー</h4>
   <div class="row">
     <div class="col">
       <table class="table table-borderless">
         <tr>
-          <th style="width: 10%">User</th>
+          <th style="width: 10%">書いたひと</th>
           <td>
             <%= link_to mypage_path(name: @review.user.name) do %>
               <%= @review.user.name %>
             <% end %>
           </td>
-          <th>Submission Date</th>
+          <th>書いた日</th>
           <td><%= @review.created_at.strftime('%Y/%m/%d') %></td>
-          <th style="width: 20%">Date finish read</th>
+          <th style="width: 20%">よみおわった日</th>
           <td><%= @review.readed_at&.strftime("%Y/%m/%d") %></td>
         </tr>
         <tr>
-          <th>Content</th>
+          <th>レビュー</th>
           <td colspan="5"><%= render_review_with_hashtags(@review.content) %></td>
         </tr>
         <tr>
@@ -41,7 +41,7 @@
         </tr>
       </table>
       
-      <h3 id="reviewCommentCount">Comments（<%= @comments.count %>件）</h3>
+      <h3 id="reviewCommentCount">コメント（<%= @comments.count %>件）</h3>
       <div class="review-comments-index">
         <%= render "public/partial/comments", review: @review, comments: @comments %>
       </div>
