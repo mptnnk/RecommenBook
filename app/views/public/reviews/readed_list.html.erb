@@ -17,8 +17,8 @@
         <table class="table table-hover table-inverse">
           <thead class="text-center">
             <tr>
-              <th style="width: 10%"></th>
-              <th style="width: 20%">タイトル</th>
+              <th style="width: 20%"></th>
+              <th style="width: 30%">タイトル</th>
               <th style="width: 20%">著　　者</th>
               <th>読み終わった日</th>
             </tr>
@@ -38,7 +38,7 @@
                 <% end %>
               </td>
               <td><%= book['author'] %></td>
-              <td>
+              <td class="text-center">
                 <% latest_readed_at = readed.latest_readed_at %>
                 <% if latest_readed_at.present? %>
                   <%= DateTime.parse(latest_readed_at)&.strftime('%Y/%m/%d') %>

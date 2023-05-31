@@ -43,7 +43,7 @@
       
       <h3 id="reviewCommentCount">コメント（<%= @comments.count %>件）</h3>
       <div class="review-comments-index">
-        <%= render "public/partial/comments", review: @review, comments: @comments %>
+        <%= render "public/partial/comments", review: @review, comments: @comments, display_page: @display_page %>
       </div>
       <% if user_signed_in? %>
         <%= render "public/review_comments/form", review: @review, review_comment: @review_comment %>

@@ -20,6 +20,7 @@ class Public::TweetsController < ApplicationController
   def show
     @tweet = Tweet.find(params[:id])
     @comments = @tweet.tweet_comments.all
+    @display_page = tweet_path(@tweet.id)
     if @tweet.isbn.present?
       @book = RakutenWebService::Books::Book.search(isbn: @tweet.isbn, outOFStockFlag: 1).first
       @book_favorites = FavoriteBook.where(isbn: @book.isbn)

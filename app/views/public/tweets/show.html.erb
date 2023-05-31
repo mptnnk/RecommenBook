@@ -38,7 +38,7 @@
       </table>
       <h3 id="tweetCommentCount">コメント（<%= @comments.count %>件）</h3>
       <div class="tweet-comments-index">
-        <%= render "public/partial/comments", tweet: @tweet, comments: @comments %>
+        <%= render "public/partial/comments", tweet: @tweet, comments: @comments, display_page: @display_page %>
       </div>
       <%= render "public/tweet_comments/form", tweet: @tweet, tweet_comment: @tweet_comment %>
     </div>

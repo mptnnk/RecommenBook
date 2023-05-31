@@ -17,19 +17,15 @@ class Public::ReviewsController < ApplicationController
       
     elsif params[:user_name].blank? && params[:book_id].blank?
       @reviews = Review.where(in_release: true).where.not(content: [nil, '']).page(params[:page]).per(10).order(created_at: :DESC)
-      # @reviews = Review.joins(:user).where(in_release : true, users: {is_active: true}).page(params[:page]).per(10).order(created_at: :DESC)
     end
   end
   
   def readed_list
     @user = User.find_by(name: params[:user_name])
     if @user == current_user
-      # @readed_books = Review.where(user_id: current_user.id).group(:isbn)
       @readed_lists = Review.where(user_id: current_user.id).select("isbn, MAX(readed_at) as latest_readed_at").group(:isbn)
     elsif @user != current_user
       @readed_lists = Review.where(user_id: @user.id).select("isbn, MAX(readed_at) as latest_readed_at").group(:isbn)
-      # @readed_books = Review.where(user_id: @user.id).group(:isbn)
-      
     end
   end
 
@@ -38,6 +34,7 @@ class Public::ReviewsController < ApplicationController
     @book_favorites = FavoriteBook.where(isbn: @book.isbn)
     @review_comment = ReviewComment.new
     @comments = @review.review_comments.all
+    @display_page = review_path(@review.id)
   end
 
   def new
