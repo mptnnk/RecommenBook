@@ -7,9 +7,9 @@
     
     <div class="col-md-8 offset-md-1">
       <h4 class="page-title">
-        <% if params[:user_name].present? && params[:user_name] == current_user.name %>
+        <% if @user == current_user %>
           あなたのいいね一覧
-        <% elsif params[:user_name].present? && params[:user_name] != current_user.name %>
+        <% else %>
           <%= @user.name %>さんのいいね一覧（新着順）
         <% end %>
       </h4>

@@ -4,7 +4,7 @@ class Public::LikesController < ApplicationController
   
   def index
     # if params[:user_id]
-      @in_release_reviews = Review.where(user_id: @user.id, in_release: true).count
+      # @in_release_reviews = Review.where(user_id: @user.id, in_release: true).count
       tweet_likes = Like.where(user_id: @user.id).where.not(tweet_id: nil)
       # likeテーブルの中でtweet_idがnilでないものを「tweet_likes」として抽出する。
       @tweets = Tweet.joins(:likes).where(likes: { id: tweet_likes.pluck(:id) })

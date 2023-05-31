@@ -35,8 +35,8 @@ Rails.application.routes.draw do
     get 'hashtag/:name' => "hashtags#index", as: 'hashtag'
     get 'readed_list' => "reviews#readed_list", as: 'readed_list'
     
-    # get 'comments' => 'review_comments#index', as: "comments"
-    resources :review_comments, only: [:index], as: "comments"
+    get 'comments' => 'review_comments#index', as: "comments"
+    # resources :review_comments, only: [:index], as: "comments"
     
     resources :books, only: [:show] do
       resources :reviews, only: [:new, :create]

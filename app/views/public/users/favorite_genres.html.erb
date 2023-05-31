@@ -1,8 +1,9 @@
+<!--条件分岐確認OK-->
 <div class="container-fluid">
   <div class="row">
     <% if params[:name] %>
       <div class="col-md-3">
-        <%= render 'public/partial/userinfo', user: @user, book: @book, reading_lists: @reading_lists, readed_books_count: @readed_books_count, recommenbook: @recommenbook, in_release_reviews: @in_release_reviews %>
+        <%= render 'public/partial/userinfo', user: @user, book: @book, reading_lists: @reading_lists, readed_lists_count: @readed_lists_count, recommenbook: @recommenbook, in_release_reviews: @in_release_reviews %>
       </div>
     <% end %>
     
@@ -18,7 +19,11 @@
       
       <div class="table-responsive">
         <% @favorite_genres.each do |favorite_genre| %>
-          <%= link_to favorite_genre.genre.name, books_search_path(book_genre_id: favorite_genre.genre.book_genre_id) %>
+        <ul>
+          <li>
+            <%= link_to favorite_genre.genre.name, books_search_path(book_genre_id: favorite_genre.genre.book_genre_id) %>
+          </li>
+        </ul>
         <% end %>
       </div>
       

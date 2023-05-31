@@ -34,7 +34,6 @@ class Public::ReviewsController < ApplicationController
     @book_favorites = FavoriteBook.where(isbn: @book.isbn)
     @review_comment = ReviewComment.new
     @comments = @review.review_comments.all
-    @display_page = review_path(@review.id)
   end
 
   def new

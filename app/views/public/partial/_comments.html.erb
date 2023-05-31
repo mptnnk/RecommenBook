@@ -14,9 +14,9 @@
         
         <td><%= comment.comment %></td>
 
-        <% if comment.is_a?(ReviewComment) && !display_page %>
+        <% if comment.is_a?(ReviewComment) %>
           <td colspan="2" style="width: 20%"><%= link_to "もとのレビューを見る", review_path(review.id), class: "btn btn-sm btn-info" %></td>
-        <% elsif comment.is_a?(TweetComment) && !display_page %>
+        <% elsif comment.is_a?(TweetComment) && !tweet_path(tweet.id) %>
           <td colspan="2" style="width: 20%"><%= link_to "もとのつぶやきを見る", tweet_path(tweet.id), class: "btn btn-sm btn-info" %></td>
         <% end %>
         
