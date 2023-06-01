@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   validates :name, presence: true, uniqueness: true
-  validates :introduction, length: {maximum: 15}
+  validates :introduction, length: {maximum: 20}
   
   has_many :reviews, dependent: :destroy
   has_many :tweets, dependent: :destroy
@@ -28,7 +28,7 @@ class User < ApplicationRecord
   has_one_attached :profile_image
   
   def get_profile_image
-    (profile_image.attached?) ? profile_image : 'default-image.jpg'
+    (profile_image.attached?) ? profile_image : 'default-image.png'
   end
   
   def to_param

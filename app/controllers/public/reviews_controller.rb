@@ -62,9 +62,9 @@ class Public::ReviewsController < ApplicationController
   def destroy
     if @review.destroy
       if request.referer == review_url(@review)
-        redirect_to reviews_path, alert: 'レビューを消しました、、'
+        redirect_to reviews_path, alert: 'レビューを消しました'
       else
-        redirect_to request.referer, alert: 'レビューを消しました、、'
+        redirect_to request.referer, alert: 'レビューを消しました'
       end
     else
       redirect_to request.referer, alert: 'レビューを消せませんでした ;('

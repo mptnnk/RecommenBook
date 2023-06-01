@@ -1,15 +1,18 @@
 <table class="table">
   <div class="text-center mt-2 mb-2">
-    <%= image_tag user.get_profile_image, size:'80x100' %>
-  <tr>
+    <%= image_tag user.get_profile_image, class: "user-image" %>
+    <% if user == current_user %>
+      <%= link_to users_information_edit_path do %>
+        <%= image_tag 'henshuu.png', class: "edit-btn" %>
+      <% end %>
+    <% end %>
   </div>
+  <tr>
   <div class="row mt-2 mb-2">
     <% if user_signed_in? && user !=  current_user %>
       <div class="mx-auto">
         <%= render "public/relationships/btn", user: user %>
       </div>
-    <% elsif user == current_user %>
-      <%= link_to "プロフィールを編集する", users_information_edit_path, class:"btn btn-outline-secondary btn-block"%>
     <% end %>
   </div>
     <th style="width: 40%">なまえ</th>

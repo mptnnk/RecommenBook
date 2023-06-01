@@ -1,39 +1,33 @@
 <div class="container">
   <div class="row">
-    <div class="col">
-      <h2 class="page-title"><%= @user.name %>さんの会員情報編集</h2>
-      <%= form_with model: @user, url: admin_user_path, method: :patch, local: true do |user| %>
-      <table class="table table-borderless">
-        <tr>
-          <th style="width: 25%">ユーザーネーム</th>
-          <td><%= user.text_field :name, class: "form-control" %></td>
-        </tr>
-        <tr>
-          <th>メールアドレス</th>
-          <td><%= user.email_field :email, class: "form-control" %></td>
-        </tr>
-        <tr>
-          <th>プロフィール画像</th>
-          <td>
-            <%= image_tag @user.get_profile_image, size: '80x100' %>
-            <%= user.file_field :profile_image, class: "form-control-file profile_image mt-2", acceppt: "image/*" %>
-          </td>
-        </tr>
-        <tr>
-          <th>会員ステータス</th>
-          <td>
-            <%= user.radio_button :is_active, true %>
-            <%= user.label :is_active, "有効", { value: "true", style: "display: inline-block;" } %>
-            <%= user.radio_button :is_active, false %>
-            <%= user.label :is_active, "退会", { value: "false", style: "display: inline-block;" } %>
-          </td>
-        </tr>
-        <tr>
-          <th></th>
-          <td><%= user.submit "変更を保存する", class: "btn btn-success mt-2" %></td>
-        </tr>
-      </table>
-      <% end %>
-    </div>
+    <%= form_with model: @user, url: admin_user_path, method: :patch, local: true do |user| %>
+      <div class="col-md-12 col-sm-12">
+        <p class="page-title"><%= @user.name %>さんの会員情報編集</p>
+        <div class="form-group">
+          <%= user.label :name, "ユーザーネーム", class: "form-title" %>
+          <%= user.text_field :name, class: "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= user.label :email, "メールアドレス", class: "form-title" %>
+          <%= user.email_field :email, class: "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= user.label :profile_image, "プロフィール画像", class: "form-title" %><br>
+          <%= image_tag @user.get_profile_image, class: "edit-user-image" %>
+          <%= user.file_field :profile_image, class: "form-control-file profile-image", accept: "image/*" %>
+        </div>
+        <div class="form-group">
+          <%= user.label :is_active, "会員ステータス", class:"form-title" %><br>
+          <%= user.radio_button :is_active, true %>
+          <%= user.label :is_active, "有効", { value: "true", style: "display: inline-block;" } %>
+          <%= user.radio_button :is_active, false %>
+          <%= user.label :is_active, "退会", { value: "false", style: "display: inline-block;" } %>
+        </div>
+        <div class="form-group">
+          
+          <%= user.submit "変更を保存する", class: "btn btn-success" %>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>

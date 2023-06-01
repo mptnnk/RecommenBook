@@ -13,7 +13,7 @@
   <tbody>
     <% users.each do |user| %>
       <tr>
-        <td style="width: 10%"><%= image_tag user.get_profile_image, size: '40x50' %></td>
+        <td style="width: 10%"><%= image_tag user.get_profile_image, class: "user-image" %></td>
         <td>
           <%= link_to mypage_path(name: user.name) do %>
             <%= user.name %>

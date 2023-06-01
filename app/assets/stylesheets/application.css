@@ -39,11 +39,9 @@
 }
 
 .page-title{
-  // background-color: #ddd;
-  display: inline-block;
-  // padding: 5px;
-  // border-radius: 5px;
-  font-size: 40px;
+  padding: 5px;
+  font-weight: 450;
+  font-size: 30px;
 }
 
 header {
@@ -57,12 +55,24 @@ main {
 
 footer{
   font-family: 'DotGothic16', sans-serif;
+  background-color: white;
 }
 
-.top-text {
-  line-height: 2;
-  background-image: image-url("hukidasi.svg");
-  background-size: auto;
+.top-image {
+  background-image: url("hondana.jpg");
+  height: 350px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 10px;
+}
+
+.top-text{
+  line-height: 2.5;
+  padding-top: 10px;
+  text-align: center;
+  /*text-shadow: 1px 1px 2px white, 0 0 1em white, 0 0 0.2em white;*/
+  color: white;
 }
 
 .page-subtitle{
@@ -81,15 +91,49 @@ footer{
   border: 2px dotted #dcdcdc;
   border-radius: 20px;
   border-collapse: separate;
-  
 }
 
 th {
   color: #006400;
 }
 
+.form-title {
+  color: #006400;
+  /*width: 20%;*/
+}
+
+.input-form {
+  width: 50%;
+}
+
+.logo-image {
+  width: 50%;
+  height: 50%;
+}
+
 .lists-image {
   padding: 10px;
+}
+
+.admin-user-image{
+  width: 10%;
+  height: auto;
+}
+
+.user-image {
+  width: 50%;
+  height: auto;
+}
+
+.edit-user-image{
+  width: 20%;
+  height: auto;
+}
+
+.edit-btn {
+  width: 15%;
+  height: 15%;
+  padding-top: 35px;
 }
 
 .spoiler-large {
@@ -112,4 +156,16 @@ th {
 .mypage-title{
   color: #dc143c;
   margin-top :20px;
+}
+
+@media screen and (max-width: 959px) {
+	/* 959px以下に適用されるCSS（タブレット用） */
+}
+@media screen and (max-width: 480px) {
+	/* 480px以下に適用されるCSS（スマホ用） */
+  .page-title{
+    padding: 5px;
+    font-weight: 450;
+    font-size: 23px;
+  }
 }
