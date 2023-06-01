@@ -1,8 +1,8 @@
-<!--レスポンシブ対応確認-->
+<!--レスポンシブ対応確認OK-->
 <div class="container-fluid">
   <div class="row">
-    <p class="page-title">ユーザー編集</p>
     <div class="col-md-12 col-sm-12">
+      <p class="page-title">ユーザー編集</p>
       <%= form_with model: @user, url: users_information_path, method: :patch, local: true do |user| %>
         <div class="form-group">
           <%= user.label :name, "なまえ", class: "form-title" %>

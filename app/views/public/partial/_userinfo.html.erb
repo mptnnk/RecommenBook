@@ -1,5 +1,6 @@
-<table class="table">
-  <div class="text-center mt-2 mb-2">
+<table class="table text-center">
+  
+  <div class="user-image-area text-center mt-2 mb-2">
     <%= image_tag user.get_profile_image, class: "user-image" %>
     <% if user == current_user %>
       <%= link_to users_information_edit_path do %>
@@ -7,6 +8,7 @@
       <% end %>
     <% end %>
   </div>
+  
   <tr>
   <div class="row mt-2 mb-2">
     <% if user_signed_in? && user !=  current_user %>
@@ -15,114 +17,104 @@
       </div>
     <% end %>
   </div>
-    <th style="width: 40%">なまえ</th>
     <td>
       <%= link_to mypage_path(name: user.name) do %>
         <%= user.name %>
-      <% end %></td>
+      <% end %>さん
+    </td>
   </tr>
   <tr>
-    <th>ひとこと</th>
-    <td><%= user.introduction %></td>
-  </tr>
-  <tr>
-    <th>レビュー</th>
     <td>
       <%= link_to reviews_path(user_name: user.name) do %>
         <% if user == current_user %>
-          <%= user.reviews.where.not(content: [nil,'']).count %> reviews
+          <%= user.reviews.where.not(content: [nil,'']).count %>レビュー
         <% else %>
-          <%= in_release_reviews.count %> reviews
+          <%= in_release_reviews.count %>レビュー
         <% end %>
       <% end %>
     </td>
   </tr>
   <tr>
-    <th>ツイート</th>
     <td>
       <%= link_to tweets_path(user_name: user.name) do %>
-        <%= user.tweets.count %> tweets
+        <%= user.tweets.count %>ツイート
       <% end %>
     </td>
   </tr>
   <tr>
-    <th>おきにいりの本</th>
     <td>
+      おきにいりは
       <%= link_to favorite_books_path(user_name: user.name) do %>
-        <%= user.favorite_books.count %> books
+      　<%= user.favorite_books.count %>冊
       <% end %>
     </td>
   </tr>
   <tr>
-    <th>すきなジャンル</th>
     <td>
+      すきな
       <%= link_to users_favorite_genres_path(name: user.name) do %>
-        <%= user.favorite_genres.count %> genres
+        <%= user.favorite_genres.count %>ジャンル
       <% end %>
     </td>
   </tr>
   <tr>
-    <th>おすすめしたい本</th>
     <td>
       <% if recommenbook.present? %>
         <%= link_to book_path(id: book.isbn) do %>
           <%= book['title'].truncate(28) %>
         <% end %>
+        がおすすめ
       <% else %>
-        <p>nothing</p>
+        <p>まだないよ</p>
       <% end %>
     </td>
   </tr>
   <tr>
-    <th>よんだ本</th>
     <td>
       <% if readed_lists_count.nil? %>
         <%= link_to "0books", readed_list_path(user_name: user.name) %>
       <% else %>
         <%= link_to readed_list_path(user_name: user.name) do %>
-          <%= readed_lists_count %> books
+          <%= readed_lists_count %>冊
         <% end %>
+        よんだ
       <% end %>
     </td>
   </tr>
   <tr>
-    <th>よみたい本</th>
     <td>
       <%= link_to reading_lists_path(user_name: user.name) do %>
-        <%= reading_lists.count %> books
+        <%= reading_lists.count %> 冊
       <% end %>
+      よみたい
     </td>
   </tr>
   
   <tr>
-    <th>いいねしたもの</th>
     <td>
       <%= link_to likes_path(user_name: user.name) do %>
-        <%= user.likes.count %> likes
+        <%= user.likes.count %>いいね
       <% end %>
     </td>
   </tr>
   <tr>
-    <th>コメントしたもの</th>
     <td>
       <%= link_to comments_path(user_name: user.name) do %>
-        <%= user.review_comments.count + user.tweet_comments.count %> comments
+        <%= user.review_comments.count + user.tweet_comments.count %>コメント
       <% end %>
     </td>
   </tr>
   <tr>
-    <th>フォロー</th>
     <td>
       <%= link_to followings_path(user_name: user.name) do %>
-        <%= user.followings.count %> follows
+        <%= user.followings.count %>フォロー
       <% end %>
     </td>
   </tr>
   <tr>
-    <th>フォロワー</th>
     <td>
       <%= link_to followers_path(user_name: user.name) do %>
-        <%= user.followers.count %> followers
+        <%= user.followers.count %>フォロワー
       <% end %>
     </td>
   </tr>

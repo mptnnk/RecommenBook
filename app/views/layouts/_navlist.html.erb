@@ -1,4 +1,4 @@
-<ul class="navbar-nav navbar-expand-lg ml-auto mb-2">
+<ul class="navbar-nav ml-auto">
   <% if admin_signed_in? %>
   <!--管理者ログインのとき。レビュー一覧、つぶやき一覧、会員一覧は後で作る-->
     <li class="nav-item">
@@ -16,17 +16,17 @@
     
   <% elsif user_signed_in? %>
   <!--ユーザーログイン時-->
-    <li class="nav-link">
-      <%= link_to "About", about_path, style:"color:gray", class:"border border-secondary rounded p-2" %>
+    <li class="nav-item">
+      <%= link_to "about", about_path, class: "nav-link" %>
     </li>
-    <li class="nav-link">
-      <%= link_to books_search_path, style:"color:gray", class:"border border-secondary rounded p-2" do %>
+    <li class="nav-item">
+      <%= link_to books_search_path, class: "nav-link" do %>
         <i class="fas fa-book"></i><i class="fas fa-search-plus"></i>
       <% end %>
     </li>
-    <li class="nav-item dropdown border border-secondary rounded">
+    <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      　めにゅー
+      　menu
       </a>
       <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
         <%= link_to "マイページ", mypage_path(current_user.name), class: "dropdown-item", style:"color:gray" %>
@@ -35,7 +35,7 @@
       </div>
     </li>
     <li class="nav-link">
-      <%= link_to destroy_user_session_path, method: :delete, style:"color:gray", class:"border border-secondary rounded p-2" do %>
+      <%= link_to destroy_user_session_path, method: :delete, class: "nav-link" do %>
         <i class="fas fa-sign-out-alt"></i>
       <% end %>
     </li>
@@ -44,14 +44,14 @@
   
   <!--どちらもログインしていないとき-->
     <li class="nav-link">
-      <%= link_to "About", about_path, style:"color:gray", class:"border border-secondary rounded p-2" %>
+      <%= link_to "About", about_path, class: "nav-link" %>
     </li>
     <li class="nav-link">
-      <%= link_to books_search_path, style:"color:gray", class:"border border-secondary rounded p-2" do %>
+      <%= link_to books_search_path, class: "nav-link" do %>
         <i class="fas fa-book"></i><i class="fas fa-search-plus"></i>
       <% end %>
     </li>
-    <li class="nav-item dropdown border border-secondary rounded">
+    <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         めにゅー
       </a>
@@ -61,10 +61,10 @@
       </div>
     </li>
     <li class="nav-link">
-      <%= link_to "会員登録", new_user_registration_path, style:"color:gray", class:"border border-secondary rounded p-2" %>
+      <%= link_to "会員登録", new_user_registration_path, class: "nav-link" %>
     </li>
     <li class="nav-link">
-      <%= link_to "ログイン", new_user_session_path, style:"color:gray", class:"border border-secondary rounded p-2" %>
+      <%= link_to "ログイン", new_user_session_path, class: "nav-link" %>
     </li>
   <% end %>
 </ul>

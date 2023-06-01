@@ -21,36 +21,45 @@
 }
 
 .login-name{
-  font-family: 'DotGothic16', sans-serif;
-  font-size: 30px;
+  font-size: 20px;
 }
 
 .login-admin{
-  font-size: 25px;
-  padding: 5px;
+  font-size: 20px;
   color: #008000;
-  background-color: #fffacd;
-}
-
-.nav-link{
-  color: #808080;
-  padding: 2px;
-  border-radius: 5px;
-}
-
-.page-title{
-  padding: 5px;
-  font-weight: 450;
-  font-size: 30px;
 }
 
 header {
   font-family: 'DotGothic16', sans-serif;
+  background-color: white;
+  display: flex;
+  z-index: 99;
+  top: 0;
+  height: 80px;
+  position: fixed;
+  justify-content: space-between;
+  width: 100%;
 }
 
+.logo-image {
+  width: 30%;
+  height: 30%;
+}
+
+.navbar-toggler {
+  font-size: inherit !important;
+}
+
+.nav-link{
+  color: #808080;
+  border: gray;
+  border-radius: 2px;
+}
+
+
 main {
-  font-family: 'DotGothic16', sans-serif;
-  
+ font-family: 'DotGothic16', sans-serif;
+ margin: 80px auto;
 }
 
 footer{
@@ -59,20 +68,55 @@ footer{
 }
 
 .top-image {
+  /*background-attachment: fixed;*/
+  margin-top: 0;
   background-image: url("hondana.jpg");
-  height: 350px;
-  background-size: cover;
-  background-position: center;
+  /*background-position: center;*/
   background-repeat: no-repeat;
-  border-radius: 10px;
+  position: relative;
+  height: 400px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
 }
 
-.top-text{
+.top-image:before {
+  background: inherit;
+  content: '';
+  filter: blur(4px);
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  bottom: -5px;
+  left: -5px;
+}
+
+.top-image .top-title{
+  font-size: 30px;
+  position: absolute;
+  color: white;
+  font-weight: bold;
+  top: 5%;
+  text-shadow: 1px 1px 2px white, 0 0 1em gray, 0 0 0.2em gray;
+}
+
+.top-image .top-text{
   line-height: 2.5;
   padding-top: 10px;
+  position: absolute;
   text-align: center;
-  /*text-shadow: 1px 1px 2px white, 0 0 1em white, 0 0 0.2em white;*/
   color: white;
+  max-width: 90%;
+  top: 20%;
+  text-shadow: 1px 1px 2px gray, 0 0 1em gray, 0 0 0.2em gray;
+}
+
+.page-title{
+  padding: 5px;
+  font-weight: 450;
+  font-size: 30px;
 }
 
 .page-subtitle{
@@ -106,11 +150,6 @@ th {
   width: 50%;
 }
 
-.logo-image {
-  width: 50%;
-  height: 50%;
-}
-
 .lists-image {
   padding: 10px;
 }
@@ -120,9 +159,22 @@ th {
   height: auto;
 }
 
+.user-image-area{
+  position: relative;
+}
+
 .user-image {
-  width: 50%;
+  width: 30%;
   height: auto;
+}
+
+.edit-btn {
+  width: 15%;
+  height: auto;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding-bottom: 0;
 }
 
 .edit-user-image{
@@ -130,21 +182,15 @@ th {
   height: auto;
 }
 
-.edit-btn {
-  width: 15%;
-  height: 15%;
-  padding-top: 35px;
-}
-
 .spoiler-large {
   font-size: 20px;
   font-weight: bold;
-  color: #ff7f50;
+  color: #ff4500;
 }
 
 .spoiler-small {
   font-size: 12px;
-  color: #ff7f50;
+  color: #ff4500;
 }
 
 .favorite-explain{
@@ -163,6 +209,28 @@ th {
 }
 @media screen and (max-width: 480px) {
 	/* 480px以下に適用されるCSS（スマホ用） */
+
+.top-image .top-title{
+  font-size: 20px;
+  position: absolute;
+  color: white;
+  font-weight: bold;
+  top: 10%;
+  text-shadow: 1px 1px 2px white, 0 0 1em gray, 0 0 0.2em gray;
+}
+
+.top-image .top-text{
+  line-height: 2.5;
+  font-size: 10px;
+  padding-top: 10px;
+  position: absolute;
+  text-align: center;
+  color: white;
+  max-width: 90%;
+  top: 20%;
+  text-shadow: 1px 1px 2px gray, 0 0 1em gray, 0 0 0.2em gray;
+}
+
   .page-title{
     padding: 5px;
     font-weight: 450;
