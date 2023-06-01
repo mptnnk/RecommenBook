@@ -48,6 +48,8 @@ header {
 
 .navbar-toggler {
   font-size: inherit !important;
+  background-color: white;
+  justify-content: flex-end;
 }
 
 .nav-link{
@@ -56,6 +58,9 @@ header {
   border-radius: 2px;
 }
 
+.nav-item {
+  background-color: white;
+}
 
 main {
  font-family: 'DotGothic16', sans-serif;
@@ -209,6 +214,11 @@ th {
 }
 @media screen and (max-width: 480px) {
 	/* 480px以下に適用されるCSS（スマホ用） */
+footer{
+  font-family: 'DotGothic16', sans-serif;
+  background-color: white;
+  font-size: 10px;
+}
 
 .top-image .top-title{
   font-size: 20px;
@@ -230,7 +240,6 @@ th {
   top: 20%;
   text-shadow: 1px 1px 2px gray, 0 0 1em gray, 0 0 0.2em gray;
 }
-
   .page-title{
     padding: 5px;
     font-weight: 450;

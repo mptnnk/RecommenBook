@@ -68,7 +68,11 @@
         <!--Rakuten Web Services Attribution Snippet FROM HERE-->
         <a href="https://webservice.rakuten.co.jp/" target="_blank"><img src="https://webservice.rakuten.co.jp/img/credit/200709/credit_22121.gif" border="0" alt="Rakuten Web Service Center" title="Rakuten Web Service Center" width="221" height="21"/></a>
         <!-- Rakuten Web Services Attribution Snippet TO HERE -->
-        <span class="text-right mt-3"><%= link_to "管理者ログイン", new_admin_session_path, style:"color:green", class:"border border-success rounded p-2" %></span>
+        <span class="mt-3">
+          <%= link_to new_admin_session_path do %>
+            <i class="fas fa-user-cog"></i>
+          <% end %>
+        </span>
       </div>
     </footer>
   </body>
