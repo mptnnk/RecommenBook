@@ -22,9 +22,6 @@ class ApplicationController < ActionController::Base
       @readed_lists_count = @user.reviews.group(:isbn).size.count
       @reading_lists = @user.reading_lists.all
     end
-    
-
-    
   end
   
 end

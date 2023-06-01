@@ -4,7 +4,16 @@ class Public::UsersController < ApplicationController
   before_action :set_userinfo, only: [:show, :favorite_genres]
 
   def show
-    redirect_to root_path, alert: 'ユーザー情報が有効ではありません'  unless @user
+    redirect_to root_path, alert: '有効ではないユーザーです'  unless @user
+    followings = current_user.followings.all
+    @tweets = []
+    @reviews = []
+    followings.each do |follow|
+      @tweets.concat(follow.tweets.all.order(created_at: :DESC))
+      @reviews.concat(follow.reviews.all.order(created_at: :DESC))
+    end
+    @posts = (@tweets + @reviews)
+    @posts = Kaminari.paginate_array(@posts).limit(10)
   end
   
   def favorite_genres

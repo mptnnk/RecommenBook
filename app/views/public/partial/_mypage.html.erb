@@ -1,70 +1,83 @@
 <% objects.each do |obj| %>
-  <div class="card border-light mx-2" style="width: 13rem">
+  <div class="card" style="width: 100%">
     
     <% if obj.isbn.present? %>
       <% book = RakutenWebService::Books::Book.search(isbn: obj.isbn, outOfStockFlag: 1).first %>
         
-        <div class="card-img-top text-center">
+        
+        <div class="card-body d-flex">
+          <div class="mr-3">
             <%= link_to book_path(book.isbn) do %>
               <%= image_tag(book['small_image_url']) %>
             <% end %>
-        </div>
+            
+          </div>
+
+          <div class="card-text d-flex flex-column">
+            <div class="d-flex flex-row">
+              <% if posts %>
+                <%= link_to mypage_path(obj.user.name), class:"mr-4" do %>
+                  <%= obj.user.name %>
+                <% end %>
+              <% end %>
+              
+              <%= link_to book_path(book.isbn) do %>
+                <%= book['title'].truncate(20) %>
+              <% end %>
+            </div>
+            
+            <div class="col">
+             <% if obj.is_a?(Review) %>
+                <% if obj.spoiler == false %>
+                  <%= render_review_with_hashtags(obj.content, 50) %>
+                  <%= link_to "（くわしく）", review_path(obj.id), style: "color: #ff7f50" %>
+                <% else %>
+                  <%= link_to review_path(obj.id) do %>
+                    <p class="spoiler-large"><i class="fas fa-exclamation-circle"></i>ねたばれ<i class="fas fa-exclamation-circle"></i><span class="spoiler-small">くわしく</span></p>
+                    
+                  <% end %>
+                <% end %>
+                
+              <% elsif obj.is_a?(Tweet) %>
+              
+                <%= render_tweet_with_hashtags(obj.tweet_content, 50) %>
+                <%= link_to "（くわしく）", tweet_path(obj.id), style: "color: #ff7f50" %>
+                
+              <% elsif obj.is_a?(FavoriteBook) %>
+                
+              <% end %> <!--is_a?条件分岐 done-->
+            </div>
+          </div> <!--card-text flex-column end-->
+        </div> <!--card-body d-flex end-->
         
-        <p class="card-title text-center">
-          <%= link_to book_path(book.isbn) do %>
-            <%= book['title'].truncate(20) %>
+        <div class="card-text d-flex flex-row">
+          <%= obj.created_at.strftime('%Y/%m/%d') %>
+
+          <% if user_signed_in? && obj.is_a?(Review) %>
+            <span class=<%= "like-" + obj.id.to_s %> ><%= render "public/likes/reviewbtn", review: obj %></span>
+            （<%= obj.review_comments.count %>）コメント
+            
+          <% elsif user_signed_in? && obj.is_a?(Tweet) %>
+            <span class=<%= "like-" + obj.id.to_s %> ><%= render "public/likes/tweetbtn", tweet: obj %></span>
+            （<%= obj.tweet_comments.count %>）コメント
+            
+          <% elsif !user_signed_in? && obj.is_a?(Review) %>
+            <i class="fas fa-heart" aria-hidden="true" style="color: red;"></i><%= obj.likes.count %>いいね
+            ( <%= obj.review_comments.count %> )Comments
+            
+          <% elsif !user_signed_in? && obj.is_a?(Tweet) %>
+            <i class="fas fa-heart" aria-hidden="true" style="color: red;"></i><%= obj.likes.count %>いいね
+            ( <%= obj.tweet_comments.count %> )Comments
+            
+          <% elsif obj.is_a?(FavoriteBook) %>
+          
           <% end %>
-        </p>
-        
+        </div>
+
     <% end %> <!--obj.isbn.present done-->
     
-    <div class="card-text">
-      <% if obj.is_a?(Review) %>
-      
-        <% if obj.spoiler == false %>
-          <%= render_review_with_hashtags(obj.content, 50) %>
-          <%= link_to "（くわしく）", review_path(obj.id), style: "color: #ff7f50" %>
-        <% else %>
-          <%= link_to review_path(obj.id) do %>
-            <p class="spoiler-large"><i class="fas fa-exclamation-circle"></i>ねたばれ<i class="fas fa-exclamation-circle"></i><span class="spoiler-small">くわしく</span></p>
-            
-          <% end %>
-        <% end %>
-        
-      <% elsif obj.is_a?(Tweet) %>
-      
-        <%= render_tweet_with_hashtags(obj.tweet_content, 50) %>
-        <%= link_to "（くわしく）", tweet_path(obj.id), style: "color: #ff7f50" %>
-        
-      <% elsif obj.is_a?(FavoriteBook) %>
-        
-      <% end %> <!--is_a?条件分岐 done-->
-    </div> <!--card-text end-->
-    <div class="card-text">
-      <%= obj.created_at.strftime('%Y/%m/%d') %>
-    </div>
-    
-    <div class="card-text">
-      <% if user_signed_in? && obj.is_a?(Review) %>
-        <span class=<%= "like-" + obj.id.to_s %> ><%= render "public/likes/reviewbtn", review: obj %></span>
-        （<%= obj.review_comments.count %>）コメント
-        
-      <% elsif user_signed_in? && obj.is_a?(Tweet) %>
-        <span class=<%= "like-" + obj.id.to_s %> ><%= render "public/likes/tweetbtn", tweet: obj %></span>
-        （<%= obj.tweet_comments.count %>）コメント
-        
-      <% elsif !user_signed_in? && obj.is_a?(Review) %>
-        <i class="fas fa-heart" aria-hidden="true" style="color: red;"></i><%= obj.likes.count %>いいね
-        ( <%= obj.review_comments.count %> )Comments
-        
-      <% elsif !user_signed_in? && obj.is_a?(Tweet) %>
-        <i class="fas fa-heart" aria-hidden="true" style="color: red;"></i><%= obj.likes.count %>いいね
-        ( <%= obj.tweet_comments.count %> )Comments
-        
-      <% elsif obj.is_a?(FavoriteBook) %>
-      
-      <% end %>
-    </div>
+
   </div> <!--card end-->
+  
 <% end %> <!--each do done-->
 
