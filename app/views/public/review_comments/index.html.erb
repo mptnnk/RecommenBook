@@ -9,9 +9,9 @@
     <div class="col-md-8 offset-md-1">
       <h4 class="page-title">
         <% if @user == current_user %>
-          Your Comments
+          あなたのコメント
         <% else %>
-          <%= @user.name %>'s Comments
+          <%= @user.name %>さんのコメント
         <% end %>
       </h4>
 
@@ -20,8 +20,8 @@
         <table class="table table-sm table-responsive">
           <thead class="text-center">
             <tr>
-              <th colspan="2" style="width: 40%">Reply To</th>
-              <th style="width: 50%">Comment</th>
+              <th colspan="2" style="width: 40%"></th>
+              <th style="width: 50%">コメント</th>
               <th>Date</th>
             </tr>
           </thead>

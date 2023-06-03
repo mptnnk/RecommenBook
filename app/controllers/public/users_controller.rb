@@ -5,15 +5,7 @@ class Public::UsersController < ApplicationController
 
   def show
     redirect_to root_path, alert: '有効ではないユーザーです'  unless @user
-    followings = current_user.followings.all
-    @tweets = []
-    @reviews = []
-    followings.each do |follow|
-      @tweets.concat(follow.tweets.all.order(created_at: :DESC))
-      @reviews.concat(follow.reviews.all.order(created_at: :DESC))
-    end
-    @posts = (@tweets + @reviews)
-    @posts = Kaminari.paginate_array(@posts).limit(10)
+
   end
   
   def profile

@@ -1,4 +1,5 @@
 class Public::BooksController < ApplicationController
+  before_action :set_userinfo
   
   def search
     genre_id = params[:book_genre_id]

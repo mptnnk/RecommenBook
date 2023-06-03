@@ -21,17 +21,23 @@
     　<td colspan="3" style="width: 30%">
         <% if obj.is_a?(Review)  && obj.user.is_active %>
           <%= link_to mypage_path(name: obj.user.name) do %>
-            <%= obj.user.name %>
-          <% end %>'s Reviews
+            　@<%= obj.user.name %>
+          <% end %>
         <% elsif obj.is_a?(Tweet) && obj.user.is_active %>
           <%= link_to mypage_path(name: obj.user.name) do %>
-            <%= obj.user.name %>
-          <% end %>'s Tweets
+            @<%= obj.user.name %>
+          <% end %>
         <% elsif !obj.user.is_active %>
-          Unsubscribed user
+          退会したユーザー
         <% end %>
       </td>
-      <td colspan="2" style="width: 20%"><%= obj.created_at.strftime('%Y/%m/%d') %></td>
+      <td colspan="2" style="width: 20%">
+        <% if obj.created_at.to_date == Date.today %>
+          <%= obj.created_at.strftime("%Y/%m/%d/ %p%I：%M") %>
+        <% else %>
+          <%= obj.created_at.strftime("%Y/%m/%d") %>
+        <% end %>
+      </td>
     </tr>
     
     <tr>　<!--2行目 投稿文表示-->

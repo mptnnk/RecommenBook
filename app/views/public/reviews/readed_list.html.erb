@@ -8,9 +8,9 @@
     <div class="col-md-8 offset-md-1">
       <h2 class="page-title">
         <% if @user == current_user %>
-          Your Readed Lists
+          あなたが読んだ本
         <% else %>
-          <%= @user.name %>'s Readed Lists
+          <%= @user.name %>さんが読んだ本
         <% end %>
       </h2>
       
@@ -19,8 +19,8 @@
           <thead class="text-center">
             <tr>
               <th style="width: 20%"></th>
-              <th style="width: 30%">Title</th>
-              <th style="width: 20%">Author</th>
+              <th style="width: 30%">タイトル</th>
+              <th style="width: 20%">本の作者</th>
               <th>Readed date</th>
             </tr>
           </thead>

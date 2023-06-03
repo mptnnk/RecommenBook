@@ -16,9 +16,22 @@
       </h2>
       
       <% if @user == current_user %>
-        <%= render 'public/partial/mypage', objects: @posts, posts: @posts %>
+        <% if @posts.present? %>
+          <%= render 'public/partial/mypage', objects: @posts, posts: @posts %>
+        <% else %>
+          フォロー中のユーザーの最新投稿が表示されます
+        <% end %>
         
       <% else %>
+        <h4 class="mypage-title">ひとこと</h4>
+          <div class="row ml-2">
+            <% if @user.introduction.present? %>
+              <%= @user.introduction %>
+            <% else %>
+              ひとことがありません
+            <% end %>
+          </div>
+          
         <h4 class="mypage-title">最近のレビュー</h4>
           <div class="row ml-2">
             <% if @reviews.present? %>
@@ -37,12 +50,12 @@
             <% end %>
           </div>
           
-        <h4 class="mypage-title">Recent Favorite Books</h4>
+        <h4 class="mypage-title">最近のお気に入り</h4>
           <div class="row ml-2">
             <% if @favorite_books.present? %>
               <%= render 'public/partial/mypage', objects: @favorite_books, posts: @posts %>
             <% else %>
-              No Favorite Book
+              お気に入りの本がありません
             <% end %>
           </div>
       <% end %>

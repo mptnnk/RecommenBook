@@ -24,6 +24,7 @@
       <% end %>
     </li>
     <li class="nav-item d-none d-md-block dropdown">
+    <!--d-none d-md-blockでmd以上でしか表示しない-->
       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       　メニュー
       </a>
@@ -40,7 +41,10 @@
       　メニュー
       </a>
       <div class="dropdown-menu nav-item" aria-labelledby="navbarDropdownMenuLink">
-        <%= link_to "プロフィール", mypage_sm_path(current_user.name), class: "dropdown-item", style:"color:gray" %>
+        <%= link_to "自分のプロフィール", mypage_sm_path(current_user.name), class: "dropdown-item", style:"color:gray" %>
+        <% if user.present? && user != current_user %>
+          <%= link_to "このユーザーのプロフィール", mypage_sm_path(user.name), class: "dropdown-item", style: "color: gray" %>
+        <% end %>
         <%= link_to "レビューを見る", reviews_path, class: "dropdown-item", style:"color:gray" %>
         <%= link_to "みんなのつぶやき", tweets_path, class: "dropdown-item", style:"color:gray" %>
       </div>
@@ -63,7 +67,8 @@
         本をさがす<i class="fas fa-search-plus"></i>
       <% end %>
     </li>
-    <li class="nav-item dropdown">
+    <li class="nav-item d-none d-md-block dropdown">
+    <!--d-none d-md-blockでmd以上でしか表示しない-->
       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         みんなの投稿
       </a>
@@ -72,6 +77,21 @@
         <%= link_to "みんなのつぶやき", tweets_path, class: "dropdown-item", style:"color:gray" %>
       </div>
     </li>
+    
+        <!--スマートフォン表示の時のみプロフィール別メニュー-->
+    <li class="nav-item dropdown d-md-none">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      　メニュー
+      </a>
+      <div class="dropdown-menu nav-item" aria-labelledby="navbarDropdownMenuLink">
+        <% if params[:name].present? %>
+          <%= link_to "このユーザーのプロフィール", mypage_sm_path(user.name), class: "dropdown-item", style: "color: gray" %>
+        <% end %>
+        <%= link_to "レビューを見る", reviews_path, class: "dropdown-item", style:"color:gray" %>
+        <%= link_to "みんなのつぶやき", tweets_path, class: "dropdown-item", style:"color:gray" %>
+      </div>
+    </li>
+    
     <li class="nav-item">
       <%= link_to "会員登録", new_user_registration_path, class: "nav-link" %>
     </li>
