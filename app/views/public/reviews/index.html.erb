@@ -1,13 +1,13 @@
 <!--reviewの一覧-->
 <div class="container-fluid">
-  <div class="row">
+  <div class="row flex-row">
     <% if params[:user_name] %>
-      <div class="col-md-3">
+      <div class="col-lg-3 d-none d-lg-block">
         <%= render 'public/partial/userinfo', user: @user, book: @book, reading_lists: @reading_lists, readed_lists_count: @readed_lists_count, recommenbook: @recommenbook, in_release_reviews: @in_release_reviews %>
       </div>
     <% end %>
     
-    <div class="col-md-8 offset-md-1">
+    <div class="col-lg-8 col-md-10 offset-md-1 col-sm-12">
       <h4 class="page-title">
         <% if user_signed_in? %>
           <% if params[:user_name].present? && params[:user_name] == current_user.name %>
@@ -30,73 +30,72 @@
           <% end %>
         <% end %>
       </h4>
+
+      <% if user_signed_in? %>
       
-      <div class="table-responsive">
-        <% if user_signed_in? %>
+        <% if params[:user_name].present? && params[:user_name] == current_user.name %>
         
-          <% if params[:user_name].present? && params[:user_name] == current_user.name %>
-          
-            <% if @my_reviews.present? %>
-              <%= render 'public/partial/lists', objects: @my_reviews %>
-              <%= paginate @my_reviews, theme: 'twitter-bootstrap-4' %>
-            <% else %>
-              <p>No Reviews</p>
-            <% end %>
-            
-          <% elsif params[:user_name].present? && params[:user_name] != current_user.name %>
-          
-            <% if @user_reviews.present? %>
-              <%= render 'public/partial/lists', objects: @user_reviews %>
-              <%= paginate @user_reviews, theme: 'twitter-bootstrap-4' %>
-            <% else %>
-              <p>No Reviews</p>
-            <% end %>
-            
-          <% elsif params[:book_id].present? %>
-          
-            <%= render 'public/partial/lists', objects: @book_reviews %>
-            <%= paginate @book_reviews, theme: 'twitter-bootstrap-4' %>
-          
+          <% if @my_reviews.present? %>
+            <%= render 'public/partial/lists', objects: @my_reviews %>
+            <%= paginate @my_reviews, theme: 'twitter-bootstrap-4' %>
           <% else %>
-          
-            <% if @reviews.present? %>
-              <%= render 'public/partial/lists', objects: @reviews %>
-              <%= paginate @reviews, theme: 'twitter-bootstrap-4' %>
-            <% else %>
-              <p>No Reviews</p>
-            <% end %>
-            
+            <p>レビューがありません</p>
           <% end %>
-        
-        <% elsif !user_signed_in? %>
-        
-          <% if params[:user_name].present? %>
           
-            <% if @user_reviews.present? %>
-              <%= render 'public/partial/lists', objects: @user_reviews %>
-              <%= paginate @user_reviews, theme: 'twitter-bootstrap-4' %>
-            <% else %>
-              <p>No Reviews</p>
-            <% end %>
-            
-          <% elsif params[:book_id].present? %>
-          
-            <%= render 'public/partial/lists', objects: @book_reviews %>
-            <%= paginate @book_reviews, theme: 'twitter-bootstrap-4' %>
-            
+        <% elsif params[:user_name].present? && params[:user_name] != current_user.name %>
+        
+          <% if @user_reviews.present? %>
+            <%= render 'public/partial/lists', objects: @user_reviews %>
+            <%= paginate @user_reviews, theme: 'twitter-bootstrap-4' %>
           <% else %>
+            <p>レビューがありません</p>
+          <% end %>
           
-            <% if @reviews.present? %>
-              <%= render 'public/partial/lists', objects: @reviews %>
-              <%= paginate @reviews, theme: 'twitter-bootstrap-4' %>
-            <% else %>
-              <p>No Reviews</p>
-            <% end %>
-            
+        <% elsif params[:book_id].present? %>
+        
+          <%= render 'public/partial/lists', objects: @book_reviews %>
+          <%= paginate @book_reviews, theme: 'twitter-bootstrap-4' %>
+        
+        <% else %>
+        
+          <% if @reviews.present? %>
+            <%= render 'public/partial/lists', objects: @reviews %>
+            <%= paginate @reviews, theme: 'twitter-bootstrap-4' %>
+          <% else %>
+            <p>レビューがありません</p>
           <% end %>
           
         <% end %>
-      </div> <!--table end-->
-    </div> <!--col-md-8 end-->
+      
+      <% elsif !user_signed_in? %>
+      
+        <% if params[:user_name].present? %>
+        
+          <% if @user_reviews.present? %>
+            <%= render 'public/partial/lists', objects: @user_reviews %>
+            <%= paginate @user_reviews, theme: 'twitter-bootstrap-4' %>
+          <% else %>
+            <p>レビューがありません</p>
+          <% end %>
+          
+        <% elsif params[:book_id].present? %>
+        
+          <%= render 'public/partial/lists', objects: @book_reviews %>
+          <%= paginate @book_reviews, theme: 'twitter-bootstrap-4' %>
+          
+        <% else %>
+        
+          <% if @reviews.present? %>
+            <%= render 'public/partial/lists', objects: @reviews %>
+            <%= paginate @reviews, theme: 'twitter-bootstrap-4' %>
+          <% else %>
+            <p>レビューがありません</p>
+          <% end %>
+          
+        <% end %>
+        
+      <% end %>
+    </div> <!--table end-->
+  
   </div> <!--row end-->
 </div> <!--container-fluid end-->

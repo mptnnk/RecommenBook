@@ -2,15 +2,14 @@
     <% if obj.isbn.present? %>
       <% book = RakutenWebService::Books::Book.search(isbn: obj.isbn, outOfStockFlag: 1).first %>
       
-    <div class="row flex-row">
-      <div class="col-lg-1 col-md-1 col-sm-1 mt-5">
-        <%= link_to book_path(book.isbn) do %>
-          <%= image_tag(book['small_image_url']) %>
-        <% end %>
-      </div><!--リスト左側-->
+      <div class="row flex-row pt-2 mb-3 lists"> <!--リスト全体-->
+        <div class="col-lg-1 col-md-1 col-sm-1"><!--リスト左側-->
+          <%= link_to book_path(book.isbn) do %>
+            <%= image_tag(book['small_image_url']) %>
+          <% end %>
+        </div>
       
-      <div class="col-lg-11 col-md-11 col-sm-11">
-        <div class="flex-column">　<!--要素ごと縦並び-->
+        <div class="col-lg-10 col-md-12 col-sm-12 flex-column"><!--リスト右側　要素縦並び-->
           <div>
             <% if posts %>
               <%= link_to mypage_path(obj.user.name) do %>
@@ -46,11 +45,11 @@
               <%= obj.created_at.strftime('%Y/%m/%d') %>
     
               <% if user_signed_in? && obj.is_a?(Review) %>
-                <span class=<%= "like-" + obj.id.to_s %> ><%= render "public/likes/reviewbtn", review: obj %></span>
+                <span class=<%= "like-review-" + obj.id.to_s %> ><%= render "public/likes/reviewbtn", review: obj %></span>
                 （<%= obj.review_comments.count %>）コメント
                 
               <% elsif user_signed_in? && obj.is_a?(Tweet) %>
-                <span class=<%= "like-" + obj.id.to_s %> ><%= render "public/likes/tweetbtn", tweet: obj %></span>
+                <span class=<%= "like-tweet-" + obj.id.to_s %> ><%= render "public/likes/tweetbtn", tweet: obj %></span>
                 （<%= obj.tweet_comments.count %>）コメント
                 
               <% elsif !user_signed_in? && obj.is_a?(Review) %>
@@ -65,14 +64,8 @@
               
               <% end %>
           </div>
-          
         </div><!--リスト右側並びend-->
-        
-      </div><!--リスト左側全体end-->
-      
-    </div><!--リスト全体end-->
-    
-    <% end %> <!--obj.isbn.present done-->
-  
-<% end %> <!--each do done-->
+      </div><!--リスト全体end-->
+    <% end %> <!--obj.isbn.present end-->
+<% end %> <!--each do end-->
 

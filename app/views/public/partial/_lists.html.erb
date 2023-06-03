@@ -1,110 +1,102 @@
 <% objects.each do |obj| %>
-  <table class="table table-sm table-light lists" style="width: 100%">
-    <tr>　<!--1行目 isbnを所持している場合のみ本情報表示-->
-      <% if obj.isbn.present? %>
-        <% book = RakutenWebService::Books::Book.search(isbn: obj.isbn, outOfStockFlag: 1).first %>
-        <% unless current_page?(book_path(book.isbn)) %>
-          <td colspan="1", style="width: 10%; padding: 20px" rowspan="2">
-            <%= link_to book_path(book.isbn) do %>
-              <%= image_tag(book['small_image_url']) %>
-            <% end %>
-          </td>
-          <td colspan="4" style="width: 40%">
+  <% if obj.isbn.present? %> <!--isbnを所持している場合のみ本情報表示-->
+    <% book = RakutenWebService::Books::Book.search(isbn: obj.isbn, outOfStockFlag: 1).first %>
+    <div class="row flex-row pt-2 mb-3 lists"><!--リスト全体-->
+      <% unless current_page?(book_path(book.isbn)) %>
+      
+        <div class="col-lg-1 col-md-1 col-sm-1"><!--リスト左側-->
+          <%= link_to book_path(book.isbn) do %>
+            <%= image_tag(book['small_image_url']) %>
+          <% end %>
+        </div> <!--リスト左側end-->
+      
+        <div class="col-lg-10 col-md-12 col-sm-12 flex-column"><!--リスト右側　要素縦並び-->
+          <div>
             <%= link_to book_path(book.isbn) do %>
               <%= book['title'].truncate(30) %>
             <% end %>
-          </td>
-        <% end %>
-      <% end %>
-      
-    　<!--1行目 ユーザー名と投稿日表示-->
-    　<td colspan="3" style="width: 30%">
-        <% if obj.is_a?(Review)  && obj.user.is_active %>
-          <%= link_to mypage_path(name: obj.user.name) do %>
-            　@<%= obj.user.name %>
-          <% end %>
-        <% elsif obj.is_a?(Tweet) && obj.user.is_active %>
-          <%= link_to mypage_path(name: obj.user.name) do %>
-            @<%= obj.user.name %>
-          <% end %>
-        <% elsif !obj.user.is_active %>
-          退会したユーザー
-        <% end %>
-      </td>
-      <td colspan="2" style="width: 20%">
-        <% if obj.created_at.to_date == Date.today %>
-          <%= obj.created_at.strftime("%Y/%m/%d/ %p%I：%M") %>
-        <% else %>
-          <%= obj.created_at.strftime("%Y/%m/%d") %>
-        <% end %>
-      </td>
-    </tr>
-    
-    <tr>　<!--2行目 投稿文表示-->
-      <td colspan="9" style="width: 90%">
-        <% if obj.is_a?(Review) %>
-          <% if obj.spoiler == false %>
-            <%= render_review_with_hashtags(obj.content, 130) %>
-            <%= link_to "（詳細を見る）", review_path(obj.id), style: "color: #ff7f50" %>
-          <% else %>
-            <%= link_to review_path(obj.id) do %>
-              <p class="spoiler-large"><i class="fas fa-exclamation-circle"></i>ネタバレあり<i class="fas fa-exclamation-circle"></i><span class="spoiler-small">詳細を見る</span></p>
+            
+            <% if obj.is_a?(Review)  && obj.user.is_active %>
+              <%= link_to mypage_path(name: obj.user.name) do %>
+                　@<%= obj.user.name %>
+              <% end %>
+            <% elsif obj.is_a?(Tweet) && obj.user.is_active %>
+              <%= link_to mypage_path(name: obj.user.name) do %>
+                @<%= obj.user.name %>
+              <% end %>
+            <% elsif !obj.user.is_active %>
+              退会したユーザー
             <% end %>
-          <% end %>
+          </div>
+      <% end %> <!--unless book_path end-->
+    <% end %> <!--if isbn.present end-->
           
-        <% elsif obj.is_a?(Tweet) %>
-          <%= render_tweet_with_hashtags(obj.tweet_content, 130) %>
-          <%= link_to "（詳細を見る）", tweet_path(obj.id), style: "color: #ff7f50" %>
-        <% end %>
-      </td>
-    </tr>
+          <div>
+            <% if obj.created_at.to_date == Date.today %>
+              <%= obj.created_at.strftime("%Y/%m/%d/ %p%I：%M") %>
+            <% else %>
+              <%= obj.created_at.strftime("%Y/%m/%d") %>
+            <% end %>
+          </div>
+          
+          <div>
+            <% if obj.is_a?(Review) %>
+              <% if obj.spoiler == false %>
+                <%= render_review_with_hashtags(obj.content, 130) %>
+                <%= link_to "（詳細を見る）", review_path(obj.id), style: "color: #ff7f50" %>
+              <% else %>
+                <%= link_to review_path(obj.id) do %>
+                  <p class="spoiler-large"><i class="fas fa-exclamation-circle"></i>ネタバレあり<i class="fas fa-exclamation-circle"></i><span class="spoiler-small">詳細を見る</span></p>
+                <% end %>
+              <% end %>
+              
+            <% elsif obj.is_a?(Tweet) %>
+              <%= render_tweet_with_hashtags(obj.tweet_content, 130) %>
+              <%= link_to "（詳細を見る）", tweet_path(obj.id), style: "color: #ff7f50" %>
+            <% end %>
+          </div>
+          
+          <div>
+            <span class=<%= "like-" + obj.id.to_s %> >
+              <% if user_signed_in? && obj.is_a?(Review) %>
+                <span class=<%= "like-review-" + obj.id.to_s %> ><%= render "public/likes/reviewbtn", review: obj %></span>
+              <% elsif user_signed_in? && obj.is_a?(Tweet) %>
+                <span class=<%= "like-tweet-" + obj.id.to_s %> ><%= render "public/likes/tweetbtn", tweet: obj %></span>
+              <% else %>
+                <i class="fas fa-heart" aria-hidden="true" style="color: red;"></i><%= obj.likes.count %>いいね
+              <% end %>
+            </span>
+            
+            <span class="ml-3">
+              <% if obj.is_a?(Review) && obj.review_comments.present? %>
+                <%= obj.review_comments.count %>コメント
+              <% elsif obj.is_a?(Tweet) && obj.tweet_comments.present? %>
+                <%= obj.tweet_comments.count %>コメント
+              <% else %>
+                0コメント
+              <% end %>
+            </span>
+            
+            <% if obj.user == current_user && obj.is_a?(Review) %>
+              <span class="ml-5">ステータス</span>
+              <% if obj.in_release == true %>
+                <span class="text-success">公開中</span>
+              <% else %>
+                <span class="text-secondary">下書き</span>
+              <% end %>
+            <% end %>
+            
+            <span>
+              <% if obj.is_a?(Review) && obj.user == current_user %>
+                <%= link_to "編集する", edit_review_path(obj.id), style: "display: inline", class:"btn btn-success btn-sm"%>
+                <%= link_to "削除する", review_path(obj.id), method: :delete, "data-confirm" => "レビューを削除しますか？", style: "display: inline", class: "btn btn-danger btn-sm" %>
+              <% elsif obj.is_a?(Tweet) && obj.user == current_user %>
+                <%= link_to "削除する", tweet_path(obj.id), method: :delete, "data-confirm" => "つぶやきを削除しますか？", style:"display: inline-block", class:"btn btn-danger btn-sm" %>
+              <% else %>
+              <% end %>
+            </span>
+          </div>
     
-    <tr>　<!--3行目　いいねとコメント（自分の投稿はステータスと削除・編集リンク表示）-->
-      <% if obj.isbn.present? && !current_page?(book_path(book.isbn)) %>
-        <td colspan="1" style="width: 10%"></td>
-      <% end %>
-      <td colspan="1" style="width: 10%" class=<%= "like-" + obj.id.to_s %> >
-        <% if user_signed_in? && obj.is_a?(Review) %>
-          <%= render "public/likes/reviewbtn", review: obj %>
-        <% elsif user_signed_in? && obj.is_a?(Tweet) %>
-          <%= render "public/likes/tweetbtn", tweet: obj %>
-        <% else %>
-          <i class="fas fa-heart" aria-hidden="true" style="color: red;"></i><%= obj.likes.count %>いいね
-        <% end %>
-      </td>
-      
-      <td colspan="1" style="width: 12%">　<!--コメント-->
-        <% if obj.is_a?(Review) && obj.review_comments.present? %>
-          <%= obj.review_comments.count %>コメント
-        <% elsif obj.is_a?(Tweet) && obj.tweet_comments.present? %>
-          <%= obj.tweet_comments.count %>コメント
-        <% else %>
-          0コメント
-        <% end %>
-      </td>
-      
-      <% if obj.user == current_user && obj.is_a?(Review) %>
-        <th colspan="1" style="width: 10%">ステータス</th>
-        <td colspan="1" style="width: 10%">
-          <% if obj.in_release == true %>
-            <p class="text-success">公開中</p>
-          <% else %>
-            <p class="text-secondary">下書き</p>
-          <% end %>
-        </td>
-      <% else %>
-        <td colspan="2" style="width: 20%"></td>
-      <% end %>
-      
-      <td colspan="2" style="width: 20%">
-        <% if obj.is_a?(Review) && obj.user == current_user %>
-          <%= link_to "編集する", edit_review_path(obj.id), style: "display: inline", class:"btn btn-success btn-sm"%>
-          <%= link_to "削除する", review_path(obj.id), method: :delete, "data-confirm" => "レビューを削除しますか？", style: "display: inline", class: "btn btn-danger btn-sm" %>
-        <% elsif obj.is_a?(Tweet) && obj.user == current_user %>
-          <%= link_to "削除する", tweet_path(obj.id), method: :delete, "data-confirm" => "つぶやきを削除しますか？", style:"display: inline-block", class:"btn btn-danger btn-sm" %>
-        <% else %>
-        <% end %>
-      </td>
-    </tr>
-  </table>
+        </div><!--右側縦並びend -->
+  </div> <!--リスト end-->
 <% end %>
