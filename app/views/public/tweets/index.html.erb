@@ -1,14 +1,14 @@
 <!--tweetの一覧-->
 <!--条件分岐確認済み-->
 <div class="container-fluid">
-  <div class="row">
+  <div class="row flex-row">
     <% if params[:user_name] %>
-      <div class="col-md-3">
+      <div class="col-lg-3 d-none d-lg-block">
         <%= render 'public/partial/userinfo', user: @user, book: @book, reading_lists: @reading_lists, readed_lists_count: @readed_lists_count, recommenbook: @recommenbook, in_release_reviews: @in_release_reviews %>
       </div>
     <% end %>
     
-    <div class="col-md-8 offset-md-1">
+    <div class="col-lg-8 col-md-10 offset-md-1 col-sm-12">
       <h4 class="page-title">
         <% if user_signed_in? %>
           <% if params[:user_name].present? && params[:user_name] == current_user.name %>
@@ -38,7 +38,6 @@
         <% end %>
       </h3>
       
-      <div class="table-responsive">
         <% if user_signed_in? %>
         
           <% if params[:user_name].present? && params[:user_name] == current_user.name %>
@@ -64,7 +63,7 @@
             <%= render 'public/partial/lists', objects: @book_tweets %>
             <%= paginate @book_tweets, theme: 'twitter-bootstrap-4' %>
           
-          <% else %>
+          <% elsif params[:user_name].blank? && params[:book_id].blank? %>
             
             <% if @tweets.present? %>
               <%= render 'public/partial/lists', objects: @tweets %>
@@ -103,7 +102,7 @@
           <% end %>
         
         <% end %>
-      </div>
+        
     </div>
   </div>
 </div>

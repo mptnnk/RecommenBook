@@ -26,6 +26,9 @@ class ApplicationController < ActionController::Base
         @readed_lists_count = current_user.reviews.group(:isbn).size.count
         @reading_lists = current_user.reading_lists.all
         @recommenbook = current_user.favorite_books.find_by(recommenbook: true)
+        if @recommenbook.present?
+          @book = RakutenWebService::Books::Book.search({isbn: @recommenbook.isbn, outOfStockFlag: 1}).first
+        end
         
       elsif @user != current_user
         @reviews = @user.reviews.where(in_release: true).where.not(content: [nil, '']).limit(4).order(created_at: :DESC)
@@ -35,10 +38,9 @@ class ApplicationController < ActionController::Base
         @readed_lists_count = @user.reviews.group(:isbn).size.count
         @reading_lists = @user.reading_lists.all
         @recommenbook = @user.favorite_books.find_by(recommenbook: true)
-      end
-      
-      if @recommenbook.present?
-        @book = RakutenWebService::Books::Book.search({isbn: @recommenbook.isbn, outOfStockFlag: 1}).first
+        if @recommenbook.present?
+          @book = RakutenWebService::Books::Book.search({isbn: @recommenbook.isbn, outOfStockFlag: 1}).first
+        end
       end
       
     end

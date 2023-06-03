@@ -31,8 +31,8 @@ class Public::RelationshipsController < ApplicationController
     users.each do |user|
       recommenbook = user.favorite_books.find_by(recommenbook: true)
       if recommenbook.present?
-        book = RakutenWebService::Books::Book.search(isbn: recommenbook.isbn, outOfStockFlag: 1).first
-        recommenbooks << book
+        @book = RakutenWebService::Books::Book.search(isbn: recommenbook.isbn, outOfStockFlag: 1).first
+        recommenbooks << @book
       end
     end
     return recommenbooks

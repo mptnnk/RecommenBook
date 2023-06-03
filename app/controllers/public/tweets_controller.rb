@@ -9,10 +9,14 @@ class Public::TweetsController < ApplicationController
       elsif @user != current_user
         @user_tweets = Tweet.where(user_id: @user.id).page(params[:page]).per(10).order(created_at: :DESC)
       end
-    elsif params[:book_id]
+    end
+    
+    if params[:book_id]
       @book = RakutenWebService::Books::Book.search(isbn: params[:book_id], outOfStockFlag: 1).first
-      @book_tweets = Tweet.where(isbn: params[:book_id]).page(params[:page]).per(10).order(created_at: :DESC)
-    elsif params[:user_name].blank? && params[:book_id].blank?
+    end
+    @book_tweets = Tweet.where(isbn: params[:book_id]).page(params[:page]).per(10).order(created_at: :DESC)
+    
+    if params[:user_name].blank? && params[:book_id].blank?
       @tweets = Tweet.page(params[:page]).per(10).order(created_at: :DESC)
     end
   end
