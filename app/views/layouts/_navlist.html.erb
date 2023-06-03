@@ -1,6 +1,5 @@
 <ul class="navbar-nav ml-auto">
   <% if admin_signed_in? %>
-  <!--管理者ログインのとき。レビュー一覧、つぶやき一覧、会員一覧は後で作る-->
     <li class="nav-item">
       <%= link_to "レビュー一覧", admin_path, class: "nav-link" %>
     </li>
@@ -24,7 +23,7 @@
         本をさがす<i class="fas fa-search-plus"></i>
       <% end %>
     </li>
-    <li class="nav-item dropdown">
+    <li class="nav-item d-none d-md-block dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       　メニュー
       </a>
@@ -34,14 +33,27 @@
         <%= link_to "みんなのつぶやき", tweets_path, class: "dropdown-item", style:"color:gray" %>
       </div>
     </li>
+      
+    <!--スマートフォン表示の時のみプロフィール別メニュー-->
+    <li class="nav-item dropdown d-md-none">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      　メニュー
+      </a>
+      <div class="dropdown-menu nav-item" aria-labelledby="navbarDropdownMenuLink">
+        <%= link_to "プロフィール", mypage_sm_path(current_user.name), class: "dropdown-item", style:"color:gray" %>
+        <%= link_to "レビューを見る", reviews_path, class: "dropdown-item", style:"color:gray" %>
+        <%= link_to "みんなのつぶやき", tweets_path, class: "dropdown-item", style:"color:gray" %>
+      </div>
+    </li>
+    
     <li class="nav-item">
       <%= link_to destroy_user_session_path, method: :delete, class: "nav-link" do %>
         ログアウト<i class="fas fa-sign-out-alt"></i>
       <% end %>
     </li>
     
+    
   <% else %>
-  
   <!--どちらもログインしていないとき-->
     <li class="nav-item">
       <%= link_to "サイトマップ", about_path, class: "nav-link" %>

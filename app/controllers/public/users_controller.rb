@@ -1,7 +1,7 @@
 class Public::UsersController < ApplicationController
   # before_action :authenticate_user!, only: [:edit, :update, :unsubscribe]
   before_action :set_current_user, only: [:edit, :update, :unsubscribe, :withdraw]
-  before_action :set_userinfo, only: [:show, :favorite_genres]
+  before_action :set_userinfo, only: [:show, :profile, :favorite_genres]
 
   def show
     redirect_to root_path, alert: '有効ではないユーザーです'  unless @user
@@ -14,6 +14,9 @@ class Public::UsersController < ApplicationController
     end
     @posts = (@tweets + @reviews)
     @posts = Kaminari.paginate_array(@posts).limit(10)
+  end
+  
+  def profile
   end
   
   def favorite_genres

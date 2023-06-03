@@ -139,9 +139,10 @@ th {
   width: 15%;
   height: auto;
   position: absolute;
-  right: 0;
+  right: 100px;
   bottom: 0;
   padding-bottom: 0;
+  color: gray;
 }
 
 .edit-user-image{

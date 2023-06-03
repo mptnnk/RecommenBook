@@ -20,7 +20,7 @@
     <% end %>
     <%= link_to reviews_path, style: "text-decoration: none;" do %>
       <div class="col about-content about2">
-        <p class="about-title">本の感想を語り合おう</p>
+        <p class="about-title">本の感想を語り合おう<i class="fas fa-feather"></i></p>
         <p class="about-text">リアルタイムで本の感想がやりとりできる</p>
       </div>
     <% end %>
@@ -29,33 +29,67 @@
   <div class="row about-box">
     <%= link_to books_search_path, style: "text-decoration: none;" do %>
       <div class="col about-content about3">
-        <p class="about-title">ランダムでおすすめ</p>
+        <p class="about-title">ランダムでおすすめ<i class="fas fa-random"></i></p>
         <p class="about-text">お気に入りの本を登録すると、<br>ランダムでおすすめの本が表示されるよ</p>
       </div>
     <% end %>
     <%= link_to tweets_path, style: "text-decoration: none;" do %>
       <div class="col about-content about4">
-        <p class="about-title">気になる本をつぶやく</p>
+        <p class="about-title">気になる本をつぶやく<i class="fas fa-comments"></i></p>
         <p class="about-text">新刊情報、読みたい本のこと、みんなと共有</p>
       </div>
     <% end %>
   </div>
       
-    <% else %>
-      <div class="col-lg-3 d-none d-lg-block">
-        <%= render "public/partial/session", user: @user %>
-      </div>
-      <div class="col-lg-8 col-md-12">
-        <p class="top-title">
-          RecommenBook
-        </p>
-        <h5 class="top-text">
-          ここでは、じぶんのすきな本をレビューしたり、<br>
-          気になる本をさがしてみたり、<br>
-          自分と好みが似ている人のよんでいる本をチェックしたり。。<br>
-          みんなで楽しく本をよもう！<i class="fas fa-book"></i><i class="fas fa-smile"></i>
-        </h5>
-      </div>
-    <% end %>
+    <% else %> <!--if !user_signed_in-->
   
+    <div class="col-lg-3 d-none d-lg-block">
+      <%= render "public/partial/session", user: @user %>
+    </div>
+    
+    <div class="col-lg-8 offset">
+      <h1 class="about-top-title">
+        RecommenBookって？
+      </h1>
+      <h5 class="top-text">
+        Recommend（おすすめ）とBook（本）をくっつけた造語です。
+      </h5>
+        
+    <div class="row about-box">
+      <%= link_to books_search_path, style: "text-decoration: none;" do %>
+        <div class="col about-content about1">
+          <p class="about-title">好きな本をさがそう<i class="fas fa-book"></i></p>
+          <p class="about-text">本を検索して、お気に入りに登録しよう</p>
+        </div>
+      <% end %>
+      <%= link_to reviews_path, style: "text-decoration: none;" do %>
+        <div class="col about-content about2">
+          <p class="about-title">本の感想を語り合おう<i class="fas fa-feather"></i></p>
+          <p class="about-text">リアルタイムで本の感想がやりとりできる</p>
+        </div>
+      <% end %>
+    </div>
+    
+    <div class="row about-box">
+      <%= link_to books_search_path, style: "text-decoration: none;" do %>
+        <div class="col about-content about3">
+          <p class="about-title">ランダムでおすすめ<i class="fas fa-random"></i></p>
+          <p class="about-text">お気に入りの本を登録すると、<br>ランダムでおすすめの本が表示されるよ</p>
+        </div>
+      <% end %>
+      <%= link_to tweets_path, style: "text-decoration: none;" do %>
+        <div class="col about-content about4">
+          <p class="about-title">気になる本をつぶやく<i class="fas fa-comments"></i></p>
+          <p class="about-text">新刊情報、読みたい本のこと、みんなと共有</p>
+        </div>
+      <% end %>
+    </div>
+    
+    </div>
+
+    <div class="col-sm-12 col-md-12 d-lg-none mt-2">
+      <%= render "public/partial/session", user: @user %>
+    </div>
+
+  <% end %>
 </div>

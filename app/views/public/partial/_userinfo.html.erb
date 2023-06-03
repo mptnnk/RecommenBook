@@ -4,7 +4,7 @@
     <%= image_tag user.get_profile_image, class: "user-image" %>
     <% if user == current_user %>
       <%= link_to users_information_edit_path do %>
-        <%= image_tag 'henshuu.png', class: "edit-btn" %>
+        <i class="fas fa-user-edit edit-btn"></i>
       <% end %>
     <% end %>
   </div>

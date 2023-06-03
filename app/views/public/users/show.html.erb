@@ -24,21 +24,16 @@
             <% if @reviews.present? %>
               <%= render 'public/partial/mypage', objects: @reviews, posts: @posts %>
             <% else %>
-              レビューがないよ
+              レビューがありません
             <% end %>
           </div>
           
-        <h4 class="mypage-title">Recent Tweets</h4>
+        <h4 class="mypage-title">最近のつぶやき</h4>
           <div class="row ml-2">
             <% if @tweets.present? %>
               <%= render 'public/partial/mypage', objects: @tweets, posts: @posts %>
             <% else %>
-             No Tweet
-            <% end %>
-          </div>
-          <div class="text-right mt-2">
-            <%= link_to tweets_path(user_name: @user.name), style: "color: black;" do %>
-              ＞＞<%= @user.name %>'s Tweets index
+             つぶやきがありません
             <% end %>
           </div>
           
@@ -48,11 +43,6 @@
               <%= render 'public/partial/mypage', objects: @favorite_books, posts: @posts %>
             <% else %>
               No Favorite Book
-            <% end %>
-          </div>
-          <div class="text-right mt-2">
-            <%= link_to favorite_books_path(user_name: @user.name), style: "color: black;" do %>
-              ＞＞<%= @user.name %>'s Favorite Books index
             <% end %>
           </div>
       <% end %>

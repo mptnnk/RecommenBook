@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     patch 'users/withdraw' => 'users#withdraw'
     get 'users/favorite_genres' => 'users#favorite_genres'
     get 'users/:name' => 'users#show', as: 'mypage'
+    get 'users/:name/sm' => 'users#profile', as: 'mypage_sm'
     get 'users/information/edit' => 'users#edit'
     patch 'users/information' => 'users#update'
     

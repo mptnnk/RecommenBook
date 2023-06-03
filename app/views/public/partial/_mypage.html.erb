@@ -17,16 +17,18 @@
             <div class="d-flex flex-row">
               <% if posts %>
                 <%= link_to mypage_path(obj.user.name), class:"mr-4" do %>
-                  <%= obj.user.name %>
+                  @<%= obj.user.name %>
                 <% end %>
               <% end %>
-              
+            </div>
+            <div class="d-flex">
+                            
               <%= link_to book_path(book.isbn) do %>
                 <%= book['title'].truncate(20) %>
               <% end %>
             </div>
             
-            <div class="col">
+            <div class="d-flex">
              <% if obj.is_a?(Review) %>
                 <% if obj.spoiler == false %>
                   <%= render_review_with_hashtags(obj.content, 50) %>
