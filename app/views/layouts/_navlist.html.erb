@@ -17,7 +17,7 @@
   <% elsif user_signed_in? %>
   <!--ユーザーログイン時-->
     <li class="nav-item">
-      <%= link_to "つかいかた", about_path, class: "nav-link" %>
+      <%= link_to "サイトマップ", about_path, class: "nav-link" %>
     </li>
     <li class="nav-item">
       <%= link_to books_search_path, class: "nav-link" do %>
@@ -26,12 +26,12 @@
     </li>
     <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      　めにゅー
+      　みんなの投稿
       </a>
       <div class="dropdown-menu nav-item" aria-labelledby="navbarDropdownMenuLink">
         <%= link_to "マイページ", mypage_path(current_user.name), class: "dropdown-item", style:"color:gray" %>
-        <%= link_to "レビュー", reviews_path, class: "dropdown-item", style:"color:gray" %>
-        <%= link_to "つぶやき", tweets_path, class: "dropdown-item", style:"color:gray" %>
+        <%= link_to "レビューを見る", reviews_path, class: "dropdown-item", style:"color:gray" %>
+        <%= link_to "みんなのつぶやき", tweets_path, class: "dropdown-item", style:"color:gray" %>
       </div>
     </li>
     <li class="nav-item">
@@ -44,7 +44,7 @@
   
   <!--どちらもログインしていないとき-->
     <li class="nav-item">
-      <%= link_to "あばうと", about_path, class: "nav-link" %>
+      <%= link_to "サイトマップ", about_path, class: "nav-link" %>
     </li>
     <li class="nav-item">
       <%= link_to books_search_path, class: "nav-link" do %>
@@ -53,11 +53,11 @@
     </li>
     <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        めにゅー
+        みんなの投稿
       </a>
       <div class="nav-item dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-        <%= link_to "レビュー", reviews_path, class: "dropdown-item", style:"color:gray" %>
-        <%= link_to "つぶやき", tweets_path, class: "dropdown-item", style:"color:gray" %>
+        <%= link_to "レビューを見る", reviews_path, class: "dropdown-item", style:"color:gray" %>
+        <%= link_to "みんなのつぶやき", tweets_path, class: "dropdown-item", style:"color:gray" %>
       </div>
     </li>
     <li class="nav-item">

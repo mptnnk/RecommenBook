@@ -16,23 +16,26 @@ class Public::RelationshipsController < ApplicationController
   
   def followings
     @followings = @user.followings
-    users_recommenbook(@followings)
+    @follow_recommenbook = users_recommenbook(@followings)
   end
   
   def followers
     @followers = @user.followers
-    users_recommenbook(@followers)
+    @follower_recommenbook = users_recommenbook(@followers)
   end
   
   private
   
   def users_recommenbook(users)
+    recommenbooks = []
     users.each do |user|
       recommenbook = user.favorite_books.find_by(recommenbook: true)
       if recommenbook.present?
-        @book = RakutenWebService::Books::Book.search(isbn: recommenbook.isbn, outOfStockFlag: 1).first
+        book = RakutenWebService::Books::Book.search(isbn: recommenbook.isbn, outOfStockFlag: 1).first
+        recommenbooks << book
       end
     end
+    return recommenbooks
   end
   
 end

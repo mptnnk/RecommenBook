@@ -1,24 +1,30 @@
 <div class="container">
   <div class="row">
     <% if user_signed_in? %>
-      <div class="col-md-12">
-        <p class="page-title">
-          ＲｅｃｏｍｍｅｎＢｏｏｋ（レコメンブック）
-        </p>
+      <div class="col">
+        <h1 class="top-title">
+          RecommenBookって？
+        </h1>
         <h5 class="top-text">
-          ここでは、じぶんのすきな本をレビューしたり、<br>
-          気になる本をさがしてみたり、<br>
-          自分と好みが似ている人のよんでいる本をチェックしたり。。<br>
-          みんなで楽しく本をよもう！<i class="fas fa-book"></i><i class="fas fa-smile"></i>
+          Recommend（おすすめ）とBook（本）をくっつけた造語です。
         </h5>
+        <p>
+          
+        </p>
+        <div class="row">
+          <div class="col">
+            
+          </div>
+          <div class="col"></div>
+        </div>
       </div>
     <% else %>
-      <div class="col-md-3">
+      <div class="col-lg-3 d-none d-lg-block">
         <%= render "public/partial/session", user: @user %>
       </div>
-      <div class="col-md-8 offset-md-1">
-        <p class="page-title">
-          ＲｅｃｏｍｍｅｎＢｏｏｋ（レコメンブック）
+      <div class="col-lg-8 col-md-12">
+        <p class="top-title">
+          RecommenBook
         </p>
         <h5 class="top-text">
           ここでは、じぶんのすきな本をレビューしたり、<br>

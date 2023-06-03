@@ -45,10 +45,10 @@
     
     <main class="container-fluid">
       <% if user_signed_in? %>
-        <div class="login-name">ハロー
+        <div class="login-name">こんにちは
           <%= link_to mypage_path(name: current_user.name), style: "color: green" do %>
             <%= current_user.name %>
-          <% end %>!
+          <% end %>さん<i class="fas fa-smile"></i>
         </div>
       <% elsif admin_signed_in? %>
         <div class="login-admin">管理人ログイン中</div>

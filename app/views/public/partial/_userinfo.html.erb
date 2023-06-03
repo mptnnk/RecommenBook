@@ -25,25 +25,27 @@
   </tr>
   <tr>
     <td>
+      レビュー
       <%= link_to reviews_path(user_name: user.name) do %>
         <% if user == current_user %>
-          <%= user.reviews.where.not(content: [nil,'']).count %>レビュー
+          <%= user.reviews.where.not(content: [nil,'']).count %>件
         <% else %>
-          <%= in_release_reviews.count %>レビュー
+          <%= in_release_reviews.count %>件
         <% end %>
       <% end %>
     </td>
   </tr>
   <tr>
     <td>
+      つぶやき
       <%= link_to tweets_path(user_name: user.name) do %>
-        <%= user.tweets.count %>ツイート
+        <%= user.tweets.count %>件
       <% end %>
     </td>
   </tr>
   <tr>
     <td>
-      おきにいりは
+      お気に入りは
       <%= link_to favorite_books_path(user_name: user.name) do %>
       　<%= user.favorite_books.count %>冊
       <% end %>
@@ -51,7 +53,7 @@
   </tr>
   <tr>
     <td>
-      すきな
+      好きなのは
       <%= link_to users_favorite_genres_path(name: user.name) do %>
         <%= user.favorite_genres.count %>ジャンル
       <% end %>
@@ -59,34 +61,34 @@
   </tr>
   <tr>
     <td>
+      おすすめの本は
       <% if recommenbook.present? %>
         <%= link_to book_path(id: book.isbn) do %>
           <%= book['title'].truncate(28) %>
         <% end %>
-        がおすすめ
       <% else %>
-        <p>まだないよ</p>
+        <p>まだ登録なし</p>
       <% end %>
     </td>
   </tr>
   <tr>
     <td>
+      読んだ本
       <% if readed_lists_count.nil? %>
         <%= link_to "0books", readed_list_path(user_name: user.name) %>
       <% else %>
         <%= link_to readed_list_path(user_name: user.name) do %>
           <%= readed_lists_count %>冊
         <% end %>
-        よんだ
       <% end %>
     </td>
   </tr>
   <tr>
     <td>
+      読みたい本
       <%= link_to reading_lists_path(user_name: user.name) do %>
         <%= reading_lists.count %> 冊
       <% end %>
-      よみたい
     </td>
   </tr>
   

@@ -20,12 +20,6 @@
   box-sizing: border-box;
 }
 
-/*body{*/
-/*  margin: 0;*/
-/*  padding: 0;*/
-/*  height: 100%;*/
-/*}*/
-
 .login-name{
   font-size: 20px;
 }
@@ -36,7 +30,7 @@
 }
 
 header {
-  font-family: 'DotGothic16', sans-serif;
+  font-family: 'Sawarabi Gothic', sans-serif;
   width: 100%;
   height: 80px;
   position: fixed;
@@ -70,14 +64,14 @@ header {
 }
 
 main {
- font-family: 'DotGothic16', sans-serif;
+ font-family: 'Sawarabi Gothic', sans-serif;
  margin: 80px 0;
  padding-bottom: 80px;
  /*overflow: hidden;*/
 }
 
 footer{
-  font-family: 'DotGothic16', sans-serif;
+  font-family: 'Sawarabi Gothic', sans-serif;
   background-color: white;
   position: absolute;
   height: 80px;
@@ -86,50 +80,15 @@ footer{
   overflow: hidden;
 }
 
-.top-image {
-  /*background-attachment: fixed;*/
-  margin-top: 0;
-  background-image: url("hondana.jpg");
-  /*background-position: center;*/
-  background-repeat: no-repeat;
-  position: relative;
-  height: 400px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.top-image:before {
-  background: inherit;
-  content: '';
-  filter: blur(4px);
-  position: absolute;
-  top: -5px;
-  right: -5px;
-  bottom: -5px;
-  left: -5px;
-}
-
-.top-image .top-title{
-  font-size: 30px;
-  position: absolute;
-  color: white;
-  font-weight: bold;
-  top: 5%;
-  text-shadow: 1px 1px 2px white, 0 0 1em gray, 0 0 0.2em gray;
-}
-
-.top-image .top-text{
-  line-height: 2.5;
-  padding-top: 10px;
-  position: absolute;
+.top-title{
+  font-size: 40px;
   text-align: center;
-  color: white;
-  max-width: 90%;
-  top: 20%;
-  left: 20%;
-  text-shadow: 1px 1px 2px gray, 0 0 1em gray, 0 0 0.2em gray;
+}
+
+.top-text{
+  font-size: 20px;
+  line-height: 2;
+  text-align: center;
 }
 
 .page-title{
@@ -234,26 +193,29 @@ footer{
   font-size: 10px;
 }
 
-.top-image .top-title{
-  font-size: 20px;
-  position: absolute;
-  color: white;
-  font-weight: bold;
-  top: 10%;
-  text-shadow: 1px 1px 2px white, 0 0 1em gray, 0 0 0.2em gray;
-}
+/*.top-image .top-title{*/
+/*.top-title {*/
+/*  font-size: 20px;*/
+  /*position: absolute;*/
+  /*color: white;*/
+/*  font-weight: bold;*/
+/*  text-align: center;*/
+  /*top: 10%;*/
+  /*text-shadow: 1px 1px 2px white, 0 0 1em gray, 0 0 0.2em gray;*/
+/*}*/
 
-.top-image .top-text{
-  line-height: 2.5;
-  font-size: 10px;
-  padding-top: 10px;
-  position: absolute;
-  text-align: center;
-  color: white;
-  max-width: 90%;
-  top: 20%;
-  text-shadow: 1px 1px 2px gray, 0 0 1em gray, 0 0 0.2em gray;
-}
+/*.top-image .top-text{*/
+/*.top-text{*/
+/*  line-height: 2.5;*/
+/*  font-size: 10px;*/
+  /*padding-top: 10px;*/
+  /*position: absolute;*/
+/*  text-align: center;*/
+  /*color: white;*/
+  /*max-width: 90%;*/
+  /*top: 20%;*/
+  /*text-shadow: 1px 1px 2px gray, 0 0 1em gray, 0 0 0.2em gray;*/
+/*}*/
   .page-title{
     padding: 5px;
     font-weight: 450;

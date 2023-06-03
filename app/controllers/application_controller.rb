@@ -11,7 +11,11 @@ class ApplicationController < ActionController::Base
     
     if @user.present?
       @in_release_reviews = Review.where(user_id: @user.id, in_release: true).where.not(content: [nil, ''])
-      @recommenbook = @user.favorite_books.find_by(recommenbook: true)
+      if @uer == current_user
+        @recommenbook = current_user.favorite_books.find_by(recommenbook: true)
+      else
+        @recommenbook = @user.favorite_books.find_by(recommenbook: true)
+      end
       if @recommenbook.present?
         @book = RakutenWebService::Books::Book.search({isbn: @recommenbook.isbn, outOfStockFlag: 1}).first
       end

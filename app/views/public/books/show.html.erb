@@ -7,17 +7,17 @@
   <div class="row mt-3">
     <div class="col">
       <% if user_signed_in? %>
-        <%= link_to "レビューをかく／よんだ本に登録", new_book_review_path(@book.isbn), class:"btn btn-success" %>
+        <%= link_to "レビューを書く／読んだ本に登録", new_book_review_path(@book.isbn), class:"btn btn-success" %>
       <% end %>
       
       <% if user_signed_in? && current_user.reading_lists.exists?(isbn: @book.isbn) %>
-        <%= link_to "よみたい本を解除", book_reading_list_path(@book.isbn), method: :delete, class:"btn btn-danger" %>
+        <%= link_to "読みたい本を解除", book_reading_list_path(@book.isbn), method: :delete, class:"btn btn-danger" %>
       <% elsif user_signed_in? %>
-        <%= link_to "よみたい本に登録", book_reading_lists_path(@book.isbn), method: :post, class:"btn btn-success" %>
+        <%= link_to "読みたい本に登録", book_reading_lists_path(@book.isbn), method: :post, class:"btn btn-success" %>
       <% end %>
       
       <% if user_signed_in? %>
-        <%= link_to "この本のことつぶやく", new_tweet_path(book_id: @book.isbn), class:"btn btn-primary" %>
+        <%= link_to "この本のことをつぶやく", new_tweet_path(book_id: @book.isbn), class:"btn btn-primary" %>
       <% end %>
       
       <% if user_signed_in? && current_user.favorite_books.exists?(isbn: @book.isbn) %>
@@ -29,33 +29,33 @@
   </div>
 
   <!--その書籍に関するレビューの一覧-->
-  <h5 class="page-title mt-5">新着レビュー！</h5>
+  <h5 class="page-title mt-5">新着レビュー</h5>
   <% if @reviews.present? %>
     <div class="row">
       <div class="col mt-3 table-responsive">
         <%= render 'public/partial/lists', objects: @reviews %>
         <div class="text-right">
-          <%= link_to "この本のレビューをみる？", reviews_path(book_id: @book.isbn), style:"color: #ff7f50" %>
+          <%= link_to "この本のレビューをみる", reviews_path(book_id: @book.isbn), style:"color: #ff7f50" %>
         </div>
       </div>
     </div>
 
   <% else %>
-    <p class="ml-3">この本のレビューはまだないよ</p>
+    <p class="ml-3">この本のレビューはまだありません</p>
   <% end %>
   
   <!--その書籍に関するつぶやきの一覧-->
-  <h5 class="page-title mt-5">新着ツイート！</h5>
+  <h5 class="page-title mt-5">新着つぶやき</h5>
   <% if @tweets.present? %>
     <div class="row">
       <div class="col mt-3">
         <%= render 'public/partial/lists', objects: @tweets %>
         <div class="text-right">
-          <%= link_to "この本のツイートをみる？", tweets_path(book_id: @book.isbn), style:"color: #ff7f50" %>
+          <%= link_to "この本のつぶやきを見る", tweets_path(book_id: @book.isbn), style:"color: #ff7f50" %>
         </div>
       </div>
     </div>
   <% else %>
-    <p class="ml-3">この本のツイートはまだないよ</p>
+    <p class="ml-3">この本のツイートはまだありません</p>
   <% end %>
 </div>

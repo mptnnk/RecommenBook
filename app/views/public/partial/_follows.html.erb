@@ -2,10 +2,10 @@
   <thead>
     <tr>
       <th></th>
-      <th>User name</th>
-      <th>User recommend</th>
-      <th>reviews</th>
-      <th>tweets</th>
+      <th>ユーザー</th>
+      <th>おすすめ</th>
+      <th>レビュー</th>
+      <th>つぶやき</th>
       <th></th>
     </tr>
   </thead>
@@ -24,8 +24,9 @@
             <%= link_to book_path(id: book.isbn) do %>
               <%= book['title'].truncate(20) %>
             <% end %>
+          <% else %>
+            登録なし
           <% end %>
-          
         </td>
         <td>
           <%= link_to reviews_path(user_name: user.name) do %>

@@ -7,14 +7,14 @@
     <div class="col-md-8 offset-md-1">
       <h4 class="page-title">
         <% if @user == current_user %>
-          Your Follows
+          あなたのフォロー
         <% else %>
-          <%= @user.name %>'s Follows
+          <%= @user.name %>さんのフォロー
         <% end %>
       </h4>
       
       <% if @followings.exists? %>
-        <%= render 'public/partial/follows', users: @followings, book: @book, recommenbook: @recommenbook %>
+        <%= render 'public/partial/follows', users: @followings, book: @book, recommenbook: @follow_recommenbook %>
       <% else %>
         <h5 class="ml-2">No Follows</h5>
       <% end %>

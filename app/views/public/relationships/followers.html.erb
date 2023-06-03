@@ -7,15 +7,15 @@
     <div class="col-md-8 offset-md-1">
       <h4 class="page-title">
         <% if @user == current_user %>
-          Your Followers
+          あなたのフォロワー
         <% else %>
-          <%= @user.name %>'s Followers
+          <%= @user.name %>さんのフォロワー
         <% end %>
       </h4>
       <% if @followers.exists? %>
-        <%= render 'public/partial/follows', users: @followers, book: @book, recommenbook: @recommenbook %>
+        <%= render 'public/partial/follows', users: @followers, book: @book, recommenbook: @follower_recommenbook %>
       <% else %>
-        <h5 class="ml-2">No Followers</h5>
+        <h5 class="ml-2">フォロワーはいません</h5>
       <% end %>
     </div>
   </div>
