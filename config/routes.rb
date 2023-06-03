@@ -10,6 +10,10 @@ Rails.application.routes.draw do
     passwords:'public/passwords'
   }
   
+  devise_scope :user do
+    get 'users', to: 'public/registrations#new'
+  end
+  
   # devise_scope :user do
   #   post 'users/guest_sign_in', to: 'public/sessions#new_guest'
   # end
@@ -17,7 +21,7 @@ Rails.application.routes.draw do
   scope module: :public do
     root to:'homes#top'
     get '/about' => 'homes#about', as:"about"
-    
+
     get 'users/unsubscribe' => 'users#unsubscribe'
     patch 'users/withdraw' => 'users#withdraw'
     get 'users/favorite_genres' => 'users#favorite_genres'
