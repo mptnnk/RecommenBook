@@ -1,0 +1,9 @@
+<div class="container">
+  <h4 class="page-title">ハッシュ検索＃<%= @tag.name %></h4>
+  <div class="row">
+    <div class="col mt-3">
+      <%= render 'public/partial/lists', objects: @posts %>
+      <%= paginate @posts, theme: 'twitter-bootstrap-4' %>
+    </div>
+  </div>
+</div>

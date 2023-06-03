@@ -1,18 +1,38 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-6 mr-auto">
-      <!--あとでログイン・ゲストログイン・新規登録の部分テンプレートをつくってはめる-->
-    </div>
-    <div class="col-md-8 offset-md-1">
-      <h1 class="top-text">
-        ようこそRecommenBookへ
-      </h1>
-      <h5 class="top-text">
-        紹介文をあとでじっくり考えます。<br>
-        紹介文をあとでじっくり考えます。<br>
-        紹介文をあとでじっくり考えます。<br>
-        ゲストログイン利用も可能です。<br>
-      </h5>
-    </div>
+    <% if user_signed_in? %>
+      <div class="col top-contents">
+        <div class="top-image">
+          <h1 class="top-title">RecommenBook</h1>
+          <h5 class="top-text">
+            みんなのレビューをみたり<br>
+            ツイートで情報共有したり<br>
+            気になる本を探してストック！<br>
+            みんなで本の感想を共有しよう<i class="fas fa-book"></i><i class="fas fa-smile"></i>
+          </h5>
+          <%= image_tag 'top-image.png', class: "img-fluid", size: "300x300" %>
+        </div>
+
+      </div>
+    <% else %> <!--if !user_signed_in-->
+      <div class="col-lg-3 d-none d-lg-block">
+        <%= render "public/partial/session", user: @user %>
+      </div>
+      <div class="col-lg-8 col-md-12 top-contents">
+        <div class="top-image">
+          <h1 class="top-title">RecommenBook</h1>
+          <h5 class="top-text">
+            みんなのレビューをみたり<br>
+            ツイートで情報共有したり<br>
+            気になる本を探してストック！<br>
+            みんなで本の感想を共有しよう<i class="fas fa-book"></i><i class="fas fa-smile"></i>
+          </h5>
+        </div>
+        <%= image_tag 'top-image.png', class: "img-fluid", size: "300x300" %>
+      </div>
+      <div class="col-sm-12 col-md-12 d-lg-none">
+        <%= render "public/partial/session", user: @user %>
+      </div>
+    <% end %>
   </div>
 </div>

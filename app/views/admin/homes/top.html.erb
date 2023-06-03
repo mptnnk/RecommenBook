@@ -1,0 +1,65 @@
+<div class="container-fluid">
+  <h4 class="page-title">
+    <% if params[:user_id] %>
+      <%= @user.name %>さんのレビュー一覧（新着順）
+    <% else %>
+      レビュー一覧（新着順）
+    <% end %>
+  </h4>
+  <div class="row">
+    <div class="col">
+      <% if @reviews %>
+        <table class="table table-sm table-borderless">
+          <thead class="text-center">
+            <tr>
+              <th>投稿日</th>
+              <th style="width: 20%">書籍タイトル</th>
+              <th>ユーザー</th>
+              <th style="width: 30%">投稿文</th>
+              <th>公開ステータス</th>
+              <th>ネタバレ</th>
+              <th>詳細を見る</th>
+            </tr>
+          </thead>
+          <% @reviews.each do |review| %>
+          <% book = RakutenWebService::Books::Book.search(isbn: review.isbn, outOfStockFlag: 1).first %>
+          <tbody>
+            <tr>
+              <td><%= review.created_at.strftime('%Y/%m/%d') %></td>
+              <td>
+                <%= link_to book_path(book.isbn) do %>
+                  <%= book['title'] %>
+                <% end %>
+              </td>
+              <td>
+                <%= link_to edit_admin_user_path(review.user.id) do %>
+                  <%= review.user.name %>
+                <% end %>
+              </td>
+              <td><%= render_review_with_hashtags(review.content, 100) %></td>
+              <td class="text-center">
+                <% if review.in_release %>
+                  <p class="text-success">公開中</p>
+                <% else %>
+                  <p class="text-secondary">下書き</p>
+                <% end %>
+              </td>
+              <td class="text-center">
+                <% if review.spoiler %>
+                  <p class="text-danger">ネタバレを含む</p>
+                <% else %>
+                  <p class="text-info">ネタバレなし</p>
+                <% end %>
+              </td>
+              <td class="text-center"><%= link_to "詳細を見る", admin_review_path(review.id), class: "btn btn-success" %></td>
+            </tr>
+          </tbody>
+          <% end %>
+        </table>
+        <%= paginate @reviews, theme: "twitter-bootstrap-4" %>
+      <% else %>
+        レビューはありません
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+<!--スマートフォン表示のときのみプロフィール別表示-->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+        <%= render 'public/partial/userinfo', user: @user, book: @book, reading_lists: @reading_lists, readed_lists_count: @readed_lists_count, recommenbook: @recommenbook, in_release_reviews: @in_release_reviews %>
+    </div>
+  </div>
+</div>

@@ -5,20 +5,46 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   validates :name, presence: true, uniqueness: true
+  validates :introduction, length: {maximum: 20}
   
   has_many :reviews, dependent: :destroy
-  has_many :books
-  # おすすめ本1冊しか登録できない仕様ならhas_oneだけど、読みたい本とかお気に入りとかを登録するのにbookテーブルを使えるならhas_manyがいいかも
+  has_many :tweets, dependent: :destroy
+  has_many :favorite_books, dependent: :destroy
+  has_many :reading_lists, dependent: :destroy
+  
+  has_many :favorite_genres
+  has_many :genres, through: :favorite_genres, dependent: :destroy
+  
+  has_many :likes, dependent: :destroy
+  has_many :review_comments, dependent: :destroy
+  has_many :tweet_comments, dependent: :destroy
+  
+  has_many :reverse_of_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
+  has_many :followers, through: :reverse_of_relationships, source: :follower
+  
+  has_many :relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
+  has_many :followings, through: :relationships, source: :followed
   
   has_one_attached :profile_image
   
   def get_profile_image
-    (profile_image.attached?) ? pdofile_image: 'default-image.jpg'
+    (profile_image.attached?) ? profile_image : 'default-image.png'
   end
   
   def to_param
-    #  to_paramはURLのidの部分にid以外のものを指定できる既存のメソッド
     name
+  end
+  
+  def follow(user)
+    relationships.create(followed_id: user.id)
+  end
+  
+  def unfollow(user)
+    relationships.find_by(followed_id: user.id).destroy
+  end
+  
+  def following?(user)
+    followings.include?(user)
   end
   
 end

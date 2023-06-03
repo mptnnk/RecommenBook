@@ -1,0 +1,1 @@
+$('.like-tweet-<%= @tweet_like.tweet_id %>').html("<%= j(render 'public/likes/tweetbtn',  tweet: @tweet_like.tweet ) %>")

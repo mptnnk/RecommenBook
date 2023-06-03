@@ -1,0 +1,52 @@
+<div class="container-fluid">
+  <div class="row">
+    <%= render 'public/partial/bookdetail', book: @book, book_favorites: @book_favorites %>
+  </div>
+  
+  <h5 class="page-title">レビュー</h5>
+  <div class="row mt-3">
+    <div class="col">
+      <table class="table table-borderless">
+        <tr>
+          <th style="width: 15%">投稿者</th>
+          <td style="width: 15%">
+            <%= link_to edit_admin_user_path(@review.user.id)  do %>
+              <%= @review.user.name %>
+            <% end %>
+          </td>
+          <th>投稿日</th>
+          <td><%= @review.created_at.strftime('%Y/%m/%d') %></td>
+          <th style="width: 20%">読み終わった日</th>
+          <td><%= @review.readed_at&.strftime('%Y/%m/%d') %></td>
+        </tr>
+        <tr>
+          <th>レビュー</th>
+          <td colspan="5"><%= render_review_with_hashtags(@review.content) %></td>
+        </tr>
+        <%= form_with model: @review, url: admin_review_path(@review), method: :patch, local: true do |review| %>
+          <tr>
+            <th>公開ステータス</th>
+            <td colspan="3">
+              <%= review.radio_button :in_release, true %>
+              <%= review.label :in_release, "ステータスを「公開」にする", { value: "true",style: "display: inline-block;" } %>
+              <%= review.radio_button :in_release, false %>
+              <%= review.label :in_release, "ステータスを「下書き」にする", { value: "false", style: "display: inline-block" } %>
+            </td>
+          </tr>
+          <tr>
+            <th>ネタバレチェック</th>
+            <td colspan="3">
+              <%= review.check_box :spoiler %>
+              <%= review.label :spoiler, "ステータスを「ネタバレを含む」にする" %>
+            </td>
+          </tr>
+          <tr>
+            <th></th>
+            <td><%= review.submit "変更を保存する", class: "btn btn-success mt-2" %></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
+    
+</div>

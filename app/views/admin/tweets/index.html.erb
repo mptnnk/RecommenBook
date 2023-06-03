@@ -1,0 +1,46 @@
+<div class="container-fluid">
+  <h4 class="page-title">
+    <% if params[:user_id] %>
+      <%= @user.name %>さんのツイート一覧
+    <% else %>
+      ツイート一覧
+    <% end %>
+  </h4>
+  
+  <div class="row">
+    <div class="col">
+      <% if @tweets.present? %>
+        <table class="table table-sm table-borderless">
+          <thead class="text-center">
+            <tr>
+              <th>投稿日</th>
+              <th style="width: 20%">書籍タイトル</th>
+              <th>ユーザー</th>
+              <th style="width: 30%">投稿文</th>
+              <th>詳細を見る</th>
+            </tr>
+          </thead>
+          <% @tweets.each do |tweet| %>
+            <% if tweet.isbn.present?%> 
+              <% book = RakutenWebService::Books::Book.search({isbn: tweet.isbn, outOfStockFlag: 1}).first %>
+            <% end %>
+            <tbody>
+              <tr>
+                <td class="text-center"><%= tweet.created_at.strftime('%Y/%m/%d') %></td>
+                <td class="text-center"><%= tweet.isbn ? (book['title']) : 'nothing' %></td>
+                <td class="text-center">
+                  <%= link_to edit_admin_user_path(tweet.user.id) do %>
+                    <%= tweet.user.name %>
+                  <% end %>
+                </td>
+                <td><%= render_tweet_with_hashtags(tweet.tweet_content, 100) %></td>
+                <td class="text-center"><%= link_to "詳細を見る", admin_tweet_path(tweet.id), class: "btn btn-success" %></td>
+              </tr>
+            </tbody>
+          <% end %>
+          
+        </table>  
+      <% end %>
+    </div>
+  </div>
+</div>

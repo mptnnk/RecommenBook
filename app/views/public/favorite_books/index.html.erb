@@ -1,0 +1,80 @@
+<!--favorite_bookの一覧-->
+<!--条件分岐確認OK-->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-3 d-none d-md-block">
+      <%= render 'public/partial/userinfo', user: @user, book: @book, reading_lists: @reading_lists, readed_lists_count: @readed_lists_count, recommenbook: @recommenbook, in_release_reviews: @in_release_reviews %>
+    </div>
+    <div class="col-md-8 offset-md-1">
+      <h4 class="page-title">
+        <% if @user == current_user %>
+          あなたのおきにいり
+        <% else %>
+          <%= @user.name %>さんのおきにいり
+        <% end %>
+      </h4>
+      
+      <% if @favorite_books.present? %>
+        <table class="table table-sm mt-2">
+          <!--<thead class"text-center">-->
+          <!--  <tr>-->
+          <!--    <th style="width: 10%"></th>-->
+          <!--    <th style="width: 20%">Title</th>-->
+          <!--    <th style="width: 10%">Author</th>-->
+          <!--    <th style="width: 20%">Caption</th>-->
+          <!--    <% if @user == current_user %>-->
+          <!--      <th style="width: 10%">Recommend</th>-->
+          <!--      <th style="width: 10%">Remove Favorite</th>-->
+          <!--    <% end %>-->
+          <!--  </tr>-->
+          <!--</thead>-->
+          <% @favorite_books.each do |favorite_book| %>
+          <% book = RakutenWebService::Books::Book.search(isbn: favorite_book.isbn, outOfStockFlag: 1).first %>
+          <tbody>
+            <tr>
+              <td style="width: 10%">
+                <%= link_to book_path(book['isbn']) do %>
+                  <%= image_tag(book['small_image_url']) %>
+                <% end %>
+              </td>
+              <td style="width: 20%">
+                <%= link_to book_path(book['isbn']) do %>
+                  <%= book['title'] %>
+                <% end %>
+              </td>
+              <td style="width: 10%">
+                <%= link_to books_search_path(author: book['author']) do %>
+                  <%= book['author'] %>
+                <% end %>
+              </td>
+              <td style="width: 20%"><%= book['item_caption'].truncate(55) %></td>
+              
+              <% if @user == current_user %>　<!--おすすめ登録とお気に入り解除はcurrent_userのみ表示-->
+                <td style="width: 13%">
+                  <% if current_user.favorite_books.where(recommenbook: true).present? && favorite_book.recommenbook %>
+                    <%= form_with model: @favorite_book, url: favorite_book_path(favorite_book.id), method: :patch, local: true do |rmbook| %>
+                      <%= rmbook.hidden_field :recommenbook, value: false %>
+                      <%= rmbook.submit "おすすめを解除", class: "btn btn-sm btn-danger" %>
+                    <% end %> <!--form_with end-->
+                    
+                  <% elsif current_user.favorite_books.where(recommenbook: true).blank? %> <!--if current_user recommenbook false-->
+                    <%= form_with model: @favorite_book, url: favorite_book_path(favorite_book.id), method: :patch, local: true do |rmbook| %>
+                      <%= rmbook.hidden_field :recommenbook, value: true %>
+                      <%= rmbook.submit "いちおしする", class: "btn btn-sm btn-primary" %>
+                    <% end %> <!--form_with end-->
+                    
+                  <% end %> <!--if current_user recommenbook end-->
+                </td>
+                <td style="width: 13%"><%= link_to "おきにいり解除", book_favorite_book_path(id: favorite_book.id, book_id: favorite_book.isbn), method: :delete, class: "btn btn-danger btn-sm" %></td>
+              <% end %> <!--if @user == current_user end-->
+            </tr>
+          </tbody>
+          <% end %> <!--@favorite_books.each done-->
+        </table>
+      <% else %> <!--if favorite_books nil-->
+        <p>No Favoirte Book</p>
+      <% end %> <!--if favorite_books end-->
+      <%= paginate @favorite_books, theme: 'twitter-bootstrap-4' %>
+    </div>
+  </div>
+</div>

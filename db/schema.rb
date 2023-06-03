@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_08_053740) do
+ActiveRecord::Schema.define(version: 2023_05_26_095144) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -52,14 +52,17 @@ ActiveRecord::Schema.define(version: 2023_05_08_053740) do
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
   end
 
-  create_table "books", force: :cascade do |t|
-    t.string "title"
-    t.string "author"
-    t.string "url"
-    t.string "image_url"
-    t.string "item_caption"
-    t.string "book_genre_id"
+  create_table "favorite_books", force: :cascade do |t|
+    t.integer "user_id", null: false
     t.string "isbn", null: false
+    t.boolean "recommenbook", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "favorite_genres", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "genre_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -71,12 +74,73 @@ ActiveRecord::Schema.define(version: 2023_05_08_053740) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "hashtag_relations", force: :cascade do |t|
+    t.integer "hashtag_id"
+    t.integer "review_id"
+    t.integer "tweet_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "hashtags", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "likes", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "review_id"
+    t.integer "tweet_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "reading_lists", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "isbn", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "relationships", force: :cascade do |t|
+    t.integer "follower_id"
+    t.integer "followed_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "review_comments", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "review_id"
+    t.text "comment", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "reviews", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.string "isbn"
+    t.string "isbn", null: false
     t.text "content"
     t.datetime "readed_at"
-    t.boolean "in_release", default: false
+    t.boolean "in_release", default: true
+    t.boolean "spoiler", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "tweet_comments", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "tweet_id"
+    t.text "comment", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "tweets", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "isbn"
+    t.text "tweet_content", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -84,9 +148,9 @@ ActiveRecord::Schema.define(version: 2023_05_08_053740) do
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
-    t.integer "book_id"
     t.string "name", null: false
     t.boolean "is_active", default: true
+    t.text "introduction"
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"

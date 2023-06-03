@@ -1,14 +1,27 @@
-<div class="search-box">
-  <%= form_with url: books_search_path, method: :get do |book| %>
-    <div class="form-group">
-      <%= book.text_field :keyword, class:"form-control" %>
-      <%= book.collection_select(:book_genre_id, Genre.all, :book_genre_id, :name, include_blank: "--") %>
-      <%= book.submit '検索', class:"form-control btn btn-success" %>
+<!--検索画面（検索結果一覧表示もあり）-->
+<div class="container-fluid">
+  <h4 class="page-title">本をさがす<i class="fas fa-search-plus"></i></h4>
+  <div class="row">
+    <div class="col search-box">
+      <%= form_with url: books_search_path, method: :get do |book| %>
+        <div class="form-group ml-2">
+          <%= book.text_field :title, :placeholder =>"タイトルでさがす", class:"mt-2 mb-2", size: "26x1" %>
+          <%= book.text_field :author, :placeholder =>"作者でさがす", class:"mb-2", size: "26x1" %>
+          <%= book.collection_select(:book_genre_id, Genre.all, :book_genre_id, :name, include_blank: "ジャンルを選ぶ") %>
+          <%= book.submit '検索', class:"btn btn-success btn-sm" %>
+        </div>
+      <% end %>
     </div>
-    
-  <% end %>
-  
-  <% if @books.present? %>
-    <%= render 'book', books: @books %>
-  <% end %>
+  </div>
+  <div class="row">
+    <div class="col">
+      <% if @books.count > 0 %>
+        <h3>検索結果<i class="fas fa-smile"></i></h3>
+        <%= render 'search', books: @books, books_page: @books_page %>
+      <% elsif @random_books.present? %>
+        <h3><i class="fas fa-smile"></i>あなたの最近のお気に入りから、<i class="fas fa-smile"></i></h3>
+        <%= render 'search', books: @random_books, books_page: @random_page %>
+      <% end %>
+    </div>
+  </div>
 </div>

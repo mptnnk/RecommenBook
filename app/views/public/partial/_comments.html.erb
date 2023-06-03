@@ -1,0 +1,24 @@
+<table class="table table-sm table-responsive">
+  <tbody>
+    <% comments.each do |comment| %>
+      <tr>
+        <td style:"width: 15%">
+          <% if comment.user.is_active %>
+            <%= link_to mypage_path(name: comment.user.name) do %>
+              <%= comment.user.name %>
+            <% end %>
+          <% else %>
+            Unsubscribed Users
+          <% end %>
+        </td>
+        
+        <td style="width: 75%"><%= comment.comment %></td>
+        <% if comment.user == current_user && comment.is_a?(ReviewComment) %>
+          <td style="width: 10%"><%= link_to "削除", review_review_comment_path(review, comment), method: :delete, class: "btn btn-danger btn-sm", remote: true %></td>
+        <% elsif comment.user == current_user && comment.is_a?(TweetComment) %>
+          <td style="width: 10%"><%= link_to "削除", tweet_tweet_comment_path(tweet, comment), method: :delete, class: "btn btn-danger btn-sm", remote: true %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

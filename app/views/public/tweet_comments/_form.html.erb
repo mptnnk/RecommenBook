@@ -1,0 +1,5 @@
+<!--tweet-->
+<%= form_with(model:[tweet, tweet_comment], local: false) do |t_comment| %>
+  <%= t_comment.text_area :comment, rows: '3', placeholder: "コメントを投稿する", class: "w-100 comment-textarea" %>
+  <%= t_comment.submit "投稿", class: "btn btn-success pull-right" %>
+<% end %>

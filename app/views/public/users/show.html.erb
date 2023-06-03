@@ -1,14 +1,60 @@
 <!--mypage-->
-<div class="container">
+<div class="container-fluid">
   <div class="row">
-    <div class="col-md-3">
-      <h2 class="page-title">User info</h2><br>
-      <%= render 'info', user: current_user %>
-
+    <div class="col-lg-3 d-none d-lg-block">
+      <%= render 'public/partial/userinfo', user: @user, book: @book, reading_lists: @reading_lists, readed_lists_count: @readed_lists_count, recommenbook: @recommenbook, in_release_reviews: @in_release_reviews %>
     </div>
-    <div class="col-md-8 col-offset-1">
-      <%= link_to "仮置き検索画面リンク",books_search_path %>
-
+    <div class="col-lg-8 col-md-10 offset-md-1 col-sm-12">
+      <h2 class="page-title">
+        <% if @user == current_user %>
+          マイページ
+        <% else %>
+          <%= link_to mypage_path(@user.name) do %>
+            <%= @user.name %>
+          <% end %>さんのページ
+        <% end %>
+      </h2>
+      
+      <% if @user == current_user %>
+        <% if @posts.present? %>
+          <%= render 'mypage', objects: @posts, posts: @posts %>
+          <%= paginate @posts, theme: "twitter-bootstrap-4" %>
+        <% else %>
+          フォロー中のユーザーの最新投稿が表示されます
+        <% end %>
+        
+      <% else %>
+        <h4 class="mypage-title">ひとこと</h4>
+          <div class="row ml-2">
+            <% if @user.introduction.present? %>
+              <%= @user.introduction %>
+            <% else %>
+              ひとことがありません
+            <% end %>
+          </div>
+          
+        <h4 class="mypage-title">最近のレビュー</h4>
+          <% if @reviews.present? %>
+            <%= render 'mypage', objects: @reviews, posts: @posts %>
+          <% else %>
+            レビューがありません
+          <% end %>
+          
+          
+        <h4 class="mypage-title">最近のつぶやき</h4>
+          <% if @tweets.present? %>
+            <%= render 'mypage', objects: @tweets, posts: @posts %>
+          <% else %>
+           つぶやきがありません
+          <% end %>
+          
+        <h4 class="mypage-title">最近のお気に入り</h4>
+          <% if @favorite_books.present? %>
+            <%= render 'mypage', objects: @favorite_books, posts: @posts %>
+          <% else %>
+            お気に入りの本がありません
+          <% end %>
+      <% end %>
     </div>
   </div>
 </div>
