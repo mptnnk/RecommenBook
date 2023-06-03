@@ -33,7 +33,7 @@
                   <%= link_to "（くわしく）", review_path(obj.id), style: "color: #ff7f50" %>
                 <% else %>
                   <%= link_to review_path(obj.id) do %>
-                    <p class="spoiler-large"><i class="fas fa-exclamation-circle"></i>ねたばれ<i class="fas fa-exclamation-circle"></i><span class="spoiler-small">くわしく</span></p>
+                    <p class="spoiler-large"><i class="fas fa-exclamation-circle"></i>ネタバレあり<i class="fas fa-exclamation-circle"></i><span class="spoiler-small">くわしく</span></p>
                     
                   <% end %>
                 <% end %>

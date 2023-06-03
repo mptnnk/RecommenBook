@@ -1,0 +1,12 @@
+ja:
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            password_confirmation:
+              confirmation: "パスワードとパスワード（確認用）が一致しません"
+            password:
+              too_short: "パスワードは%{count}文字以上で入力してください"
+            email:
+              taken: "このメールアドレスは既に使用されています"
