@@ -32,7 +32,7 @@
         <tr>
           <th></th>
           <% if user_signed_in? %>
-            <td class=<%= "like-" + @tweet.id.to_s %> >
+            <td class=<%= "like-tweet-" + @tweet.id.to_s %> >
               <%= render "public/likes/tweetbtn", tweet: @tweet %>
             </td>
           <% else %>
