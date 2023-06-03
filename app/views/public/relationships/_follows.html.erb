@@ -2,8 +2,8 @@
   <thead>
     <tr>
       <th></th>
-      <th>name</th>
-      <th>おすすめ本</th>
+      <th>ユーザー</th>
+      <th>おすすめ</th>
       <th>レビュー</th>
       <th>つぶやき</th>
       <th></th>
@@ -13,7 +13,7 @@
   <tbody>
     <% users.each do |user| %>
       <tr>
-        <td style="width: 10%"><%= image_tag user.get_profile_image, size: '40x50' %></td>
+        <td style="width: 10%"><%= image_tag user.get_profile_image, class: "user-image" %></td>
         <td>
           <%= link_to mypage_path(name: user.name) do %>
             <%= user.name %>
@@ -24,20 +24,25 @@
             <%= link_to book_path(id: book.isbn) do %>
               <%= book['title'].truncate(20) %>
             <% end %>
+          <% else %>
+            登録なし
           <% end %>
-          
         </td>
         <td>
-          <%= link_to reviews_path(user_id: user.id) do %>
+          <%= link_to reviews_path(user_name: user.name) do %>
             <%= user.reviews.count %>reviews
           <% end %>
         </td>
         <td>
-          <%= link_to tweets_path(user_id: user.id) do %>
+          <%= link_to tweets_path(user_name: user.name) do %>
             <%= user.tweets.count %>tweets
           <% end %>
         </td>
-        <td><%= render "public/relationships/btn", user: user %></td>
+        <td>
+          <% if user_signed_in? %>
+            <%= render "public/relationships/btn", user: user %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

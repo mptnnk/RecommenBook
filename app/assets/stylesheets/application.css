@@ -1,0 +1,200 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+header {
+  font-family: 'Sawarabi Gothic', sans-serif;
+  width: 100%;
+  /*height: 100px;*/
+  height: 80px;
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  top: 0;
+  z-index: 99;
+  background-color: white;
+  /*overflow: hidden;*/
+}
+
+main {
+ font-family: 'Sawarabi Gothic', sans-serif;
+ /*margin: 110px 0;*/
+ margin: 80px 0;
+ padding-bottom: 70px;
+ /*overflow: hidden;*/
+}
+
+footer{
+  font-family: 'Sawarabi Gothic', sans-serif;
+  background-color: white;
+  position: absolute;
+  height: 70px;
+  width: 100%;
+  bottom: 0;
+  overflow: hidden;
+  border-top: 1px double #d3d3d3;
+}
+
+.login-name{
+  font-size: 20px;
+}
+
+.login-admin{
+  font-size: 20px;
+  color: #008000;
+}
+
+.logo-image {
+  width: 30%;
+  height: 30%;
+}
+
+.navbar-toggler {
+  font-size: inherit !important;
+  background-color: white;
+  justify-content: flex-end;
+}
+
+.nav-link{
+  color: #808080;
+  border: gray;
+  border-radius: 2px;
+}
+
+.nav-item {
+  background-color: white;
+}
+
+.search-form {
+  background-color: white;
+}
+
+.page-title{
+  padding: 5px;
+  font-weight: 450;
+  font-size: 30px;
+}
+
+.page-subtitle{
+  background-color: #ddd;
+  display: inline-block;
+  margin: 1% 2%;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.pagination{
+  justify-content: center;
+}
+
+.lists {
+  border: 2px dotted #dcdcdc;
+  border-radius: 20px;
+  border-collapse: separate;
+  padding-bottom: 10px;
+}
+
+th {
+  color: #006400;
+}
+
+.form-title {
+  color: #006400;
+  /*width: 20%;*/
+}
+
+.input-form {
+  width: 50%;
+}
+
+.lists-image {
+  padding: 10px;
+}
+
+.admin-user-image{
+  width: 10%;
+  height: auto;
+}
+
+.user-image-area{
+  position: relative;
+}
+
+.user-image {
+  width: 30%;
+  height: auto;
+}
+
+.edit-btn {
+  width: 15%;
+  height: auto;
+  position: absolute;
+  right: 50px;
+  bottom: 0;
+  padding-bottom: 0;
+  color: gray;
+}
+
+.edit-user-image{
+  width: 20%;
+  height: auto;
+}
+
+.spoiler-large {
+  font-size: 15px;
+  font-weight: bold;
+  color: #ff4500;
+}
+
+.spoiler-small {
+  font-size: 12px;
+  color: #ff4500;
+}
+
+.favorite-explain{
+  font-size: 20px;
+  padding-left: 20px;
+  color: green;
+}
+
+.mypage-title{
+  color: #dc143c;
+  margin-top :20px;
+}
+
+
+@media screen and (max-width: 959px) {
+	/* 959px以下に適用されるCSS（タブレット用） */
+}
+@media screen and (max-width: 480px) {
+	/* 480px以下に適用されるCSS（スマホ用） */
+  footer{
+    font-family: 'DotGothic16', sans-serif;
+    background-color: white;
+    font-size: 10px;
+  }
+
+  .page-title{
+    padding: 5px;
+    font-weight: 450;
+    font-size: 23px;
+  }
+}

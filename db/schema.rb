@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_24_071541) do
+ActiveRecord::Schema.define(version: 2023_05_26_095144) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -60,6 +60,13 @@ ActiveRecord::Schema.define(version: 2023_05_24_071541) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "favorite_genres", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "genre_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "genres", force: :cascade do |t|
     t.string "name"
     t.string "book_genre_id"
@@ -89,10 +96,9 @@ ActiveRecord::Schema.define(version: 2023_05_24_071541) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "readed_books", force: :cascade do |t|
+  create_table "reading_lists", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "isbn", null: false
-    t.datetime "readed_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -115,7 +121,7 @@ ActiveRecord::Schema.define(version: 2023_05_24_071541) do
   create_table "reviews", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "isbn", null: false
-    t.text "content", null: false
+    t.text "content"
     t.datetime "readed_at"
     t.boolean "in_release", default: true
     t.boolean "spoiler", default: false
@@ -144,6 +150,7 @@ ActiveRecord::Schema.define(version: 2023_05_24_071541) do
     t.string "encrypted_password", default: "", null: false
     t.string "name", null: false
     t.boolean "is_active", default: true
+    t.text "introduction"
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"

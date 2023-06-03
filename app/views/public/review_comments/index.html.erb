@@ -1,16 +1,64 @@
 <!--レビューとツイートのコメントを両方表示-->
+<!--条件分岐確認OK-->
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-3">
-      <%= render 'public/users/info', user: @user, book: @book, in_release_reviews: @in_release_reviews %>
+      <%= render 'public/partial/userinfo', user: @user, book: @book, reading_lists: @reading_lists, readed_lists_count: @readed_lists_count, recommenbook: @recommenbook, in_release_reviews: @in_release_reviews %>
     </div>
     
     <div class="col-md-8 offset-md-1">
-      <h4 class="page-title"><%= @user.name %>さんのコメント履歴一覧</h4>
+      <h4 class="page-title">
+        <% if @user == current_user %>
+          あなたのコメント
+        <% else %>
+          <%= @user.name %>さんのコメント
+        <% end %>
+      </h4>
+
       <% if @comments.present? %>
-        <%= render 'public/partial/comments', comments: @comments, review: @review, tweet: @tweet %>
+        <!--<%= render 'public/partial/comments', comments: @comments, review: @review, tweet: @tweet %>-->
+        <table class="table table-sm table-responsive">
+          <thead class="text-center">
+            <tr>
+              <th colspan="2" style="width: 40%"></th>
+              <th style="width: 50%">コメント</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <% @comments.each do |comment| %>
+            <tbody>
+              <tr>
+                <% if comment.is_a?(ReviewComment) %>
+                <td>
+                  <%= link_to review_path(comment.review.id) do %>
+                    <%= comment.review.content.truncate(40) %>
+                  <% end %>
+                </td>
+                <td>
+                  <%= link_to mypage_path(comment.review.user.name) do %>
+                    <%= comment.review.user.name %>
+                  <% end %>
+                </td>
+                <% elsif comment.is_a?(TweetComment) %>
+                <td>
+                  <%= link_to tweet_path(comment.tweet.id) do %>
+                    <%= comment.tweet.tweet_content.truncate(20) %>
+                  <% end %>
+                </td>
+                <td>
+                  <%= link_to mypage_path(comment.tweet.user.name) do %>
+                    <%= comment.tweet.user.name %>
+                  <% end %>
+                </td>
+                <% end %>
+                <td><%= comment.comment %></td>
+                <td><%= comment.created_at.strftime('%Y/%m/%d') %></td>
+              </tr>
+            </tbody>
+          <% end %>
+        </table>
       <% else %>
-        <p>コメントはありません</p>
+        <h5 class="ml-2">No Comment</h5>
       <% end %>
     </div>
   </div>

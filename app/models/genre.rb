@@ -1,7 +1,6 @@
 class Genre < ApplicationRecord
   
-  def self.genres
-   
-  end
+  has_many :favorite_genres
+  has_many :users, through: :favorite_genres, dependent: :destroy
   
 end

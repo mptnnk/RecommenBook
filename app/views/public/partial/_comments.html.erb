@@ -2,33 +2,22 @@
   <tbody>
     <% comments.each do |comment| %>
       <tr>
-        <% if current_page?(review_path(review.id) || current_page?(tweet_path(tweet.id)) ) %>
-        <td colspan="1" style:"width: 10%">
-          <%= link_to mypage_path(name: comment.user.name) do %>
-            <%= comment.user.name %>
-          <% end %>
-        </td>
-        <% end %>
-        
-        <td><%= comment.comment %></td>
-        
-        <% unless current_page?(review_path(review.id) || current_page?(tweet_path(tweet.id)) ) %>
-          <td colspan="2" style="width: 20%">
-            <% if comment.is_a?(ReviewComment) %>
-              <%= link_to "もとのレビューを見る", review_path(review.id), class: "btn btn-sm btn-info" %>
-            <% elsif comment.is_a?(TweetComment) %>
-              <%= link_to "もとのつぶやきを見る", tweet_path(tweet.id), class: "btn btn-sm btn-info" %>
+        <td style:"width: 15%">
+          <% if comment.user.is_active %>
+            <%= link_to mypage_path(name: comment.user.name) do %>
+              <%= comment.user.name %>
             <% end %>
-          </td>
-        <% end %>
-        
-        <td colspan="1" style="width: 10%">
-          <% if comment.user == current_user && comment.is_a?(ReviewComment) %>
-            <%= link_to "削除", review_review_comment_path(review, comment), method: :delete, class: "btn btn-danger btn-sm", remote: true %>
-          <% elsif comment.user == current_user && comment.is_a?(TweetComment) %>
-            <%= link_to "削除", tweet_tweet_comment_path(tweet, comment), method: :delete, class: "btn btn-danger btn-sm", remote: true %>
+          <% else %>
+            Unsubscribed Users
           <% end %>
         </td>
+        
+        <td style="width: 75%"><%= comment.comment %></td>
+        <% if comment.user == current_user && comment.is_a?(ReviewComment) %>
+          <td style="width: 10%"><%= link_to "削除", review_review_comment_path(review, comment), method: :delete, class: "btn btn-danger btn-sm", remote: true %></td>
+        <% elsif comment.user == current_user && comment.is_a?(TweetComment) %>
+          <td style="width: 10%"><%= link_to "削除", tweet_tweet_comment_path(tweet, comment), method: :delete, class: "btn btn-danger btn-sm", remote: true %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

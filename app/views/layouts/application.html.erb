@@ -2,7 +2,8 @@
 <html>
   <head>
     <title>RecommenBook</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -13,58 +14,64 @@
 
   <body class="d-flex flex-column vh-100">
     <header class="shadow-sm">
-      <nav class="navbar navbar-fixed-top navbar-expand-lg navbar-light">
+      <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container-fluid">
+          
           <div class="navbar-brand">
             <%= link_to root_path do %>
-              <%= image_tag 'logo.png', size: '200x100' %>
+              <%= image_tag 'logo.png', class: "img-fluid logo-image" %>
             <% end %>
           </div>
+          
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-          
-          <% if user_signed_in? %>
-            <span class="helloname ml-5">Hello, 
-              <%= link_to mypage_path(name: current_user.name), style: "color: green" do %>
-                <%= current_user.name %>
-              <% end %>
-              !
-            </span>
-          <% end %>
-          
+  
           <div class="collapse navbar-collapse flex-column" id="navbarNavDropdown">
-            <%= render 'layouts/navlist' %>
+            <%= render 'layouts/navlist', user: @user %>
             
-            <div class="search-form ml-auto mr-2">
-              <form class="form-inline">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-              </form>
-            </div>
-          </div>
-          <!--navbar-collapse end-->
-        </div>
-        <!--container-fluid end-->
+            <!--<div class="search-form ml-auto mr-2">-->
+            <!--  <form class="form-inline">-->
+            <!--    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">-->
+            <!--    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">サイト内検索</button>-->
+            <!--  </form>-->
+            <!--</div>-->
+            
+          </div> <!--navbar-collapse end-->
+        </div> <!--container-fluid end-->
       </nav>
     </header>
     
-    <main class="container-fluid p-5">
-      <div class="mt-3 text-success">
+    <main class="container-fluid">
+      <% if user_signed_in? %>
+        <div class="login-name">こんにちは
+          <%= link_to mypage_path(name: current_user.name), style: "color: green" do %>
+            <%= current_user.name %>
+          <% end %>さん<i class="fas fa-smile"></i>
+        </div>
+      <% elsif admin_signed_in? %>
+        <div class="login-admin">管理人ログイン中</div>
+      <% end %>
+      
+      <div class="text-success">
         <p id="notice"><%= notice %></p>
       </div>
-      <div class="mt-3 text-danger">
+      <div class="text-danger">
         <p id="alert"><%= alert %></p>
       </div>
       <%= yield %>
     </main>
-    <footer class="footer mt-3 p-3">
+    <footer class="footer mt-3 p-3 fixed-bottom">
       <div class="container-fluid text-center">
         <span>ロゴ制作:<a href="https://www.designevo.com/jp/" title="無料オンラインロゴメーカー">DesignEvo</a></span>
         <!--Rakuten Web Services Attribution Snippet FROM HERE-->
         <a href="https://webservice.rakuten.co.jp/" target="_blank"><img src="https://webservice.rakuten.co.jp/img/credit/200709/credit_22121.gif" border="0" alt="Rakuten Web Service Center" title="Rakuten Web Service Center" width="221" height="21"/></a>
         <!-- Rakuten Web Services Attribution Snippet TO HERE -->
-        <span class="text-right mt-3"><%= link_to "管理者ログイン", new_admin_session_path, style:"color:green", class:"border border-success rounded p-2" %></span>
+        <span class="mt-3">
+          <%= link_to new_admin_session_path, style: "color: green" do %>
+            <i class="fas fa-user-cog"></i>
+          <% end %>
+        </span>
       </div>
     </footer>
   </body>

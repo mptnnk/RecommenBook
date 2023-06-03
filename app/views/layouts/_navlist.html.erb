@@ -1,53 +1,102 @@
-<ul class="navbar-nav navbar-expand-lg ml-auto mb-2">
+<ul class="navbar-nav ml-auto">
   <% if admin_signed_in? %>
-  <!--管理者ログインのとき。レビュー一覧、つぶやき一覧、会員一覧は後で作る-->
-    <li class="nav-link">
-      <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, style:"color:gray", class:"border border-secondary rounded p-2" %>
+    <li class="nav-item">
+      <%= link_to "レビュー一覧", admin_path, class: "nav-link" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to "ツイート一覧", admin_tweets_path, class: "nav-link" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to "ユーザー一覧", admin_users_path, class: "nav-link" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class: "nav-link" %>
     </li>
     
   <% elsif user_signed_in? %>
   <!--ユーザーログイン時-->
-    <li class="nav-link">
-      <%= link_to "About", about_path, style:"color:gray", class:"border border-secondary rounded p-2" %>
+    <li class="nav-item">
+      <%= link_to "サイトマップ", about_path, class: "nav-link" %>
     </li>
-    <li class="nav-link">
-      <%= link_to "本を探す", books_search_path, style:"color:gray", class:"border border-secondary rounded p-2" %>
+    <li class="nav-item">
+      <%= link_to books_search_path, class: "nav-link" do %>
+        本をさがす<i class="fas fa-search-plus"></i>
+      <% end %>
     </li>
-    <li class="nav-item dropdown border border-secondary rounded">
+    <li class="nav-item d-none d-lg-block dropdown">
+    <!--d-none d-lg-block以上でしか表示しない-->
       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Menu
+      　メニュー
       </a>
-      <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+      <div class="dropdown-menu nav-item" aria-labelledby="navbarDropdownMenuLink">
         <%= link_to "マイページ", mypage_path(current_user.name), class: "dropdown-item", style:"color:gray" %>
         <%= link_to "レビューを見る", reviews_path, class: "dropdown-item", style:"color:gray" %>
-        <%= link_to "つぶやきを見る", tweets_path, class: "dropdown-item", style:"color:gray" %>
+        <%= link_to "みんなのつぶやき", tweets_path, class: "dropdown-item", style:"color:gray" %>
       </div>
     </li>
-    <li class="nav-link">
-      <%= link_to "ログアウト", destroy_user_session_path, method: :delete, style:"color:gray", class:"border border-secondary rounded p-2" %>
+      
+    <!--スマートフォン表示の時のみプロフィール別メニュー-->
+    <li class="nav-item dropdown d-lg-none">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      　メニュー
+      </a>
+      <div class="dropdown-menu nav-item" aria-labelledby="navbarDropdownMenuLink">
+        <%= link_to "自分のプロフィール", mypage_sm_path(current_user.name), class: "dropdown-item", style:"color:gray" %>
+        <% if user.present? && user != current_user %>
+          <%= link_to "このユーザーのプロフィール", mypage_sm_path(user.name), class: "dropdown-item", style: "color: gray" %>
+        <% end %>
+        <%= link_to "レビューを見る", reviews_path, class: "dropdown-item", style:"color:gray" %>
+        <%= link_to "みんなのつぶやき", tweets_path, class: "dropdown-item", style:"color:gray" %>
+      </div>
     </li>
     
-  <% else %>
-  
-  <!--どちらもログインしていないとき-->
-    <li class="nav-link">
-      <%= link_to "About", about_path, style:"color:gray", class:"border border-secondary rounded p-2" %>
+    <li class="nav-item">
+      <%= link_to destroy_user_session_path, method: :delete, class: "nav-link" do %>
+        ログアウト<i class="fas fa-sign-out-alt"></i>
+      <% end %>
     </li>
-    <li class="nav-item dropdown border border-secondary rounded">
+    
+    
+  <% else %>
+  <!--どちらもログインしていないとき-->
+    <li class="nav-item">
+      <%= link_to "サイトマップ", about_path, class: "nav-link" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to books_search_path, class: "nav-link" do %>
+        本をさがす<i class="fas fa-search-plus"></i>
+      <% end %>
+    </li>
+    <li class="nav-item d-none d-md-block dropdown">
+    <!--d-none d-md-blockでmd以上でしか表示しない-->
       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Menu
+        みんなの投稿
       </a>
-      <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-        <%= link_to "本を探す", books_search_path, class: "dropdown-item", style:"color:gray" %>
+      <div class="nav-item dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
         <%= link_to "レビューを見る", reviews_path, class: "dropdown-item", style:"color:gray" %>
-        <%= link_to "つぶやきを見る", tweets_path, class: "dropdown-item", style:"color:gray" %>
+        <%= link_to "みんなのつぶやき", tweets_path, class: "dropdown-item", style:"color:gray" %>
       </div>
     </li>
-    <li class="nav-link">
-      <%= link_to "新規登録", new_user_registration_path, style:"color:gray", class:"border border-secondary rounded p-2" %>
+    
+        <!--スマートフォン表示の時のみプロフィール別メニュー-->
+    <li class="nav-item dropdown d-md-none">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      　メニュー
+      </a>
+      <div class="dropdown-menu nav-item" aria-labelledby="navbarDropdownMenuLink">
+        <% if params[:name].present? %>
+          <%= link_to "このユーザーのプロフィール", mypage_sm_path(user.name), class: "dropdown-item", style: "color: gray" %>
+        <% end %>
+        <%= link_to "レビューを見る", reviews_path, class: "dropdown-item", style:"color:gray" %>
+        <%= link_to "みんなのつぶやき", tweets_path, class: "dropdown-item", style:"color:gray" %>
+      </div>
     </li>
-    <li class="nav-link">
-      <%= link_to "ログイン", new_user_session_path, style:"color:gray", class:"border border-secondary rounded p-2" %>
+    
+    <li class="nav-item">
+      <%= link_to "会員登録", new_user_registration_path, class: "nav-link" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to "ログイン", new_user_session_path, class: "nav-link" %>
     </li>
   <% end %>
 </ul>

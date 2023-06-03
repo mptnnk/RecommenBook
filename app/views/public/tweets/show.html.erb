@@ -2,27 +2,27 @@
 <div class="container">
   <div class="row">
     <% if @tweet.isbn.present? %>
-      <%= render 'public/books/show', book: @book, book_favorites: @book_favorites %>
+      <%= render 'public/partial/bookdetail', book: @book, book_favorites: @book_favorites %>
     <% end %>
   </div>
   
-  <h4 class="page-title mt-3">つぶやき詳細</h4>
+  <h4 class="page-title mt-3">tweet</h4>
   <div class="row">
     <div class="col">
       <table class="table table-borderless">
         <tr>
-          <th style="width: 20%">投稿者</th>
+          <th style="width: 10%">User</th>
           <td>
             <%= link_to mypage_path(name: @tweet.user.name) do %>
               <%= @tweet.user.name %>
             <% end %>
           </td>
-          <th>投稿日</th>
+          <th>Submission Date</th>
           <td><%= @tweet.created_at.strftime('%Y/%m/%d') %></td>
         </tr>
         <tr>
-          <th>つぶやき</th>
-          <td><%= render_tweet_with_hashtags(@tweet.tweet_content, 50) %></td>
+          <th>Tweet</th>
+          <td colspan="3" style="width: 80%"><%= render_tweet_with_hashtags(@tweet.tweet_content) %></td>
           <td>
             <% if @tweet.user == current_user %>
               <%= link_to "削除する", tweet_path(@tweet.id), method: :delete, "data-confirm" => "つぶやきを削除しますか？", class:"btn btn-danger btn-sm" %>
@@ -31,16 +31,23 @@
         </tr>
         <tr>
           <th></th>
-          <td class=<%= "like-" + @tweet.id.to_s %> >
-            <%= render "public/likes/tweetbtn", tweet: @tweet %>
-          </td>
+          <% if user_signed_in? %>
+            <td class=<%= "like-tweet-" + @tweet.id.to_s %> >
+              <%= render "public/likes/tweetbtn", tweet: @tweet %>
+            </td>
+          <% else %>
+            <td><i class="fas fa-heart" aria-hidden="true" style="color: red;"></i><%= @tweet.likes.count %>いいね</td>
+          <% end %>
+          
         </tr>
       </table>
-      <div class="comments-index">
-        <h3>コメント（<%= @comments.count %>件）</h3>
+      <h3 id="tweetCommentCount">コメント（<%= @comments.count %>件）</h3>
+      <div class="tweet-comments-index">
         <%= render "public/partial/comments", tweet: @tweet, comments: @comments %>
       </div>
-      <%= render "public/tweet_comments/form", tweet: @tweet, tweet_comment: @tweet_comment %>
+      <% if user_signed_in? %>
+        <%= render "public/tweet_comments/form", tweet: @tweet, tweet_comment: @tweet_comment %>
+      <% end %>
     </div>
   </div>
   

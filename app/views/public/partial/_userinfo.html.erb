@@ -1,102 +1,127 @@
-<table class="table">
-  <div class="text-center mt-2 mb-2">
-    <%= image_tag user.get_profile_image, size:'80x100' %>
-  <tr>
+<table class="table text-center">
+  
+  <div class="user-image-area text-center mt-2 mb-2">
+    <%= image_tag user.get_profile_image, class: "user-image" %>
+    <% if user == current_user %>
+      <%= link_to users_information_edit_path do %>
+        <i class="fas fa-user-edit edit-btn"></i>
+      <% end %>
+    <% end %>
   </div>
+  
+  <tr>
   <div class="row mt-2 mb-2">
     <% if user_signed_in? && user !=  current_user %>
       <div class="mx-auto">
         <%= render "public/relationships/btn", user: user %>
       </div>
-    <% elsif user == current_user %>
-      <%= link_to "編集する", users_information_edit_path, class:"btn btn-outline-secondary btn-block"%>
     <% end %>
   </div>
-    <th>name</th>
     <td>
       <%= link_to mypage_path(name: user.name) do %>
         <%= user.name %>
-      <% end %></td>
+      <% end %>さん
+    </td>
   </tr>
   <tr>
-    <th>Reviews</th>
     <td>
-      <%= link_to reviews_path(user_id: user.id) do %>
+      レビュー
+      <%= link_to reviews_path(user_name: user.name) do %>
         <% if user == current_user %>
-          <%= user.reviews.count %>reviews
+          <%= user.reviews.where.not(content: [nil,'']).count %>件
         <% else %>
-          <%= in_release_reviews %>reviews
+          <%= in_release_reviews.count %>件
         <% end %>
       <% end %>
     </td>
   </tr>
   <tr>
-    <th>FavoriteBooks</th>
     <td>
-      <%= link_to favorite_books_path(user_id: user.id) do %>
-        <%= user.favorite_books.count %>books
+      つぶやき
+      <%= link_to tweets_path(user_name: user.name) do %>
+        <%= user.tweets.count %>件
       <% end %>
     </td>
   </tr>
   <tr>
-    <th>RecommenBook</th>
     <td>
+      お気に入りは
+      <%= link_to favorite_books_path(user_name: user.name) do %>
+      　<%= user.favorite_books.count %>冊
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      好きなのは
+      <%= link_to users_favorite_genres_path(name: user.name) do %>
+        <%= user.favorite_genres.count %>ジャンル
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      おすすめの本は
       <% if recommenbook.present? %>
         <%= link_to book_path(id: book.isbn) do %>
           <%= book['title'].truncate(28) %>
         <% end %>
       <% else %>
-        <p>nothing</p>
+        <p>まだ登録なし</p>
       <% end %>
     </td>
   </tr>
   <tr>
-    <th>ReadedBooks</th>
     <td>
-      <%= link_to readed_books_path(user_id: user.id) do %>
-        <%= user.readed_books.count %>books
+      読んだ本
+      <% if readed_lists_count.nil? %>
+        0冊
+      <% else %>
+        <%= link_to readed_list_path(user_name: user.name) do %>
+          <%= readed_lists_count %>冊
+        <% end %>
       <% end %>
     </td>
   </tr>
   <tr>
-    <th>Tweets</th>
     <td>
-      <%= link_to tweets_path(user_id: user.id) do %>
-        <%= user.tweets.count %>tweets
+      読みたい本
+      <% if reading_lists.present? %>
+        <%= link_to reading_lists_path(user_name: user.name) do %>
+          <%= reading_lists.count %> 冊
+        <% end %>
+      <% else %>
+        0冊
+      <% end %>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <%= link_to likes_path(user_name: user.name) do %>
+        <%= user.likes.count %>いいね
       <% end %>
     </td>
   </tr>
   <tr>
-    <th>Likes</th>
     <td>
-      <%= link_to likes_path(user_id: user.id) do %>
-        <%= user.likes.count %>likes
+      <%= link_to comments_path(user_name: user.name) do %>
+        <%= user.review_comments.count + user.tweet_comments.count %>コメント
       <% end %>
     </td>
   </tr>
   <tr>
-    <th>Comments</th>
     <td>
-      <%= link_to comments_path(user_id: user.id) do %>
-        <%= user.review_comments.count + user.tweet_comments.count %>comments
+      <%= link_to followings_path(user_name: user.name) do %>
+        <%= user.followings.count %>フォロー
       <% end %>
     </td>
   </tr>
   <tr>
-    <th>Follows</th>
     <td>
-      <%= link_to user_followings_path(user_id: user.id) do %>
-        <%= user.followings.count %>follows
+      <%= link_to followers_path(user_name: user.name) do %>
+        <%= user.followers.count %>フォロワー
       <% end %>
     </td>
   </tr>
-  <tr>
-    <th>Followers</th>
-    <td>
-      <%= link_to user_followers_path(user_id: user.id) do %>
-        <%= user.followers.count %>followers
-      <% end %>
-    </td>
-  </tr>
-  <!--いちおし本、いいね履歴、コメント履歴、フォロー、フォロワー、好きなジャンルを後で追加-->
 </table>
