@@ -4,7 +4,7 @@
     <div class="col-lg-3 d-none d-lg-block">
       <%= render 'public/partial/userinfo', user: @user, book: @book, reading_lists: @reading_lists, readed_lists_count: @readed_lists_count, recommenbook: @recommenbook, in_release_reviews: @in_release_reviews %>
     </div>
-    <div class="col-md-8 offset-md-1">
+    <div class="col-lg-8 col-md-8 offset-md-1 col-sm-12">
       <h2 class="page-title">
         <% if @user == current_user %>
           マイページ
@@ -17,7 +17,7 @@
       
       <% if @user == current_user %>
         <% if @posts.present? %>
-          <%= render 'public/partial/mypage', objects: @posts, posts: @posts %>
+          <%= render 'mypage', objects: @posts, posts: @posts %>
         <% else %>
           フォロー中のユーザーの最新投稿が表示されます
         <% end %>
@@ -35,7 +35,7 @@
         <h4 class="mypage-title">最近のレビュー</h4>
           <div class="row ml-2">
             <% if @reviews.present? %>
-              <%= render 'public/partial/mypage', objects: @reviews, posts: @posts %>
+              <%= render 'mypage', objects: @reviews, posts: @posts %>
             <% else %>
               レビューがありません
             <% end %>
@@ -44,7 +44,7 @@
         <h4 class="mypage-title">最近のつぶやき</h4>
           <div class="row ml-2">
             <% if @tweets.present? %>
-              <%= render 'public/partial/mypage', objects: @tweets, posts: @posts %>
+              <%= render 'mypage', objects: @tweets, posts: @posts %>
             <% else %>
              つぶやきがありません
             <% end %>
@@ -53,7 +53,7 @@
         <h4 class="mypage-title">最近のお気に入り</h4>
           <div class="row ml-2">
             <% if @favorite_books.present? %>
-              <%= render 'public/partial/mypage', objects: @favorite_books, posts: @posts %>
+              <%= render 'mypage', objects: @favorite_books, posts: @posts %>
             <% else %>
               お気に入りの本がありません
             <% end %>

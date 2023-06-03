@@ -14,7 +14,7 @@
       </h4>
       
       <% if @followings.exists? %>
-        <%= render 'public/partial/follows', users: @followings, book: @book, recommenbook: @follow_recommenbook %>
+        <%= render 'follows', users: @followings, book: @book, recommenbook: @follow_recommenbook %>
       <% else %>
         <h5 class="ml-2">No Follows</h5>
       <% end %>
