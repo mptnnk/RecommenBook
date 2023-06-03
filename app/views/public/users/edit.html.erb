@@ -5,7 +5,7 @@
       <p class="page-title">ユーザー編集</p>
       <%= form_with model: @user, url: users_information_path, method: :patch, local: true do |user| %>
         <div class="form-group">
-          <%= user.label :name, "なまえ", class: "form-title" %>
+          <%= user.label :name, "ユーザーネーム", class: "form-title" %>
           <%= user.text_field :name, class: "form-control" %>
         </div>
         <div class="form-group">
@@ -18,7 +18,7 @@
           <%= user.file_field :profile_image, class: "form-control-file profile-image", accpet: "image/*" %>
         </div>
         <div class="checkbox">
-          <%= user.label :genre_ids, "すきなジャンル", class: "form-title" %><br>
+          <%= user.label :genre_ids, "好きなジャンル", class: "form-title" %><br>
           <% Genre.all.each do |genre| %>
             <label>
               <%= user.check_box :genre_ids, { multiple: true }, genre.id, nil %>
@@ -27,7 +27,7 @@
           <% end %>
         </div>
         <div class="form-group">
-          <%= user.label :introduction, "ひとこと（15文字まで）", class: "form-title" %>
+          <%= user.label :introduction, "ひとこと（20文字まで）", class: "form-title" %>
           <%= user.text_field :introduction, class: "form-control" %>
         </div>
         <div class="form-group">

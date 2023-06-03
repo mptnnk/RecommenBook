@@ -1,3 +1,103 @@
 // Place all the styles related to the public/homes controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+/*.about-box {*/
+/*  text-align: center;*/
+/*  width: 100%;*/
+/*}*/
+
+.about-box{
+  margin-top: 20px;
+  width: 100%;
+}
+
+.about-content {
+  border-radius: 20px;
+  height: 150px;
+  width: 100%;
+  padding: 20px;
+  margin-bottom:10px;
+  color: white;
+  text-align: center;
+  box-shadow: 10px 10px 0px 0 rgba(220, 220, 220, .5);
+}
+
+.about-content:hover{
+  transform: translateY(5px);
+  box-shadow: 0 0 0 #333;
+}
+
+.about-title {
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.about-text{
+  padding-top: 0;
+  color: white;
+}
+
+.about1 {
+  background-color: #ffa500;
+}
+
+.about2 {
+  background-color: #ff69b4;
+  margin-left: 20px;
+}
+
+.about3 {
+  background-color: #6a5acd;
+}
+
+.about4 {
+  background-color: #0000cd;
+  margin-left: 20px;
+}
+@media screen and (max-width: 959px) {
+	/* 959px以下に適用されるCSS（タブレット用） */
+}
+@media screen and (max-width: 480px) {
+	/* 480px以下に適用されるCSS（スマホ用） */
+	
+.about-top-title{
+  font-size: 30px
+}
+
+
+
+.about2 {
+  background-color: #ff69b4;
+  margin-left: 0;
+}
+
+.about4 {
+  background-color: #0000cd;
+  margin-left: 0;
+}
+/*.top-image .top-title{*/
+/*.top-title {*/
+/*  font-size: 20px;*/
+  /*position: absolute;*/
+  /*color: white;*/
+/*  font-weight: bold;*/
+/*  text-align: center;*/
+  /*top: 10%;*/
+  /*text-shadow: 1px 1px 2px white, 0 0 1em gray, 0 0 0.2em gray;*/
+/*}*/
+
+/*.top-image .top-text{*/
+/*.top-text{*/
+/*  line-height: 2.5;*/
+/*  font-size: 10px;*/
+  /*padding-top: 10px;*/
+  /*position: absolute;*/
+/*  text-align: center;*/
+  /*color: white;*/
+  /*max-width: 90%;*/
+  /*top: 20%;*/
+  /*text-shadow: 1px 1px 2px gray, 0 0 1em gray, 0 0 0.2em gray;*/
+/*}*/
+
+}

@@ -20,15 +20,6 @@
   box-sizing: border-box;
 }
 
-.login-name{
-  font-size: 20px;
-}
-
-.login-admin{
-  font-size: 20px;
-  color: #008000;
-}
-
 header {
   font-family: 'Sawarabi Gothic', sans-serif;
   width: 100%;
@@ -40,6 +31,32 @@ header {
   z-index: 99;
   background-color: white;
   /*overflow: hidden;*/
+}
+
+main {
+ font-family: 'Sawarabi Gothic', sans-serif;
+ margin: 80px 0;
+ padding-bottom: 80px;
+ /*overflow: hidden;*/
+}
+
+footer{
+  font-family: 'Sawarabi Gothic', sans-serif;
+  background-color: white;
+  position: absolute;
+  height: 80px;
+  width: 100%;
+  bottom: 0;
+  overflow: hidden;
+}
+
+.login-name{
+  font-size: 20px;
+}
+
+.login-admin{
+  font-size: 20px;
+  color: #008000;
 }
 
 .logo-image {
@@ -61,34 +78,6 @@ header {
 
 .nav-item {
   background-color: white;
-}
-
-main {
- font-family: 'Sawarabi Gothic', sans-serif;
- margin: 80px 0;
- padding-bottom: 80px;
- /*overflow: hidden;*/
-}
-
-footer{
-  font-family: 'Sawarabi Gothic', sans-serif;
-  background-color: white;
-  position: absolute;
-  height: 80px;
-  width: 100%;
-  bottom: 0;
-  overflow: hidden;
-}
-
-.top-title{
-  font-size: 40px;
-  text-align: center;
-}
-
-.top-text{
-  font-size: 20px;
-  line-height: 2;
-  text-align: center;
 }
 
 .page-title{
@@ -182,40 +171,18 @@ th {
   margin-top :20px;
 }
 
+
 @media screen and (max-width: 959px) {
 	/* 959px以下に適用されるCSS（タブレット用） */
 }
 @media screen and (max-width: 480px) {
 	/* 480px以下に適用されるCSS（スマホ用） */
-footer{
-  font-family: 'DotGothic16', sans-serif;
-  background-color: white;
-  font-size: 10px;
-}
+  footer{
+    font-family: 'DotGothic16', sans-serif;
+    background-color: white;
+    font-size: 10px;
+  }
 
-/*.top-image .top-title{*/
-/*.top-title {*/
-/*  font-size: 20px;*/
-  /*position: absolute;*/
-  /*color: white;*/
-/*  font-weight: bold;*/
-/*  text-align: center;*/
-  /*top: 10%;*/
-  /*text-shadow: 1px 1px 2px white, 0 0 1em gray, 0 0 0.2em gray;*/
-/*}*/
-
-/*.top-image .top-text{*/
-/*.top-text{*/
-/*  line-height: 2.5;*/
-/*  font-size: 10px;*/
-  /*padding-top: 10px;*/
-  /*position: absolute;*/
-/*  text-align: center;*/
-  /*color: white;*/
-  /*max-width: 90%;*/
-  /*top: 20%;*/
-  /*text-shadow: 1px 1px 2px gray, 0 0 1em gray, 0 0 0.2em gray;*/
-/*}*/
   .page-title{
     padding: 5px;
     font-weight: 450;

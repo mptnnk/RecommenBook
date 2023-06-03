@@ -39,16 +39,16 @@
         <% if obj.is_a?(Review) %>
           <% if obj.spoiler == false %>
             <%= render_review_with_hashtags(obj.content, 130) %>
-            <%= link_to "（show more）", review_path(obj.id), style: "color: #ff7f50" %>
+            <%= link_to "（詳細を見る）", review_path(obj.id), style: "color: #ff7f50" %>
           <% else %>
             <%= link_to review_path(obj.id) do %>
-              <p class="spoiler">ネタバレを含みます（でも見る)</p>
+              <p class="spoiler-large"><i class="fas fa-exclamation-circle"></i>ネタバレあり<i class="fas fa-exclamation-circle"></i><span class="spoiler-small">詳細を見る</span></p>
             <% end %>
           <% end %>
           
         <% elsif obj.is_a?(Tweet) %>
           <%= render_tweet_with_hashtags(obj.tweet_content, 130) %>
-          <%= link_to "（show more）", tweet_path(obj.id), style: "color: #ff7f50" %>
+          <%= link_to "（詳細を見る）", tweet_path(obj.id), style: "color: #ff7f50" %>
         <% end %>
       </td>
     </tr>
