@@ -3,7 +3,7 @@
 <div class="container-fluid">
   <div class="row flex-row">
     <% if params[:user_name] %>
-      <div class="col-lg-3 d-none d-lg-block">
+      <div class="col-lg-3 d-lg-block">
         <%= render 'public/partial/userinfo', user: @user, book: @book, reading_lists: @reading_lists, readed_lists_count: @readed_lists_count, recommenbook: @recommenbook, in_release_reviews: @in_release_reviews %>
       </div>
     <% end %>
