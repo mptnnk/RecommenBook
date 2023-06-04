@@ -22,11 +22,11 @@
           
         <% elsif !user_signed_in? %>
           <% if params[:user_name].present? %>
-            <%= @user.name %>'s Reviews
+            <%= @user.name %>さんのレビュー
           <% elsif params[:book_id].present? %>
-            <%= @book['title'].truncate(20) %>'s Reviews
+            <%= @book['title'].truncate(20) %>のレビュー
           <% else %>
-            Reviews
+            レビュー
           <% end %>
         <% end %>
       </h4>

@@ -38,7 +38,7 @@ Rails.application.routes.draw do
     get 'followers' => 'relationships#followers', as: 'followers'
     
     get 'books/search' => "books#search"
-    get 'hashtag/:name' => "hashtags#index", as: 'hashtag'
+    get 'hashtag/:hashname' => "hashtags#index", as: 'hashtag'
     get 'readed_list' => "reviews#readed_list", as: 'readed_list'
     
     get 'comments' => 'review_comments#index', as: "comments"

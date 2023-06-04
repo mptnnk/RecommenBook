@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   
-  # set : users, favorite_books, likes, relationships, reviews, review_comments, tweets
+  # set :books, users, favorite_books, likes, relationships, reviews, review_comments, tweets, hashtags
   
   def set_userinfo
     if params[:name].present?

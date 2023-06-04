@@ -39,7 +39,7 @@ class Public::BooksController < ApplicationController
   def show
     @review = Review.new
     @tweet = Tweet.new
-    @tag = Hashtag.find_by(name: params[:name])
+    @tag = Hashtag.find_by(hashname: params[:hashname])
     
     isbn = params[:id]
     @book = RakutenWebService::Books::Book.search(isbn: isbn, outOfStockFlag: 1).first
