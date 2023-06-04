@@ -1,49 +1,85 @@
-<div class="table-responsive">
-<table class="table table-sm">
-  <thead>
-    <tr>
-      <th scope="col" class="d-none d-sm-block"></th>
-      <th scope="col" class="text-nowrap">ユーザー</th>
-      <th scope="col" class-"text-nowrap">おすすめ</th>
-      <th scope="col" class="text-nowrap">レビュー</th>
-      <th scope="col" class="text-nowrap">つぶやき</th>
-      <th scope="col" class="d-none d-sm-block"></th>
-    </tr>
-  </thead>
-  
-  <tbody>
-    <% users.each do |user| %>
+<div class="table-responsive d-none d-sm-block">
+  <table class="table table-sm">
+    <thead>
       <tr>
-        <td class="d-none d-sm-block" style="width: 10%"><%= image_tag user.get_profile_image, class: "follow-user-image" %></td>
-        <td>
-          <%= link_to mypage_path(name: user.name) do %>
-            <%= user.name %>
-          <% end %>
-        </td>
-        <td>
-          <% if user.favorite_books.recommend_book.present? %>
-            <%= user.favorite_books.recommend_book %>
-          <% else %>
-            <p class="text-secondary">--</p>
-          <% end %>
-        </td>
-        <td>
-          <%= link_to reviews_path(user_name: user.name) do %>
-            <%= user.reviews.count %>レビュー
-          <% end %>
-        </td>
-        <td>
-          <%= link_to tweets_path(user_name: user.name) do %>
-            <%= user.tweets.count %>つぶやき
-          <% end %>
-        </td>
-        <td class="d-none d-sm-block">
-          <% if user_signed_in? %>
-            <%= render "public/relationships/btn", user: user %>
-          <% end %>
-        </td>
+        <th></th>
+        <th>ユーザー</th>
+        <th>おすすめ</th>
+        <th>レビュー</th>
+        <th>つぶやき</th>
+        <th></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    
+    <tbody>
+      <% users.each do |user| %>
+        <tr>
+          <td style="width: 10%"><%= image_tag user.get_profile_image, class: "follow-user-image" %></td>
+          <td>
+            <%= link_to mypage_path(name: user.name) do %>
+              <%= user.name %>
+            <% end %>
+          </td>
+          <td>
+            <% if user.favorite_books.recommend_book.present? %>
+              <%= user.favorite_books.recommend_book %>
+            <% else %>
+              <p class="text-secondary">--</p>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to reviews_path(user_name: user.name) do %>
+              <%= user.reviews.count %>レビュー
+            <% end %>
+          </td>
+          <td>
+            <%= link_to tweets_path(user_name: user.name) do %>
+              <%= user.tweets.count %>つぶやき
+            <% end %>
+          </td>
+          <td>
+            <% if user_signed_in? %>
+              <%= render "public/relationships/btn", user: user %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div class="col-lg-none d-md-none">
+  <div class="row flex-row mb-2" style="font-size: 12px">
+    <div class="col">ユーザー</div>
+    <div class="col">おすすめ本</div>
+    <div class="col">レビュー</div>
+    <div class="col">つぶやき</div>
+  </div>
+  <% users.each do |user| %>
+    <div class="row flex-row" style="font-size: 12px">
+      <div class="col">
+        <%= link_to mypage_path(name: user.name) do %>
+          <%= user.name %>
+        <% end %>
+      </div>
+      <div class="col">
+        <% if user.favorite_books.recommend_book.present? %>
+          <%= user.favorite_books.recommend_book %>
+        <% else %>
+          <p class="text-secondary">--</p>
+        <% end %>
+      </div>
+      <div class="col">
+        <%= link_to reviews_path(user_name: user.name) do %>
+          <%= user.reviews.count %>レビュー
+        <% end %>
+      </div>
+      <div class="col">
+        <%= link_to tweets_path(user_name: user.name) do %>
+          <%= user.tweets.count %>つぶやき
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+  
 </div>

@@ -2,16 +2,16 @@
   <% if obj.isbn.present? %> <!--isbnを所持している場合のみ本情報表示-->
     <% book = RakutenWebService::Books::Book.search(isbn: obj.isbn, outOfStockFlag: 1).first %>
   <% end %>
-  <div class="row flex-row pt-2 mb-3 lists"> <!--リスト全体-->
+  <div class="row flex-row lists">　<!--リスト全体-->
     <% if obj.isbn.present? && !current_page?(book_path(book.isbn)) %>
-      <div class="col-lg-1 col-md-1 col-sm-1"><!--リスト左側-->
+      <div class="col-lg-1 col-md-1 col-sm-1 mt-4"><!--リスト左側-->
         <%= link_to book_path(book.isbn) do %>
           <%= image_tag(book['small_image_url']) %>
         <% end %>
       </div>
-    <% end %>
+  <% end %>
     
-    <div class="col-lg-10 col-md-12 col-sm-12 flex-column"><!--リスト右側　要素縦並び-->
+    <div class="col-lg-10 col-md-10 col-sm-10 flex-column">　<!--リスト右側縦並び-->
       <div>
         <% if obj.isbn.present? && !current_page?(book_path(book.isbn)) %>
           <%= link_to book_path(book.isbn) do %>
