@@ -14,14 +14,14 @@
           
           <p><i class="fas fa-exclamation-triangle"></i>つぶやきはネタバレ投稿禁止です<i class="fas fa-exclamation-triangle"></i></p>
           <p><i class="fas fa-exclamation-triangle"></i>悪意のあるつぶやきを発見した場合は、管理人が削除する可能性があります<i class="fas fa-exclamation-triangle"></i></p>
-          <%= tweet.text_area :tweet_content, size:"100x2" %><br>
-          <%= tweet.submit "つぶやきを投稿", class:"btn btn-success mt-2" %>
+          <%= tweet.text_area :tweet_content, rows: "3", style: "width: 100%" %><br>
+          <%= tweet.submit "つぶやく", class:"btn btn-success mt-2" %>
         <% end %>
       <% else %>
         <%= form_with model: @tweet, url: tweets_path, method: :post do |tweet| %>
           <%= tweet.label :"つぶやく", class:"border border-primary p-2 mt-2 rounded" %><br>
-          <%= tweet.text_area :tweet_content, size:"100x2" %><br>
-          <%= tweet.submit "つぶやきする", class:"btn btn-success mt-2" %>
+          <%= tweet.text_area :tweet_content, rows: "3", style: "width: 100%" %><br>
+          <%= tweet.submit "つぶやく", class:"btn btn-success mt-2" %>
         <% end %>
         <div class="row">
           <div class="form-group ml-2 mt-5">
@@ -30,7 +30,7 @@
                 <%= book.text_field :title, :placeholder =>"タイトルでさがす", class:"mt-2 mb-2", size: "26x1" %>
                 <%= book.text_field :author, :placeholder =>"作者でさがす", class:"mb-2", size: "26x1" %>
                 <%= book.collection_select(:book_genre_id, Genre.all, :book_genre_id, :name, include_blank: "ジャンルを選ぶ") %>
-                <%= book.submit '検索', class:"btn btn-success btn-sm" %>
+                <%= book.submit '検索する', class:"btn btn-success btn-sm" %>
               <% end %>
           </div>
         </div>

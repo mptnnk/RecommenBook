@@ -1,11 +1,11 @@
 <!--条件分岐確認OK-->
 <div class="container-fluid">
-  <div class="row">
+  <div class="row flex-row">
     <div class="col-lg-3 d-none d-lg-block">
       <%= render 'public/partial/userinfo', user: @user, book: @book, reading_lists: @reading_lists, readed_lists_count: @readed_lists_count, recommenbook: @recommenbook, in_release_reviews: @in_release_reviews %>
     </div>
     
-    <div class="col-lg-8 offset-lg-1 col-md-12 col-sm-12">
+    <div class="col-lg-8 offset-lg-1">
       <h2 class="page-title">
         <% if @user == current_user %>
           あなたが読んだ本
@@ -15,13 +15,13 @@
       </h2>
       
       <% if @readed_lists.present? %>
-        <table class="table table-hover table-inverse">
+        <table class="table table-sm">
           <thead class="text-center">
             <tr>
-              <th style="width: 20%"></th>
+              <th style="width: 10%"></th>
               <th style="width: 30%">タイトル</th>
-              <th style="width: 20%">本の作者</th>
-              <th>Readed date</th>
+              <th style="width: 20%">著者</th>
+              <th>読み終わった日</th>
             </tr>
           </thead>
           <% @readed_lists.each do |readed| %>
@@ -30,7 +30,7 @@
             <tr>
               <td>
                 <%= link_to book_path(book.isbn) do %>
-                  <%= image_tag(book['medium_image_url']) %>
+                  <%= image_tag(book['small_image_url']) %>
                 <% end %>
               </td>
               <td>
@@ -38,7 +38,11 @@
                   <%= book['title'] %>
                 <% end %>
               </td>
-              <td><%= book['author'] %></td>
+              <td>
+                <%= link_to books_search_path(author: book['author']) do %>
+                  <%= book['author'] %>
+                <% end %>
+              </td>
               <td class="text-center">
                 <% latest_readed_at = readed.latest_readed_at %>
                 <% if latest_readed_at.present? %>
@@ -53,7 +57,7 @@
         </table>
       
       <% else %>
-        <h5 class="ml-2">No Readed Lists</h5>
+        <p class="ml-2">読んだ本がまだありません</p>
       <% end %>
       
     </div>

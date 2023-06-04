@@ -15,9 +15,7 @@
       
       <%= form_with model: @review, url: book_reviews_path(@book.isbn) do |review| %>
         <%= review.hidden_field :isbn, value: @book['isbn'] %>
-        
-        <!--<%= review.label :"レビューを書く", class:"border border-primary p-2 mt-2 rounded"%><br>-->
-        <%= review.text_area :content, size:'100x5' %><br>
+        <%= review.text_area :content, rows: "5", style: "width: 100%" %><br>
         <%= review.label :"読み終わった日" %>
         <%= review.date_field :readed_at %><br>
         
@@ -28,7 +26,7 @@
         
         <%= review.check_box :spoiler %>
         <%= review.label :spoiler, "ネタバレを含む" %><br>
-        <%= review.submit "登録", class:"btn btn-success mt-2" %><p></p>
+        <%= review.submit "登録する", class:"btn btn-success mt-2" %><p></p>
       <% end %>
     </div>
   </div>

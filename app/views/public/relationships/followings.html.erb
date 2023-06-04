@@ -16,7 +16,7 @@
       <% if @user.followings.exists? %>
         <%= render 'follows', users: @user.followings, book: @book %>
       <% else %>
-        <h5 class="ml-2">フォローはいません</h5>
+        <p class="ml-2">フォローはいません</p>
       <% end %>
       
     </div> <!--col-md-8 end-->

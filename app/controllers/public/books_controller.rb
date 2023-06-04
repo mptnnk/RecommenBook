@@ -75,7 +75,7 @@ class Public::BooksController < ApplicationController
         genre_ids << book.genres.first['booksGenreId'] if book.present? && book.genres.present?
       end
       favorite_genre_ids = genre_ids.map { |id| id[0,6] }
-      most_favorite_id = favorite_genre_ids.group_by(&:itself).max_by{ |_,count| count }.first
+      most_favorite_id = favorite_genre_ids.group_by{|e| e}.sort_by{ |e,v| -v.size }.map(&:first).first
       related_books = RakutenWebService::Books::Book.search({
         books_genre_id: most_favorite_id,
         outOfStockFlag: 1,

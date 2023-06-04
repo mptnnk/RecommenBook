@@ -2,7 +2,7 @@
 <!--条件分岐確認OK-->
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-3">
+    <div class="col-lg-3 d-none d-lg-block">
       <%= render 'public/partial/userinfo', user: @user, book: @book, reading_lists: @reading_lists, readed_lists_count: @readed_lists_count, recommenbook: @recommenbook, in_release_reviews: @in_release_reviews %>
     </div>
     
@@ -16,13 +16,12 @@
       </h4>
 
       <% if @comments.present? %>
-        <!--<%= render 'public/partial/comments', comments: @comments, review: @review, tweet: @tweet %>-->
         <table class="table table-sm table-responsive">
           <thead class="text-center">
             <tr>
-              <th colspan="2" style="width: 40%"></th>
-              <th style="width: 50%">コメント</th>
-              <th>Date</th>
+              <th colspan="2" style="width: 40%">元の投稿</th>
+              <th style="width: 30%">コメント</th>
+              <th style="width: 10%">投稿日</th>
             </tr>
           </thead>
           <% @comments.each do |comment| %>
@@ -34,9 +33,9 @@
                     <%= comment.review.content.truncate(40) %>
                   <% end %>
                 </td>
-                <td>
+                <td style="width: 10%">
                   <%= link_to mypage_path(comment.review.user.name) do %>
-                    <%= comment.review.user.name %>
+                    @<%= comment.review.user.name %>
                   <% end %>
                 </td>
                 <% elsif comment.is_a?(TweetComment) %>
@@ -58,7 +57,7 @@
           <% end %>
         </table>
       <% else %>
-        <h5 class="ml-2">No Comment</h5>
+        <p class="ml-2">コメントがありません</p>
       <% end %>
     </div>
   </div>

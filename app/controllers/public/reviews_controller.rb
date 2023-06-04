@@ -38,7 +38,7 @@ class Public::ReviewsController < ApplicationController
 
   def new
     @book = find_book(params[:book_id])
-    @readed = Review.where(isbn: @book.isbn)
+    @readed = Review.where(user_id: current_user.id,isbn: @book.isbn)
     @book_favorites = FavoriteBook.where(isbn: @book.isbn)
     @review = Review.new
   end  

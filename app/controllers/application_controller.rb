@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
           @reviews.concat(follow.reviews.all.order(created_at: :DESC))
         end
         @posts = (@tweets + @reviews).sort_by(&:created_at).reverse!
-        @posts = Kaminari.paginate_array(@posts).limit(10)
+        @posts = Kaminari.paginate_array(@posts).page(params[:page]).per(10)
         @favorite_books = current_user.favorite_books.all
         @favorite_genres = current_user.favorite_genres.all
         @readed_lists_count = current_user.reviews.group(:isbn).size.count
