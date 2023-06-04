@@ -144,6 +144,11 @@ th {
   height: auto;
 }
 
+.follow-user-image{
+  width: 100%;
+  height: auto;
+}
+
 .edit-btn {
   width: 15%;
   height: auto;
@@ -191,6 +196,10 @@ th {
     font-family: 'DotGothic16', sans-serif;
     background-color: white;
     font-size: 10px;
+  }
+  
+  table{
+    font-size: 12px;
   }
 
   .page-title{

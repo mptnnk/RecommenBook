@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
           @tweets.concat(follow.tweets.all.order(created_at: :DESC))
           @reviews.concat(follow.reviews.all.order(created_at: :DESC))
         end
-        @posts = (@tweets + @reviews)
+        @posts = (@tweets + @reviews).sort_by(&:created_at).reverse!
         @posts = Kaminari.paginate_array(@posts).limit(10)
         @favorite_books = current_user.favorite_books.all
         @favorite_genres = current_user.favorite_genres.all
@@ -39,7 +39,7 @@ class ApplicationController < ActionController::Base
         @reading_lists = @user.reading_lists.all
         @recommenbook = @user.favorite_books.find_by(recommenbook: true)
         if @recommenbook.present?
-          @book = RakutenWebService::Books::Book.search({isbn: @recommenbook.isbn, outOfStockFlag: 1}).first
+          @book = RakutenWebService::Books::Book.search(isbn: @recommenbook.isbn, outOfStockFlag: 1).first
         end
       end
       

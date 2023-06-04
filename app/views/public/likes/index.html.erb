@@ -9,16 +9,16 @@
     <div class="col-md-8 offset-md-1">
       <h4 class="page-title">
         <% if @user == current_user %>
-          Your Likes
+          あなたがいいねした投稿
         <% else %>
-          <%= @user.name %>'s Likes
+          <%= @user.name %>さんがいいねした投稿
         <% end %>
       </h4>
       
       <% if @combined_records.present? %>
         <%= render 'public/partial/lists', objects: @combined_records %>
       <% else %>
-        <h5 class="ml-2">No Like</h5>
+        <h5 class="ml-2">いいねがありません</h5>
       <% end %>
     </div> <!--col-md-8 end-->
   </div> <!--row end-->
