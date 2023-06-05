@@ -1,6 +1,6 @@
 class Public::FavoriteBooksController < ApplicationController
   before_action :authenticate_user!, only: [:create, :update, :destroy]
-  
+  before_action :find_favorite, only: [:update, :destroy]
   before_action :set_userinfo, only: [:index] # application_controller
   
   def index
@@ -18,16 +18,15 @@ class Public::FavoriteBooksController < ApplicationController
   end  
   
   def update
-    @favorite_book = FavoriteBook.find(params[:id])
     @favorite_book.recommenbook = params[:recommenbook] == "true"
     if @favorite_book.update_columns(recommenbook: @favorite_book.recommenbook)
       redirect_to request.referer, notice: 'おすすめ本の登録を変更しました'
+    else
+      redirect_to request.referer, alert: 'おすすめ本の登録変更に失敗しました'
     end
   end
 
   def destroy
-    @favorite_book = FavoriteBook.find(params[:id])
-    
     if @favorite_book.present?
       @favorite_book.destroy
       redirect_to request.referer, alert: 'お気に入りから削除しました'
@@ -42,5 +41,8 @@ class Public::FavoriteBooksController < ApplicationController
     params.require(:favorite_book).permit(:isbn, :recommenbook).merge(user_id: current_user.id)
   end
   
+  def find_favorite
+    @favorite_book = FavoriteBook.find(params[:id])
+  end
   
 end

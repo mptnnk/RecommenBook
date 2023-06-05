@@ -71,7 +71,7 @@ class Public::ReviewsController < ApplicationController
         redirect_to request.referer, alert: 'レビューを消しました'
       end
     else
-      redirect_to request.referer, alert: '削除に失敗しました'
+      redirect_to request.referer, alert: '削除できませんでした'
     end
   end
   
