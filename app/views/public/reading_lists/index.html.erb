@@ -21,18 +21,25 @@
         <table class="table table-sm">
           <thead class="text-center">
             <tr>
+              <th></th>
               <th style="width:10%"></th>
               <th style="width:20%">タイトル</th>
               <th style="width:20%">著者</th>
               <th class="d-none d-sm-block" style="width:50%">説明</th>
             </tr>
           </thead>
-          <% @reading_lists.each do |reading_list| %>
-            
-            <% book = RakutenWebService::Books::Book.search(isbn: reading_list.isbn, outOfStockFlag: 1).first %>
+          <% @reading_lists.each do |list| %>
+            <% book = RakutenWebService::Books::Book.search(isbn: list.isbn, outOfStockFlag: 1).first %>
             <tbody>
               <tr>
-                <td class="text-center">
+                <% if @user == current_user %>
+                  <td style="width: 5%">
+                    <%= link_to book_reading_list_path(id: list.id, book_id: list.isbn), method: :delete, style: "color: black" do %>
+                      <i class="fas fa-trash-alt"></i>
+                    <% end %>
+                  </td>
+                <% end %>
+                <td>
                   <%= link_to book_path(book.isbn) do %>
                     <%= image_tag(book['small_image_url']) %>
                   <% end %>
@@ -48,10 +55,12 @@
                   <% end %>
                 </td>
                 <td class="d-none d-sm-block"><%= book['item_caption'] %></td>
+
               </tr>
             </tbody>
           <% end %> <!--readed_books.each end-->
         </table>
+        <%= paginate @reading_lists, theme: "twitter-bootstrap-4" %>
       <% else %> <!--if @readed_books.nil-->
         <p class="ml-2">読みたい本がまだありません</p>
       <% end %> <!--if readed_books.present? end-->

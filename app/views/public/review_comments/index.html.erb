@@ -56,6 +56,7 @@
             </tbody>
           <% end %>
         </table>
+        <%= paginate @comments, theme: "twitter-bootstrap-4" %>
       <% else %>
         <p class="ml-2">コメントがありません</p>
       <% end %>

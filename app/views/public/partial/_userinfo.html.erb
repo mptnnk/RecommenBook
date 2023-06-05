@@ -88,7 +88,7 @@
       読みたい本
       <% if reading_lists.present? %>
         <%= link_to reading_lists_path(user_name: user.name) do %>
-          <%= reading_lists.count %> 冊
+          <%= reading_lists.count %>冊
         <% end %>
       <% else %>
         0冊

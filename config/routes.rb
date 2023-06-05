@@ -53,6 +53,7 @@ Rails.application.routes.draw do
     resources :reviews, only: [:index, :show, :edit, :update, :destroy] do
       resources :review_comments, only: [:create, :destroy]
       resource :likes, only: [:create, :destroy]
+      delete :delete_readed, on: :collection
     end
     resources :favorite_books, only: [:index, :update]
     resources :reading_lists, only: [:index]

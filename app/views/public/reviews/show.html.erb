@@ -43,8 +43,8 @@
       <% end %>
       <span>
         <% if @review.user == current_user %>
-          <%= link_to "編集する", edit_review_path(@review.id), class:"btn btn-primary btn-sm"%>
-          <%= link_to "削除する", review_path(@review.id), method: :delete, "data-confirm" => "レビューを削除しますか？", class:"btn btn-danger btn-sm" %>
+          <%= link_to "編集", edit_review_path(@review.id), class:"btn btn-primary btn-sm"%>
+          <%= link_to "削除", review_path(@review.id), method: :delete, "data-confirm" => "レビューを削除しますか？", class:"btn btn-danger btn-sm" %>
         <% end %>
       </span>
     </div>
@@ -54,6 +54,7 @@
       <p id="reviewCommentCount">コメント（<%= @comments.count %>件）</h3>
       <div class="review-comments-index">
         <%= render "public/partial/comments", review: @review, comments: @comments %>
+        <%= paginate @comments, theme: "twitter-bootstrap-4" %>
       </div>
       <% if user_signed_in? %>
         <%= render "public/review_comments/form", review: @review, review_comment: @review_comment %>

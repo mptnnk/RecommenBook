@@ -35,7 +35,7 @@
       <% end %>
       <span>
         <% if @tweet.user == current_user %>
-          <%= link_to "削除する", tweet_path(@tweet.id), method: :delete, "data-confirm" => "つぶやきを削除しますか？", class:"btn btn-danger btn-sm" %>
+          <%= link_to "削除", tweet_path(@tweet.id), method: :delete, "data-confirm" => "つぶやきを削除しますか？", class:"btn btn-danger btn-sm" %>
         <% end %>
       </span>
     </div>
@@ -45,6 +45,7 @@
       <p id="tweetCommentCount">コメント（<%= @comments.count %>件）</p>
       <div class="tweet-comments-index">
         <%= render "public/partial/comments", tweet: @tweet, comments: @comments %>
+        <%= paginate @comments, theme: "twitter-bootstrap-4" %>
       </div>
       <% if user_signed_in? %>
         <%= render "public/tweet_comments/form", tweet: @tweet, tweet_comment: @tweet_comment %>

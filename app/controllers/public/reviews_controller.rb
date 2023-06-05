@@ -1,5 +1,5 @@
 class Public::ReviewsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create, :edit, :destroy]
+  before_action :authenticate_user!, only: [:new, :create, :edit, :destroy, :delete_readed]
   before_action :submitted_review, only: [:show, :edit, :update, :destroy]
   before_action :set_userinfo, only: [:index, :readed_list], if: -> { params[:user_name].present? } # application_controller
   
@@ -23,17 +23,31 @@ class Public::ReviewsController < ApplicationController
   def readed_list
     @user = User.find_by(name: params[:user_name])
     if @user == current_user
-      @readed_lists = Review.where(user_id: current_user.id).select("isbn, MAX(readed_at) as latest_readed_at").group(:isbn)
+      readed_reviews = Review.where(user_id: current_user.id).group_by(&:isbn).transform_values { |v| v.max_by(&:created_at) }.values.sort_by(&:created_at).reverse
+      @readed_lists = Kaminari.paginate_array(readed_reviews).page(params[:page]).per(10)
+      # @readed_lists = Review.where(user_id: current_user.id).group(:isbn).having("MAX(readed_at) = MAX(readed_at)")
+      # @readed_lists = Review.where(user_id: current_user.id).select("isbn, MAX(readed_at) as latest_readed_at").group(:isbn)
+      
     elsif @user != current_user
-      @readed_lists = Review.where(user_id: @user.id).select("isbn, MAX(readed_at) as latest_readed_at").group(:isbn)
+      readed_reviews = Review.where(user_id: @user.id).group_by(&:isbn).transform_values { |v| v.max_by(&:created_at) }.values.sort_by(&:created_at).reverse
+      @readed_lists = Kaminari.paginate_array(readed_reviews).page(params[:page]).per(10)
+      # @readed_lists = Review.where(user_id: @user.id).select("isbn, MAX(readed_at) as latest_readed_at").group(:isbn)
+      
     end
+  end
+  
+  def delete_readed
+    readed = Review.find(params[:readed_id])
+    readed.destroy
+    # @readed_lists = Review.where(user_id: current_user.id).group_by(&:isbn).transform_values { |v| v.max_by(&:created_at) }.values.sort_by(&:created_at).reverse
+    redirect_to readed_list_path(user_name: current_user.name)
   end
 
   def show
     @book = RakutenWebService::Books::Book.search(isbn: @review.isbn, outOfStockFlag: 1).first
     @book_favorites = FavoriteBook.where(isbn: @book.isbn)
     @review_comment = ReviewComment.new
-    @comments = @review.review_comments.all
+    @comments = @review.review_comments.order(created_at: :DESC).page(params[:page]).per(10)
   end
 
   def new

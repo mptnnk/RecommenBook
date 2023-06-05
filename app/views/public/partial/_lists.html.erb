@@ -85,10 +85,10 @@
         
         <span>
           <% if obj.is_a?(Review) && obj.user == current_user %>
-            <%= link_to "編集する", edit_review_path(obj.id), style: "display: inline", class:"btn btn-success btn-sm"%>
-            <%= link_to "削除する", review_path(obj.id), method: :delete, "data-confirm" => "レビューを削除しますか？", style: "display: inline", class: "btn btn-danger btn-sm" %>
+            <%= link_to "編集", edit_review_path(obj.id), style: "display: inline", class:"btn btn-success btn-sm"%>
+            <%= link_to "削除", review_path(obj.id), method: :delete, "data-confirm" => "レビューを削除しますか？", style: "display: inline", class: "btn btn-danger btn-sm" %>
           <% elsif obj.is_a?(Tweet) && obj.user == current_user %>
-            <%= link_to "削除する", tweet_path(obj.id), method: :delete, "data-confirm" => "つぶやきを削除しますか？", style:"display: inline-block", class:"btn btn-danger btn-sm" %>
+            <%= link_to "削除", tweet_path(obj.id), method: :delete, "data-confirm" => "つぶやきを削除しますか？", style:"display: inline-block", class:"btn btn-danger btn-sm" %>
           <% else %>
           <% end %>
         </span>

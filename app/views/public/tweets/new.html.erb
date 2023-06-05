@@ -25,7 +25,7 @@
         <% end %>
         <div class="row">
           <div class="form-group ml-2 mt-5">
-            <h5>本さがしてからかく？<i class="fas fa-search-plus"></i></h5>
+            <h5>本を探してつぶやく？<i class="fas fa-search-plus"></i></h5>
               <%= form_with url: books_search_path, method: :get do |book| %>
                 <%= book.text_field :title, :placeholder =>"タイトルでさがす", class:"mt-2 mb-2", size: "26x1" %>
                 <%= book.text_field :author, :placeholder =>"作者でさがす", class:"mb-2", size: "26x1" %>

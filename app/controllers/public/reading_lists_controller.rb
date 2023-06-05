@@ -3,7 +3,7 @@ class Public::ReadingListsController < ApplicationController
   before_action :set_userinfo, only: [:index] # application_controller
   
   def index
-    @reading_lists = ReadingList.where(user_id: @user.id)
+    @reading_lists = ReadingList.where(user_id: @user.id).page(params[:page]).order(created_at: :DESC).per(10)
   end
 
   def create
@@ -15,7 +15,7 @@ class Public::ReadingListsController < ApplicationController
   def destroy
     @book = RakutenWebService::Books::Book.search(isbn: params[:book_id], outOfStockFlag: 1).first
     @reading_list = current_user.reading_lists.find_by(isbn: @book.isbn)
-    @reading_list.destroy ? (redirect_to request.referer, alert: '読みたい本から削除しました') : (redirect_to request.regerer, alert: '削除できませんでした')
+    @reading_list.destroy ? (redirect_to request.referer, alert: '読みたい本から削除しました') : (redirect_to request.referer, alert: '削除できませんでした')
   end
   
   private

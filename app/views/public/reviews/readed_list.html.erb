@@ -13,6 +13,7 @@
           <%= @user.name %>さんが読んだ本
         <% end %>
       </h2>
+      <p>一番新しく登録した日付が表示されます。</p>
       
       <% if @readed_lists.present? %>
         <table class="table table-sm">
@@ -22,6 +23,9 @@
               <th style="width: 30%">タイトル</th>
               <th style="width: 20%">著者</th>
               <th>読み終わった日</th>
+              <% if @user == current_user %>
+                <th></th>
+              <% end %>
             </tr>
           </thead>
           <% @readed_lists.each do |readed| %>
@@ -44,17 +48,23 @@
                 <% end %>
               </td>
               <td class="text-center">
-                <% latest_readed_at = readed.latest_readed_at %>
-                <% if latest_readed_at.present? %>
-                  <%= DateTime.parse(latest_readed_at)&.strftime('%Y/%m/%d') %>
+                <% if readed.readed_at.present? %>
+                  <%= readed.readed_at&.strftime('%Y/%m/%d') %>
                 <% else %>
                   不明
+                <% end %>
+              </td>
+              <td>
+                <% if @user == current_user %>
+                  <%= button_to "削除", { controller: "reviews", action: "delete_readed", readed_id: readed.id }, method: :delete, data: { confirm: "読んだ本を削除しますか？（同時にレビューを投稿した場合、それも削除されます。レビュー編集から読んだ日付を変更できます）" }, class: "btn btn-danger btn-sm" %>
                 <% end %>
               </td>
             </tr>
           </tbody>
           <% end %>
         </table>
+        
+        <%= paginate @readed_lists, theme: "twitter-bootstrap-4" %>
       
       <% else %>
         <p class="ml-2">読んだ本がまだありません</p>
