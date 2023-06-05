@@ -11,7 +11,7 @@ class Admin::TweetsController < ApplicationController
 
   def show
     @tweet = Tweet.find(params[:id])
-    @book = RakutenWebService::Books::Book.search(isbn: @tweet.isbn, outOfStockFlag: 1)
+    @book = search_book(@tweet.isbn)
     @book_favorites = FavoriteBook.where(isbn: @tweet.isbn).count
   end
   

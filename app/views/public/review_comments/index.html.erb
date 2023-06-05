@@ -34,8 +34,12 @@
                   <% end %>
                 </td>
                 <td style="width: 10%">
-                  <%= link_to mypage_path(comment.review.user.name) do %>
-                    @<%= comment.review.user.name %>
+                  <% if comment.review.user.is_active %>
+                    <%= link_to mypage_path(comment.review.user.name) do %>
+                      @<%= comment.review.user.name %>
+                    <% end %>
+                  <% else %>
+                    @退会したユーザー
                   <% end %>
                 </td>
                 <% elsif comment.is_a?(TweetComment) %>
@@ -45,8 +49,12 @@
                   <% end %>
                 </td>
                 <td>
-                  <%= link_to mypage_path(comment.tweet.user.name) do %>
-                    <%= comment.tweet.user.name %>
+                  <% if comment.tweet.user.is_active %>
+                    <%= link_to mypage_path(comment.tweet.user.name) do %>
+                      <%= comment.tweet.user.name %>
+                    <% end %>
+                  <% else %>
+                    @退会したユーザー
                   <% end %>
                 </td>
                 <% end %>

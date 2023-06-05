@@ -7,13 +7,13 @@ class Public::ReadingListsController < ApplicationController
   end
 
   def create
-    @book = RakutenWebService::Books::Book.search(isbn: params[:book_id], outOfStockFlag: 1).first
+    @book = search_book(params[:book_id])
     @reading_list = current_user.reading_lists.build(isbn: @book.isbn)
     @reading_list.save ? (redirect_to book_path(@book.isbn), notice: '読みたい本に登録しました') : (redirect_to request.referer, alert: '登録に失敗しました')
   end  
   
   def destroy
-    @book = RakutenWebService::Books::Book.search(isbn: params[:book_id], outOfStockFlag: 1).first
+    @book = search_book(params[:book_id])
     @reading_list = current_user.reading_lists.find_by(isbn: @book.isbn)
     @reading_list.destroy ? (redirect_to request.referer, alert: '読みたい本から削除しました') : (redirect_to request.referer, alert: '削除できませんでした')
   end

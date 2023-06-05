@@ -42,7 +42,7 @@ class Public::BooksController < ApplicationController
     @tag = Hashtag.find_by(hashname: params[:hashname])
     
     isbn = params[:id]
-    @book = RakutenWebService::Books::Book.search(isbn: isbn, outOfStockFlag: 1).first
+    @book = search_book(isbn)
     @reviews = Review.where(isbn: isbn).where(in_release: true).where.not(content: [nil, '']).limit(4).order(created_at: :DESC)
     @tweets = Tweet.where(isbn: isbn).limit(4).order(created_at: :DESC)
     @book_favorites = FavoriteBook.where(isbn: isbn)
@@ -71,7 +71,7 @@ class Public::BooksController < ApplicationController
       recent_favorite_isbns = current_user.favorite_books.order(created_at: :DESC).limit(30).pluck(:isbn)
       genre_ids = []
       recent_favorite_isbns.each do |isbn|
-        book = RakutenWebService::Books::Book.search(isbn: isbn, outOfStockFlag: 1).first
+        book = search_book(isbn)
         genre_ids << book.genres.first['booksGenreId'] if book.present? && book.genres.present?
       end
       favorite_genre_ids = genre_ids.map { |id| id[0,6] }

@@ -1,6 +1,7 @@
 <% objects.each do |obj| %>
   <% if obj.isbn.present? %> <!--isbnを所持している場合のみ本情報表示-->
-    <% book = RakutenWebService::Books::Book.search(isbn: obj.isbn, outOfStockFlag: 1).first %>
+    <% book = search_book(obj.isbn) %>
+    
   <% end %>
   <div class="row flex-row lists">　<!--リスト全体-->
     <% if obj.isbn.present? && !current_page?(book_path(book.isbn)) %>
@@ -28,7 +29,7 @@
             @<%= obj.user.name %>
           <% end %>
         <% elsif !obj.user.is_active %>
-          退会したユーザー
+          @退会したユーザー
         <% end %>
         
         <% if obj.created_at.to_date == Date.today %>

@@ -22,7 +22,8 @@
           </thead>
           <% @tweets.each do |tweet| %>
             <% if tweet.isbn.present?%> 
-              <% book = RakutenWebService::Books::Book.search({isbn: tweet.isbn, outOfStockFlag: 1}).first %>
+              <% book = search_book(tweet.isbn) %>
+              
             <% end %>
             <tbody>
               <tr>

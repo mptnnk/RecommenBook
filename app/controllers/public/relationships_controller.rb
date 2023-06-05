@@ -14,9 +14,13 @@ class Public::RelationshipsController < ApplicationController
     redirect_to request.referer
   end
   
-  def followings; end
+  def followings
+    @followings = @user.followings.where(is_active: true).page(params[:page]).per(10)
+  end
   
-  def followers; end
+  def followers
+    @followers = @user.followers.where(is_active: true).page(params[:page]).per(10)
+  end
     
 end
   

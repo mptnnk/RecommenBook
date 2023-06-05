@@ -8,7 +8,7 @@ class Public::FavoriteBooksController < ApplicationController
   end
 
   def create
-    @book = RakutenWebService::Books::Book.search(isbn: params[:book_id], outOfStockFlag: 1).first
+    @book = search_book(params[:book_id])
     @favorite_book = current_user.favorite_books.build(isbn: @book.isbn)
     if @favorite_book.save!
       redirect_to book_path(@book.isbn), notice: 'お気に入りの本に登録しました'

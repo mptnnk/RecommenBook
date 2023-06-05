@@ -22,7 +22,7 @@
             </tr>
           </thead>
           <% @reviews.each do |review| %>
-          <% book = RakutenWebService::Books::Book.search(isbn: review.isbn, outOfStockFlag: 1).first %>
+          <% book = search_book(review.isbn) %>
           <tbody>
             <tr>
               <td><%= review.created_at.strftime('%Y/%m/%d') %></td>

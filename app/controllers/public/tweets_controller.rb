@@ -12,7 +12,7 @@ class Public::TweetsController < ApplicationController
     end
     
     if params[:book_id]
-      @book = RakutenWebService::Books::Book.search(isbn: params[:book_id], outOfStockFlag: 1).first
+      @book = search_book(params[:book_id])
     end
     @book_tweets = Tweet.where(isbn: params[:book_id]).page(params[:page]).per(10).order(created_at: :DESC)
     
@@ -25,7 +25,7 @@ class Public::TweetsController < ApplicationController
     @tweet = Tweet.find(params[:id])
     @comments = @tweet.tweet_comments.order(created_at: :DESC).page(params[:page]).per(10)
     if @tweet.isbn.present?
-      @book = RakutenWebService::Books::Book.search(isbn: @tweet.isbn, outOfStockFlag: 1).first
+      @book = search_book(@tweet.isbn)
       @book_favorites = FavoriteBook.where(isbn: @book.isbn)
     end
     @tweet_comment = TweetComment.new
@@ -33,7 +33,7 @@ class Public::TweetsController < ApplicationController
 
   def new
     if params[:book_id].present?
-      @book = RakutenWebService::Books::Book.search(isbn: params[:book_id], outOfStockFlag: 1).first
+      @book = search_book(params[:book_id])
       @book_isbn = @book["isbn"]
       @book_favorites = FavoriteBook.where(isbn: @book.isbn)
       @tweet = Tweet.new
@@ -44,7 +44,7 @@ class Public::TweetsController < ApplicationController
 
   def create
     if params[:book_id].present?
-      @book = RakutenWebService::Books::Book.search(isbn: params[:book_id], outOfStockFlag: 1).first
+      @book = search_book(params[:book_id])
       @book_favorites = FavoriteBook.where(isbn: @book.isbn)
       @tweet = current_user.tweets.build(
         isbn: @book.isbn,

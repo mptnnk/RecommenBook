@@ -29,7 +29,7 @@
             </tr>
           </thead>
           <% @reading_lists.each do |list| %>
-            <% book = RakutenWebService::Books::Book.search(isbn: list.isbn, outOfStockFlag: 1).first %>
+            <% book = search_book(list.isbn) %>
             <tbody>
               <tr>
                 <% if @user == current_user %>

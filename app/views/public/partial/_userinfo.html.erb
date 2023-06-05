@@ -113,14 +113,14 @@
   <tr>
     <td>
       <%= link_to followings_path(user_name: user.name) do %>
-        <%= user.followings.count %>フォロー
+        <%= user.followings.where(is_active: true).count %>フォロー
       <% end %>
     </td>
   </tr>
   <tr>
     <td>
       <%= link_to followers_path(user_name: user.name) do %>
-        <%= user.followers.count %>フォロワー
+        <%= user.followers.where(is_active: true).count %>フォロワー
       <% end %>
     </td>
   </tr>

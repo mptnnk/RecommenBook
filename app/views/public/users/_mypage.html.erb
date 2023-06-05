@@ -1,6 +1,6 @@
 <% objects.each do |obj| %>
     <% if obj.isbn.present? %>
-      <% book = RakutenWebService::Books::Book.search(isbn: obj.isbn, outOfStockFlag: 1).first %>
+      <% book = search_book(obj.isbn) %>
       
       <div class="row flex-row pt-2 mb-3 lists"> <!--リスト全体-->
         <div class="col-lg-1 col-md-1 col-sm-1"><!--リスト左側-->

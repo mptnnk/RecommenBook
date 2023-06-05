@@ -1,5 +1,7 @@
 class ApplicationController < ActionController::Base
   
+  include ApplicationHelper
+  
   # set :books, users, favorite_books, likes, relationships, reviews, review_comments, tweets, hashtags
   
   def set_userinfo
@@ -27,7 +29,7 @@ class ApplicationController < ActionController::Base
         @reading_lists = current_user.reading_lists.all
         @recommenbook = current_user.favorite_books.find_by(recommenbook: true)
         if @recommenbook.present?
-          @book = RakutenWebService::Books::Book.search({isbn: @recommenbook.isbn, outOfStockFlag: 1}).first
+          @book = search_book(@recommenbook.isbn)
         end
         
       elsif @user != current_user
@@ -39,7 +41,7 @@ class ApplicationController < ActionController::Base
         @reading_lists = @user.reading_lists.all
         @recommenbook = @user.favorite_books.find_by(recommenbook: true)
         if @recommenbook.present?
-          @book = RakutenWebService::Books::Book.search(isbn: @recommenbook.isbn, outOfStockFlag: 1).first
+          @book = search_book(@recommenbook.isbn)
         end
       end
       

@@ -3,7 +3,7 @@ class Admin::ReviewsController < ApplicationController
   
   def show
     @review = Review.find(params[:id])
-    @book = RakutenWebService::Books::Book.search(isbn: @review.isbn, outOfStockFlag: 1).first
+    @book = search_book(@review.isbn)
     @book_favorites = FavoriteBook.where(isbn: @book.isbn)
   end
   

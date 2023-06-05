@@ -7,9 +7,14 @@
   <h4 class="page-title mt-3">レビュー</h4>
   <div class="row flex-row ml-1">
     <div class="col-11">
-      <%= link_to mypage_path(name: @review.user.name) do %>
-        @<%= @review.user.name %>
-      <% end %>　
+      <% if @review.user.is_active %>
+        <%= link_to mypage_path(name: @review.user.name) do %>
+          @<%= @review.user.name %>
+        <% end %>
+      <% else %>
+        @退会したユーザー
+      <% end %>
+
       <% if @review.created_at.to_date == Date.today %>
         <%= @review.created_at.strftime("%Y/%m/%d/ %p%I：%M") %>
       <% else %>

@@ -17,7 +17,7 @@
       
       <% if @favorite_books.present? %>
         <% @favorite_books.each do |favorite_book| %>
-        <% book = RakutenWebService::Books::Book.search(isbn: favorite_book.isbn, outOfStockFlag: 1).first %>
+        <% book = search_book(favorite_book.isbn) %>
         <div class="row flex-row pt-2 mb-3 lists"><!--画面右側の箱の枠全体-->
           <div class="col-lg-1 col-md-1 col-sm-1"><!--画面右側の箱 左の枠-->
             <%= link_to book_path(book['isbn']) do %>
