@@ -1,5 +1,6 @@
 class Admin::TweetsController < ApplicationController
   before_action :authenticate_admin!
+  before_action :find_tweet, only: [:show, :destroy]
   
   def index
     if params[:user_id].present?
@@ -10,14 +11,19 @@ class Admin::TweetsController < ApplicationController
   end
 
   def show
-    @tweet = Tweet.find(params[:id])
     @book = search_book(@tweet.isbn)
-    @book_favorites = FavoriteBook.where(isbn: @tweet.isbn).count
+    @book_favorites = FavoriteBook.where(isbn: @book.isbn)
+     
   end
   
   def destroy
-    @tweet = Tweet.find(params[:id])
     @tweet.destroy
     redirect_to admin_tweets_path, alert: "ツイートを削除しました"
+  end
+  
+  private
+  
+  def find_tweet
+    @tweet = Tweet.find(params[:id])
   end
 end

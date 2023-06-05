@@ -1,35 +1,29 @@
 class Public::ReviewsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :destroy, :delete_readed]
-  before_action :submitted_review, only: [:show, :edit, :update, :destroy]
+  before_action :find_review, only: [:show, :edit, :update, :destroy]
   before_action :set_userinfo, only: [:index, :readed_list], if: -> { params[:user_name].present? } # application_controller
   
   def index
     if params[:user_name]
       if @user == current_user
-        @my_reviews = Review.where(user_id: current_user.id).where.not(content: [nil, '']).page(params[:page]).per(10).order(created_at: :DESC)
+        @my_reviews = get_reviews(user_id: current_user.id, in_release: true)
       elsif @user != current_user
-        @user_reviews = Review.where(user_id: @user.id, in_release: true).where.not(content: [nil, '']).page(params[:page]).per(10).order(created_at: :DESC)
+        @user_reviews = get_reviews(user_id: @user.id, in_release: true)
       end
-      
     elsif params[:book_id]
       @book = search_book(params[:book_id])
-      @book_reviews = Review.where(isbn: params[:book_id], in_release: true).where.not(content: [nil, '']).page(params[:page]).per(10).order(created_at: :DESC)
-      
+      @book_reviews = get_reviews(isbn: params[:book_id], in_release: true)
     elsif params[:user_name].blank? && params[:book_id].blank?
-      @reviews = Review.where(in_release: true).where.not(content: [nil, '']).page(params[:page]).per(10).order(created_at: :DESC)
+      @reviews = get_reviews(in_release: true)
     end
   end
   
   def readed_list
     @user = User.find_by(name: params[:user_name])
     if @user == current_user
-      readed_reviews = Review.where(user_id: current_user.id).group_by(&:isbn).transform_values { |v| v.max_by(&:created_at) }.values.sort_by(&:created_at).reverse
-      @readed_lists = Kaminari.paginate_array(readed_reviews).page(params[:page]).per(10)
-      
+      @readed_lists = readed_lists(current_user.id)
     elsif @user != current_user
-      readed_reviews = Review.where(user_id: @user.id).group_by(&:isbn).transform_values { |v| v.max_by(&:created_at) }.values.sort_by(&:created_at).reverse
-      @readed_lists = Kaminari.paginate_array(readed_reviews).page(params[:page]).per(10)
-      
+      @readed_lists = readed_lists(@user.id)
     end
   end
   
@@ -41,7 +35,7 @@ class Public::ReviewsController < ApplicationController
 
   def show
     @book = search_book(@review.isbn)
-    @book_favorites = FavoriteBook.where(isbn: @book.isbn)
+    @book_favorites = book_favorites(@book.isbn)
     @review_comment = ReviewComment.new
     @comments = @review.review_comments.order(created_at: :DESC).page(params[:page]).per(10)
   end
@@ -49,7 +43,7 @@ class Public::ReviewsController < ApplicationController
   def new
     @book = search_book(params[:book_id])
     @readed = Review.where(user_id: current_user.id,isbn: @book.isbn)
-    @book_favorites = FavoriteBook.where(isbn: @book.isbn)
+    @book_favorites = book_favorites(@book.isbn)
     @review = Review.new
   end  
 
@@ -61,7 +55,7 @@ class Public::ReviewsController < ApplicationController
   
   def edit
     @book = search_book(@review.isbn)
-    @book_favorites = FavoriteBook.where(isbn: @book.isbn)
+    @book_favorites = book_favorites(@book.isbn)
   end
   
   def update
@@ -87,8 +81,21 @@ class Public::ReviewsController < ApplicationController
     params.require(:review).permit(:isbn, :content, :readed_at, :in_release, :spoiler).merge(user_id:current_user.id)
   end
   
-  def submitted_review
+  def find_review
     @review = Review.find(params[:id])
   end
-
+  
+  def get_reviews(condition)
+    Review.where(condition).where.not(content: [nil, '']).page(params[:page]).per(10).order(created_at: :DESC)
+  end
+  
+  def book_favorites(isbn)
+    FavoriteBook.where(isbn: @book.isbn)
+  end
+  
+  def readed_lists(user_id)
+    find_readed_review = Review.where(user_id: user_id).group_by(&:isbn).transform_values { |v| v.max_by(&:created_at) }.values.sort_by(&:created_at).reverse
+    Kaminari.paginate_array(find_readed_review).page(params[:page]).per(10)
+  end
+  
 end

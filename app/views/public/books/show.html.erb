@@ -20,8 +20,8 @@
         <%= link_to "この本のことをつぶやく", new_tweet_path(book_id: @book.isbn), class:"btn btn-primary mt-2" %>
       <% end %>
       
-      <% if user_signed_in? && current_user.favorite_books.exists?(isbn: @book.isbn) %>
-        <%= link_to "お気に入りを解除", book_favorite_book_path(@book.isbn), method: :delete, class:"btn btn-danger mt-2" %>
+      <% if user_signed_in? && @favorite_book.present? %>
+        <%= link_to "お気に入りを解除", favorite_book_path(@favorite_book.id), method: :delete, class:"btn btn-danger mt-2" %>
       <% elsif user_signed_in? %>
         <%= link_to "お気に入りに登録", book_favorite_books_path(@book.isbn), method: :post, class:"btn btn-primary mt-2" %>
       <% end %>

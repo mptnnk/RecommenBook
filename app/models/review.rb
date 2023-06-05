@@ -20,7 +20,7 @@ class Review < ApplicationRecord
     puts hashtags.inspect
     review.hashtags = []
     hashtags.uniq.map do |hashtag|
-      #ハッシュタグは先頭の'#'を外した上で保存
+      #ハッシュタグは先頭の'#'を外して保存
       tag = Hashtag.find_or_create_by(hashname: hashtag.delete('#＃'))
       review.hashtags << tag
     end

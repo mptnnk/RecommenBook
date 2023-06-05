@@ -5,16 +5,16 @@ class Public::TweetsController < ApplicationController
   def index
     if params[:user_name]
       if @user == current_user
-        @my_tweets = Tweet.where(user_id: current_user.id).page(params[:page]).per(10).order(created_at: :DESC)
+        @my_tweets = get_tweets(user_id: current_user.id)
       elsif @user != current_user
-        @user_tweets = Tweet.where(user_id: @user.id).page(params[:page]).per(10).order(created_at: :DESC)
+        @user_tweets = get_tweets(user_id: @user.id)
       end
     end
     
     if params[:book_id]
       @book = search_book(params[:book_id])
     end
-    @book_tweets = Tweet.where(isbn: params[:book_id]).page(params[:page]).per(10).order(created_at: :DESC)
+    @book_tweets = get_tweets(isbn: params[:book_id])
     
     if params[:user_name].blank? && params[:book_id].blank?
       @tweets = Tweet.page(params[:page]).per(10).order(created_at: :DESC)
@@ -26,7 +26,7 @@ class Public::TweetsController < ApplicationController
     @comments = @tweet.tweet_comments.order(created_at: :DESC).page(params[:page]).per(10)
     if @tweet.isbn.present?
       @book = search_book(@tweet.isbn)
-      @book_favorites = FavoriteBook.where(isbn: @book.isbn)
+      @book_favorites = book_favorites(@book.isbn)
     end
     @tweet_comment = TweetComment.new
   end
@@ -35,7 +35,7 @@ class Public::TweetsController < ApplicationController
     if params[:book_id].present?
       @book = search_book(params[:book_id])
       @book_isbn = @book["isbn"]
-      @book_favorites = FavoriteBook.where(isbn: @book.isbn)
+      @book_favorites = book_favorites(@book.isbn)
       @tweet = Tweet.new
     else
       @tweet = Tweet.new
@@ -45,7 +45,7 @@ class Public::TweetsController < ApplicationController
   def create
     if params[:book_id].present?
       @book = search_book(params[:book_id])
-      @book_favorites = FavoriteBook.where(isbn: @book.isbn)
+      @book_favorites = book_favorites(@book.isbn)
       @tweet = current_user.tweets.build(
         isbn: @book.isbn,
         tweet_content: params[:tweet][:tweet_content]
@@ -80,4 +80,11 @@ class Public::TweetsController < ApplicationController
     params.require(:tweet).permit(:isbn, :tweet_content).merge(user_id:current_user.id)
   end
   
+  def get_tweets(condition)
+    Tweet.where(condition).page(params[:page]).per(10).order(created_at: :DESC)
+  end
+  
+  def book_favorites(isbn)
+    FavoriteBook.where(isbn: @book.isbn)
+  end
 end

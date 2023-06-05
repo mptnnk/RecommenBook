@@ -39,7 +39,7 @@
         <tr>
           <th></th>
           <td>
-            <%= review.submit "変更", class:"btn btn-success btn-sm" %>
+            <%= review.submit "変更", class: "btn btn-success btn-sm" %>
             <% if @review.user == current_user %>
               <%= link_to "削除", review_path(@review.id), method: :delete, "data-confirm" => "レビューを削除しますか？", class:"btn btn-danger btn-sm" %>
             <% end %>

@@ -40,9 +40,9 @@ class Public::BooksController < ApplicationController
     @review = Review.new
     @tweet = Tweet.new
     @tag = Hashtag.find_by(hashname: params[:hashname])
-    
     isbn = params[:id]
     @book = search_book(isbn)
+    @favorite_book = FavoriteBook.joins(:user).find_by(user_id: current_user.id, isbn: isbn)
     @reviews = Review.where(isbn: isbn).where(in_release: true).where.not(content: [nil, '']).limit(4).order(created_at: :DESC)
     @tweets = Tweet.where(isbn: isbn).limit(4).order(created_at: :DESC)
     @book_favorites = FavoriteBook.where(isbn: isbn)
