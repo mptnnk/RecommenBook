@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row">
-    <% if @tweet.isbn %>
+    <% if @tweet.isbn.present? %>
       <%= render 'public/partial/bookdetail', book: @book, book_favorites: @book_favorites %>
     <% end %>
   </div>

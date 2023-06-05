@@ -53,6 +53,10 @@ footer{
   border-top: 1px double #d3d3d3;
 }
 
+.field_with_errors {
+  display: contents;
+}
+
 .login-name{
   font-size: 20px;
 }

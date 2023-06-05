@@ -8,7 +8,7 @@ class Public::LikesController < ApplicationController
     @tweets = Tweet.joins(:likes).where(likes: { id: tweet_likes.pluck(:id) })
     # TweetモデルにLikeモデルを結合させ、両テーブルが関連づいたTweetの情報を取得する。
     # tweet_likes.pluck(:id)は、tweet_likes（＝likeのうちtweet_idが含まれている配列）から各likeのIDを抽出した配列を作成する。
-    # where(likes: {id :pluckの配列})は、likeのIDがpluckの配列に含まれているツイートをフィルタリングする。
+    # where(likes: {id :pluckの配列})は、likeのIDがpluckの配列に含まれているつぶやきをフィルタリングする。
     review_likes = Like.where(user_id: @user.id).where.not(review_id: nil)
     @reviews = Review.joins(:likes).where(likes: { id: review_likes.pluck(:id)})
     @combined_records = @tweets + @reviews

@@ -6,7 +6,7 @@ class Public::ReviewsController < ApplicationController
   def index
     if params[:user_name]
       if @user == current_user
-        @my_reviews = get_reviews(user_id: current_user.id, in_release: true)
+        @my_reviews = get_reviews(user_id: current_user.id)
       elsif @user != current_user
         @user_reviews = get_reviews(user_id: @user.id, in_release: true)
       end
@@ -65,10 +65,10 @@ class Public::ReviewsController < ApplicationController
   
   def destroy
     if @review.destroy
-      if request.referer == review_url(@review)
-        redirect_to reviews_path, alert: 'レビューを消しました'
+      if request.referer == review_path(@review) || edit_review_path(@review)
+        redirect_to reviews_path, alert: 'レビューを削除ました'
       else
-        redirect_to request.referer, alert: 'レビューを消しました'
+        redirect_to request.referer, alert: 'レビューを削除ました'
       end
     else
       redirect_to request.referer, alert: '削除できませんでした'

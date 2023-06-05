@@ -23,12 +23,19 @@
           <% @tweets.each do |tweet| %>
             <% if tweet.isbn.present?%> 
               <% book = search_book(tweet.isbn) %>
-              
             <% end %>
             <tbody>
               <tr>
                 <td class="text-center"><%= tweet.created_at.strftime('%Y/%m/%d') %></td>
-                <td class="text-center"><%= tweet.isbn ? (book['title']) : 'nothing' %></td>
+                <td class="text-center">
+                  <% if tweet.isbn.present? %>
+                    <%= link_to book_path(tweet.isbn) do %>
+                      <%= book['title'] %>
+                    <% end %>
+                  <% else %>
+                    なし
+                  <% end %>
+                </td>
                 <td class="text-center">
                   <%= link_to edit_admin_user_path(tweet.user.id) do %>
                     <%= tweet.user.name %>
@@ -38,10 +45,10 @@
                 <td class="text-center"><%= link_to "詳細を見る", admin_tweet_path(tweet.id), class: "btn btn-success" %></td>
               </tr>
             </tbody>
-          <% end %>
-          
-        </table>  
-      <% end %>
+          <% end %><!--each文終わり-->
+        </table>
+        <%= paginate @tweets, theme: "twitter-bootstrap-4" %>
+      <% end %><!--if @tweets.present？おわり-->
     </div>
   </div>
 </div>

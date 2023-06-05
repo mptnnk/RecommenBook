@@ -7,8 +7,11 @@ ja:
             password_confirmation:
               confirmation: "パスワードとパスワード（確認用）が一致しません"
             password:
+              blank: "パスワードを入力してください"
               too_short: "パスワードは%{count}文字以上で入力してください"
             email:
+              blank: "メールアドレスを入力してください"
               taken: "このメールアドレスは既に使用されています"
             name:
               taken: "このユーザーネームは既に登録されています"
+              blank: "名前を入力してください"

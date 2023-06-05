@@ -51,9 +51,9 @@ class Public::TweetsController < ApplicationController
         tweet_content: params[:tweet][:tweet_content]
       )
       if @tweet.save
-        redirect_to book_path(@book.isbn), notice: "ツイートを投稿しました"
+        redirect_to book_path(@book.isbn), notice: "つぶやきを投稿しました"
       else
-        flash.now[:alert] = "ツイートを投稿できませんでした"
+        flash.now[:alert] = "つぶやきを投稿できませんでした"
         render :new
       end
 

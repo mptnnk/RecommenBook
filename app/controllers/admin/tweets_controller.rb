@@ -4,6 +4,7 @@ class Admin::TweetsController < ApplicationController
   
   def index
     if params[:user_id].present?
+      @user = User.find(params[:user_id])
       @tweets = Tweet.where(user_id: params[:user_id]).order(created_at: :DESC).page(params[:page]).per(10)
     else
       @tweets = Tweet.all.order(created_at: :DESC).page(params[:page]).per(10)
@@ -11,14 +12,15 @@ class Admin::TweetsController < ApplicationController
   end
 
   def show
-    @book = search_book(@tweet.isbn)
-    @book_favorites = FavoriteBook.where(isbn: @book.isbn)
-     
+    if @tweet.isbn.present?
+      @book = search_book(@tweet.isbn)
+      @book_favorites = FavoriteBook.where(isbn: @book.isbn)
+    end
   end
   
   def destroy
     @tweet.destroy
-    redirect_to admin_tweets_path, alert: "ツイートを削除しました"
+    redirect_to admin_tweets_path, alert: "つぶやきを削除しました"
   end
   
   private
