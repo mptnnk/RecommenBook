@@ -15,7 +15,7 @@
       
       <%= form_with model: @review, url: book_reviews_path(@book.isbn) do |review| %>
         <%= review.hidden_field :isbn, value: @book['isbn'] %>
-        <%= review.text_area :content, rows: "5", style: "width: 100%" %><br>
+        <%= review.text_area :content, rows: "5", style: "width: 100%", maxlength: "500" %><br>
         <%= review.label :"読み終わった日" %>
         <%= review.date_field :readed_at %><br>
         

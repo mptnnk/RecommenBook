@@ -16,7 +16,7 @@
         </tr>
         <tr>
           <th style="width 20%">テキスト修正</th>
-          <td colspan="3"><%= review.text_area :content, size:'80x5' %></td>
+          <td colspan="3"><%= review.text_area :content, size:'80x5', maxlength: "500" %></td>
         </tr>
         <tr>
           <th>公開ステータス</th>

@@ -14,13 +14,13 @@
           
           <p><i class="fas fa-exclamation-triangle"></i>つぶやきはネタバレ投稿禁止です<i class="fas fa-exclamation-triangle"></i></p>
           <p><i class="fas fa-exclamation-triangle"></i>悪意のあるつぶやきを発見した場合は、管理人が削除する可能性があります<i class="fas fa-exclamation-triangle"></i></p>
-          <%= tweet.text_area :tweet_content, rows: "3", style: "width: 100%" %><br>
+          <%= tweet.text_area :tweet_content, rows: "3", style: "width: 100%", maxlength: "200" %><br>
           <%= tweet.submit "つぶやく", class:"btn btn-success mt-2" %>
         <% end %>
       <% else %>
         <%= form_with model: @tweet, url: tweets_path, method: :post do |tweet| %>
           <%= tweet.label :"つぶやく", class:"border border-primary p-2 mt-2 rounded" %><br>
-          <%= tweet.text_area :tweet_content, rows: "3", style: "width: 100%" %><br>
+          <%= tweet.text_area :tweet_content, rows: "3", style: "width: 100%", maxlength: "200" %><br>
           <%= tweet.submit "つぶやく", class:"btn btn-success mt-2" %>
         <% end %>
         <div class="row">
