@@ -59,9 +59,12 @@
             <% end %>
             
           <% elsif params[:book_id].present? %>
-          
-            <%= render 'public/partial/lists', objects: @book_tweets %>
-            <%= paginate @book_tweets, theme: 'twitter-bootstrap-4' %>
+            <%if @book_tweets.present? %>
+              <%= render 'public/partial/lists', objects: @book_tweets %>
+              <%= paginate @book_tweets, theme: 'twitter-bootstrap-4' %>
+            <% else %>
+              <p>つぶやきがありません</p>
+            <% end %>
           
           <% elsif params[:user_name].blank? && params[:book_id].blank? %>
             

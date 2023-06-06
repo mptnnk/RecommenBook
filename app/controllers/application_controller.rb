@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   
   include ApplicationHelper
+  rescue_from ActiveRecord::RecordNotFound, with: :data_not_found
+  rescue_from ActionController::RoutingError, with: :page_not_found
   
   # set :books, users, favorite_books, likes, relationships, reviews, review_comments, tweets, hashtags
   
@@ -46,6 +48,18 @@ class ApplicationController < ActionController::Base
       end
       
     end
+  end
+  
+  private
+  
+  def data_not_found
+    flash[:alert] = "データが見つかりません"
+    redirect_back(fallback_location: root_path)
+  end
+  
+  def data_not_found
+    flash[:alert] = "ページが見つかりません"
+    redirect_back(fallback_location: root_path)
   end
   
 end

@@ -3,9 +3,6 @@ class Public::ReviewsController < ApplicationController
   before_action :find_review, only: [:show, :edit, :update,:destroy]
   before_action :set_userinfo, only: [:index, :readed_list], if: -> { params[:user_name].present? } # application_controller
   
-  rescue_from ActiveRecord::RecordNotFound, with: :data_not_found
-
-  
   def index
     if params[:user_name]
       if @user == current_user
@@ -92,11 +89,6 @@ class Public::ReviewsController < ApplicationController
   
   def find_review
     @review = Review.find(params[:id])
-  end
-  
-  def data_not_found
-    flash[:alert] = "データが見つかりません"
-    redirect_back(fallback_location: root_path)
   end
   
   def get_reviews(condition)
