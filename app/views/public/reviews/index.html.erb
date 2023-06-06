@@ -52,10 +52,13 @@
           <% end %>
           
         <% elsif params[:book_id].present? %>
-        
-          <%= render 'public/partial/lists', objects: @book_reviews %>
-          <%= paginate @book_reviews, theme: 'twitter-bootstrap-4' %>
-        
+          <% if @book_reviews.present? %>
+            <%= render 'public/partial/lists', objects: @book_reviews %>
+            <%= paginate @book_reviews, theme: 'twitter-bootstrap-4' %>
+          <% else %>
+            <p>レビューがありません</p>
+          <% end %>
+          
         <% else %>
         
           <% if @reviews.present? %>
@@ -79,9 +82,12 @@
           <% end %>
           
         <% elsif params[:book_id].present? %>
-        
-          <%= render 'public/partial/lists', objects: @book_reviews %>
-          <%= paginate @book_reviews, theme: 'twitter-bootstrap-4' %>
+          <% if @book_reviews.present? %>
+            <%= render 'public/partial/lists', objects: @book_reviews %>
+            <%= paginate @book_reviews, theme: 'twitter-bootstrap-4' %>
+          <% else %>
+            <p>レビューがありません</p>
+          <% end %>
           
         <% else %>
         

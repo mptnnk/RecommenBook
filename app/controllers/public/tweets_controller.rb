@@ -1,5 +1,6 @@
 class Public::TweetsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :destroy]
+  before_action :find_tweet, only: [:show, :destroy]
   before_action :set_userinfo, only: [:index], if: -> { params[:user_name].present? } # application_controller
   
   def index
@@ -22,7 +23,6 @@ class Public::TweetsController < ApplicationController
   end
 
   def show
-    @tweet = Tweet.find(params[:id])
     @comments = @tweet.tweet_comments.order(created_at: :DESC).page(params[:page]).per(10)
     if @tweet.isbn.present?
       @book = search_book(@tweet.isbn)
@@ -68,9 +68,14 @@ class Public::TweetsController < ApplicationController
   end
   
   def destroy
-    @tweet = Tweet.find(params[:id])
     if @tweet.destroy
-      redirect_to tweets_path, alert: 'つぶやきを削除しました'
+      if request.referer&.match(/\/tweets\/\d+/)
+        redirect_to tweets_path, alert: 'つぶやきを削除しました'
+      else
+        redirect_to request.referer, alert: 'つぶやきを削除しました'
+      end
+    else
+      redirect_to request.referer, alert: '削除できませんでした'
     end
   end
   
@@ -82,6 +87,10 @@ class Public::TweetsController < ApplicationController
   
   def get_tweets(condition)
     Tweet.where(condition).page(params[:page]).per(10).order(created_at: :DESC)
+  end
+  
+  def find_tweet
+    @tweet = Tweet.find(params[:id])
   end
   
   def book_favorites(isbn)

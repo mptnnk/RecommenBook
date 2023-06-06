@@ -1,9 +1,10 @@
 class Public::ReviewsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :destroy, :delete_readed]
-  before_action :find_review, only: [:show, :edit, :update, :destroy]
+  before_action :find_review, only: [:show, :edit, :update,:destroy]
   before_action :set_userinfo, only: [:index, :readed_list], if: -> { params[:user_name].present? } # application_controller
   
   rescue_from ActiveRecord::RecordNotFound, with: :data_not_found
+
   
   def index
     if params[:user_name]
@@ -37,6 +38,9 @@ class Public::ReviewsController < ApplicationController
   end
 
   def show
+    if @review.blank?
+      redirect_to reviews_path, alert: 'レビューを削除しました'
+    end
     @book = search_book(@review.isbn)
     @book_favorites = book_favorites(@book.isbn)
     @review_comment = ReviewComment.new
@@ -68,9 +72,9 @@ class Public::ReviewsController < ApplicationController
   
   def destroy
     if @review.destroy
-      if request.referer&.include?("/reviews/:id")
+      if request.referer&.match(/\/reviews\/\d+/)
         redirect_to reviews_path, alert: 'レビューを削除しました'
-      elsif request.referer&.include?("/reviews/:id/edit")
+      elsif request.referer&.match(/\/reviews\/\d+\/edit/)
         redirect_to reviews_path, alert: 'レビューを削除しました'
       else
         redirect_to request.referer, alert: 'レビューを削除しました'
@@ -91,7 +95,8 @@ class Public::ReviewsController < ApplicationController
   end
   
   def data_not_found
-    redirect_to reviews_path, alert: '該当するレビューが見つかりません'
+    flash[:alert] = "データが見つかりません"
+    redirect_back(fallback_location: root_path)
   end
   
   def get_reviews(condition)
