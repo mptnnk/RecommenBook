@@ -3,6 +3,8 @@ class Public::ReviewsController < ApplicationController
   before_action :find_review, only: [:show, :edit, :update, :destroy]
   before_action :set_userinfo, only: [:index, :readed_list], if: -> { params[:user_name].present? } # application_controller
   
+  rescue_from ActiveRecord::RecordNotFound, with: :data_not_found
+  
   def index
     if params[:user_name]
       if @user == current_user
@@ -30,6 +32,7 @@ class Public::ReviewsController < ApplicationController
   def delete_readed
     readed = Review.find(params[:readed_id])
     readed.destroy
+    flash[:alert] = "読んだ本を削除しました"
     redirect_to readed_list_path(user_name: current_user.name)
   end
 
@@ -65,10 +68,12 @@ class Public::ReviewsController < ApplicationController
   
   def destroy
     if @review.destroy
-      if request.referer == review_path(@review) || edit_review_path(@review)
-        redirect_to reviews_path, alert: 'レビューを削除ました'
+      if request.referer&.include?("/reviews/:id")
+        redirect_to reviews_path, alert: 'レビューを削除しました'
+      elsif request.referer&.include?("/reviews/:id/edit")
+        redirect_to reviews_path, alert: 'レビューを削除しました'
       else
-        redirect_to request.referer, alert: 'レビューを削除ました'
+        redirect_to request.referer, alert: 'レビューを削除しました'
       end
     else
       redirect_to request.referer, alert: '削除できませんでした'
@@ -83,6 +88,10 @@ class Public::ReviewsController < ApplicationController
   
   def find_review
     @review = Review.find(params[:id])
+  end
+  
+  def data_not_found
+    redirect_to reviews_path, alert: '該当するレビューが見つかりません'
   end
   
   def get_reviews(condition)
