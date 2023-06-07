@@ -41,8 +41,8 @@
 - 読んだ本をおすすめしたい、感想を共有したいとき
 - 次に読む本を気になるジャンルなどから探したいとき
 
-## 設計書
-<...>
+## ER図
+![RecommenBook_ER図【加筆修正】](https://github.com/mptnnk/RecommenBook/assets/121846198/d0008117-ab2c-4ee9-83d3-f768e1e4e56f)
 
 ## 開発環境
 - OS：Linux(CentOS)
