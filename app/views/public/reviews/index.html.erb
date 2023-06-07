@@ -7,7 +7,7 @@
       </div>
     <% end %>
     
-    <div class="col-lg-8 col-md-10 offset-md-1 col-sm-12">
+    <div class="col-lg-8 offset-lg-1 col-md-12 col-sm-12">
       <h4 class="page-title">
         <% if user_signed_in? %>
           <% if params[:user_name].present? && params[:user_name] == current_user.name %>
@@ -22,11 +22,11 @@
           
         <% elsif !user_signed_in? %>
           <% if params[:user_name].present? %>
-            <%= @user.name %>'s Reviews
+            <%= @user.name %>さんのレビュー
           <% elsif params[:book_id].present? %>
-            <%= @book['title'].truncate(20) %>'s Reviews
+            <%= @book['title'].truncate(20) %>のレビュー
           <% else %>
-            Reviews
+            レビュー
           <% end %>
         <% end %>
       </h4>
@@ -52,10 +52,13 @@
           <% end %>
           
         <% elsif params[:book_id].present? %>
-        
-          <%= render 'public/partial/lists', objects: @book_reviews %>
-          <%= paginate @book_reviews, theme: 'twitter-bootstrap-4' %>
-        
+          <% if @book_reviews.present? %>
+            <%= render 'public/partial/lists', objects: @book_reviews %>
+            <%= paginate @book_reviews, theme: 'twitter-bootstrap-4' %>
+          <% else %>
+            <p>レビューがありません</p>
+          <% end %>
+          
         <% else %>
         
           <% if @reviews.present? %>
@@ -79,9 +82,12 @@
           <% end %>
           
         <% elsif params[:book_id].present? %>
-        
-          <%= render 'public/partial/lists', objects: @book_reviews %>
-          <%= paginate @book_reviews, theme: 'twitter-bootstrap-4' %>
+          <% if @book_reviews.present? %>
+            <%= render 'public/partial/lists', objects: @book_reviews %>
+            <%= paginate @book_reviews, theme: 'twitter-bootstrap-4' %>
+          <% else %>
+            <p>レビューがありません</p>
+          <% end %>
           
         <% else %>
         

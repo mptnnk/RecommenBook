@@ -39,10 +39,12 @@ class Public::BooksController < ApplicationController
   def show
     @review = Review.new
     @tweet = Tweet.new
-    @tag = Hashtag.find_by(name: params[:name])
-    
+    @tag = Hashtag.find_by(hashname: params[:hashname])
     isbn = params[:id]
-    @book = RakutenWebService::Books::Book.search(isbn: isbn, outOfStockFlag: 1).first
+    @book = search_book(isbn)
+    if user_signed_in?
+      @favorite_book = FavoriteBook.joins(:user).find_by(user_id: current_user.id, isbn: isbn)
+    end
     @reviews = Review.where(isbn: isbn).where(in_release: true).where.not(content: [nil, '']).limit(4).order(created_at: :DESC)
     @tweets = Tweet.where(isbn: isbn).limit(4).order(created_at: :DESC)
     @book_favorites = FavoriteBook.where(isbn: isbn)
@@ -71,11 +73,11 @@ class Public::BooksController < ApplicationController
       recent_favorite_isbns = current_user.favorite_books.order(created_at: :DESC).limit(30).pluck(:isbn)
       genre_ids = []
       recent_favorite_isbns.each do |isbn|
-        book = RakutenWebService::Books::Book.search(isbn: isbn, outOfStockFlag: 1).first
+        book = search_book(isbn)
         genre_ids << book.genres.first['booksGenreId'] if book.present? && book.genres.present?
       end
       favorite_genre_ids = genre_ids.map { |id| id[0,6] }
-      most_favorite_id = favorite_genre_ids.group_by(&:itself).max_by{ |_,count| count }.first
+      most_favorite_id = favorite_genre_ids.group_by{|e| e}.sort_by{ |e,v| -v.size }.map(&:first).first
       related_books = RakutenWebService::Books::Book.search({
         books_genre_id: most_favorite_id,
         outOfStockFlag: 1,

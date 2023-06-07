@@ -1,6 +1,6 @@
 <% objects.each do |obj| %>
     <% if obj.isbn.present? %>
-      <% book = RakutenWebService::Books::Book.search(isbn: obj.isbn, outOfStockFlag: 1).first %>
+      <% book = search_book(obj.isbn) %>
       
       <div class="row flex-row pt-2 mb-3 lists"> <!--リスト全体-->
         <div class="col-lg-1 col-md-1 col-sm-1"><!--リスト左側-->
@@ -9,7 +9,7 @@
           <% end %>
         </div>
       
-        <div class="col-lg-10 col-md-12 col-sm-12 flex-column"><!--リスト右側　要素縦並び-->
+        <div class="col-lg-10 col-md-12 col-sm-12 flex-column ml-1"><!--リスト右側　要素縦並び-->
           <div>
             <% if posts %>
               <%= link_to mypage_path(obj.user.name) do %>
@@ -26,16 +26,16 @@
              <% if obj.is_a?(Review) %>
                 <% if obj.spoiler == false %>
                   <%= render_review_with_hashtags(obj.content, 50) %>
-                  <%= link_to "（くわしく）", review_path(obj.id), style: "color: #ff7f50" %>
+                  <%= link_to "（詳細を見る）", review_path(obj.id), style: "color: #ff7f50" %>
                 <% else %>
                   <%= link_to review_path(obj.id) do %>
-                    <p class="spoiler-large"><i class="fas fa-exclamation-circle"></i>ネタバレあり<i class="fas fa-exclamation-circle"></i><span class="spoiler-small">くわしく</span></p>
+                    <p class="spoiler-large"><i class="fas fa-exclamation-circle"></i>ネタバレあり<i class="fas fa-exclamation-circle"></i><span class="spoiler-small">詳細を見る</span></p>
                   <% end %>
                 <% end %>
                 
               <% elsif obj.is_a?(Tweet) %>
                 <%= render_tweet_with_hashtags(obj.tweet_content, 50) %>
-                <%= link_to "（くわしく）", tweet_path(obj.id), style: "color: #ff7f50" %>
+                <%= link_to "（詳細を見る）", tweet_path(obj.id), style: "color: #ff7f50" %>
                 
               <% elsif obj.is_a?(FavoriteBook) %>
                 
@@ -54,11 +54,11 @@
                 
               <% elsif !user_signed_in? && obj.is_a?(Review) %>
                 <i class="fas fa-heart" aria-hidden="true" style="color: red;"></i><%= obj.likes.count %>いいね
-                ( <%= obj.review_comments.count %> )Comments
+                ( <%= obj.review_comments.count %> )コメント
                 
               <% elsif !user_signed_in? && obj.is_a?(Tweet) %>
                 <i class="fas fa-heart" aria-hidden="true" style="color: red;"></i><%= obj.likes.count %>いいね
-                ( <%= obj.tweet_comments.count %> )Comments
+                ( <%= obj.tweet_comments.count %> )コメント
                 
               <% elsif obj.is_a?(FavoriteBook) %>
               
@@ -68,4 +68,3 @@
       </div><!--リスト全体end-->
     <% end %> <!--obj.isbn.present end-->
 <% end %> <!--each do end-->
-

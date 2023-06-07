@@ -38,22 +38,26 @@ Rails.application.routes.draw do
     get 'followers' => 'relationships#followers', as: 'followers'
     
     get 'books/search' => "books#search"
-    get 'hashtag/:name' => "hashtags#index", as: 'hashtag'
+    get 'hashtag/:hashname' => "hashtags#index", as: 'hashtag'
     get 'readed_list' => "reviews#readed_list", as: 'readed_list'
+    
     
     get 'comments' => 'review_comments#index', as: "comments"
     # resources :review_comments, only: [:index], as: "comments"
     
     resources :books, only: [:show] do
       resources :reviews, only: [:new, :create]
-      resources :favorite_books, only: [:create, :destroy]
+      resources :favorite_books, only: [:create]
       resources :reading_lists, only: [:destroy, :create]
     end
+    
     resources :reviews, only: [:index, :show, :edit, :update, :destroy] do
       resources :review_comments, only: [:create, :destroy]
       resource :likes, only: [:create, :destroy]
+      delete :delete_readed, on: :collection
     end
-    resources :favorite_books, only: [:index, :update]
+    
+    resources :favorite_books, only: [:index, :update, :destroy]
     resources :reading_lists, only: [:index]
     resources :tweets, only: [:new, :create, :index, :show, :destroy] do
       resources :tweet_comments, only: [:create, :destroy]
