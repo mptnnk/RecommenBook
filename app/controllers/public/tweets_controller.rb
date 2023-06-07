@@ -1,20 +1,21 @@
 class Public::TweetsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :destroy]
+  before_action :find_tweet, only: [:show, :destroy]
   before_action :set_userinfo, only: [:index], if: -> { params[:user_name].present? } # application_controller
   
   def index
     if params[:user_name]
       if @user == current_user
-        @my_tweets = Tweet.where(user_id: current_user.id).page(params[:page]).per(10).order(created_at: :DESC)
+        @my_tweets = get_tweets(user_id: current_user.id)
       elsif @user != current_user
-        @user_tweets = Tweet.where(user_id: @user.id).page(params[:page]).per(10).order(created_at: :DESC)
+        @user_tweets = get_tweets(user_id: @user.id)
       end
     end
     
     if params[:book_id]
-      @book = RakutenWebService::Books::Book.search(isbn: params[:book_id], outOfStockFlag: 1).first
+      @book = search_book(params[:book_id])
     end
-    @book_tweets = Tweet.where(isbn: params[:book_id]).page(params[:page]).per(10).order(created_at: :DESC)
+    @book_tweets = get_tweets(isbn: params[:book_id])
     
     if params[:user_name].blank? && params[:book_id].blank?
       @tweets = Tweet.page(params[:page]).per(10).order(created_at: :DESC)
@@ -22,20 +23,19 @@ class Public::TweetsController < ApplicationController
   end
 
   def show
-    @tweet = Tweet.find(params[:id])
-    @comments = @tweet.tweet_comments.all
+    @comments = @tweet.tweet_comments.order(created_at: :DESC).page(params[:page]).per(10)
     if @tweet.isbn.present?
-      @book = RakutenWebService::Books::Book.search(isbn: @tweet.isbn, outOfStockFlag: 1).first
-      @book_favorites = FavoriteBook.where(isbn: @book.isbn)
+      @book = search_book(@tweet.isbn)
+      @book_favorites = book_favorites(@book.isbn)
     end
     @tweet_comment = TweetComment.new
   end
 
   def new
     if params[:book_id].present?
-      @book = RakutenWebService::Books::Book.search(isbn: params[:book_id], outOfStockFlag: 1).first
+      @book = search_book(params[:book_id])
       @book_isbn = @book["isbn"]
-      @book_favorites = FavoriteBook.where(isbn: @book.isbn)
+      @book_favorites = book_favorites(@book.isbn)
       @tweet = Tweet.new
     else
       @tweet = Tweet.new
@@ -44,16 +44,16 @@ class Public::TweetsController < ApplicationController
 
   def create
     if params[:book_id].present?
-      @book = RakutenWebService::Books::Book.search(isbn: params[:book_id], outOfStockFlag: 1).first
-      @book_favorites = FavoriteBook.where(isbn: @book.isbn)
+      @book = search_book(params[:book_id])
+      @book_favorites = book_favorites(@book.isbn)
       @tweet = current_user.tweets.build(
         isbn: @book.isbn,
         tweet_content: params[:tweet][:tweet_content]
       )
       if @tweet.save
-        redirect_to book_path(@book.isbn), notice: "ツイートを投稿しました"
+        redirect_to book_path(@book.isbn), notice: "つぶやきを投稿しました"
       else
-        flash.now[:alert] = "ツイートを投稿できませんでした"
+        flash.now[:alert] = "つぶやきを投稿できませんでした"
         render :new
       end
 
@@ -68,9 +68,14 @@ class Public::TweetsController < ApplicationController
   end
   
   def destroy
-    @tweet = Tweet.find(params[:id])
     if @tweet.destroy
-      redirect_to tweets_path, alert: 'つぶやきを削除しました'
+      if request.referer&.match(/\/tweets\/\d+/)
+        redirect_to tweets_path, alert: 'つぶやきを削除しました'
+      else
+        redirect_to request.referer, alert: 'つぶやきを削除しました'
+      end
+    else
+      redirect_to request.referer, alert: '削除できませんでした'
     end
   end
   
@@ -80,4 +85,15 @@ class Public::TweetsController < ApplicationController
     params.require(:tweet).permit(:isbn, :tweet_content).merge(user_id:current_user.id)
   end
   
+  def get_tweets(condition)
+    Tweet.where(condition).page(params[:page]).per(10).order(created_at: :DESC)
+  end
+  
+  def find_tweet
+    @tweet = Tweet.find(params[:id])
+  end
+  
+  def book_favorites(isbn)
+    FavoriteBook.where(isbn: @book.isbn)
+  end
 end

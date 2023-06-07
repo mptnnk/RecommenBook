@@ -1,58 +1,61 @@
 <!--reading_listsの一覧-->
 <!--条件分岐確認済み-->
 <div class="container-fluid">
-  <div class="row">
+  <div class="row flex-row">
     <% if params[:user_name] %>
-      <div class="col-md-3">
+      <div class="col-lg-3 d-none d-lg-block">
         <%= render 'public/partial/userinfo', user: @user, book: @book, reading_lists: @reading_lists, readed_lists_count: @readed_lists_count, recommenbook: @recommenbook, in_release_reviews: @in_release_reviews %>
        </div>
     <% end %>
     
-    <div class="col-md-8 offset-md-1">
+    <div class="col-lg-8 offset-lg-1 offset-md-12 col-sm-12"> <!--画面右側ブロック-->
       <h4 class="page-title">
         <% if @user == current_user %>
-          Your Reading Lists
+          あなたが読みたい本
         <% else %>
-          <%= @user.name %>'s Reading Lists
+          <%= @user.name %>さんの読みたい本
         <% end %>
       </h4>
       
       <% if @reading_lists.present? %>
-        <table class="table table-sm">
-          <thead>
-            <tr>
-              <th style="width:10%"></th>
-              <th style="width:20%">Title</th>
-              <th style="width:10%">Author</th>
-              <th style="width:30%">Caption</th>
-              <% if @user == current_user %>
+        <% @reading_lists.each do |list| %>
+        <% book = search_book(list.isbn) %>
+          <div class="row flex-row pt-2 mb-3 lists"> <!--画面右側の枠全体-->
+            <div class="col-lg-1 col-md-1 col-sm-1">
+              <%= link_to book_path(book.isbn) do %>
+                <%= image_tag(book['small_image_url']) %>
               <% end %>
-            </tr>
-          </thead>
-          <% @reading_lists.each do |reading_list| %>
+            </div>
             
-            <% book = RakutenWebService::Books::Book.search(isbn: reading_list.isbn, outOfStockFlag: 1).first %>
-            <tbody>
-              <tr>
-                <td class="text-center">
-                  <%= link_to book_path(book.isbn) do %>
-                    <%= image_tag(book['small_image_url']) %>
-                  <% end %>
-                </td>
-                <td>
-                  <%= link_to book_path(book.isbn) do %>
-                    <%= book['title'] %>
-                  <% end %>
-                </td>
-                <td><%= book['author'] %></td>
-                <td><%= book['item_caption'] %></td>
-              </tr>
-            </tbody>
-          <% end %> <!--readed_books.each end-->
-        </table>
+            <div class="col-lg-10 col-md-12 col-sm-12 flex-column"><!--画面右側の箱　右の枠　要素縦並び-->
+              <div>
+                <%= link_to book_path(book.isbn) do %>
+                  <%= book['title'] %>
+                <% end %>
+                　<!--1コマ空白-->
+                <%= link_to books_search_path(author: book['author']) do %>
+                  <%= book['author'] %>
+                <% end %>
+              </div>
+
+              <div><%= book['item_caption'] %></div>
+              
+              <% if @user == current_user %>
+                <%= link_to "読みたい本解除", book_reading_list_path(id: list.id, book_id: list.isbn), method: :delete, class: "btn btn-warning btn-sm", style: "color: black" %>
+              <% end %>
+            </div><!--画面右側の箱　右枠おわり-->
+
+          </div> <!--画面右側　全体の枠おわり-->
+
+        <% end %> <!--readed_books.each end-->
+
+      <%= paginate @reading_lists, theme: "twitter-bootstrap-4" %>
+      
       <% else %> <!--if @readed_books.nil-->
-        <h5 class="ml-2">No Reading List</h5>
+        <p class="ml-2">読みたい本がまだありません</p>
       <% end %> <!--if readed_books.present? end-->
-    </div> <!--col-md-8 end-->
+      
+    </div> <!--col-lg-8 end-->
+    
   </div> <!--row end-->
 </div> <!--container-fluid end-->

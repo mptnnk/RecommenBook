@@ -1,11 +1,11 @@
 <div class="container">
   <div class="row">
-    <% if @tweet.isbn %>
+    <% if @tweet.isbn.present? %>
       <%= render 'public/partial/bookdetail', book: @book, book_favorites: @book_favorites %>
     <% end %>
   </div>
   
-  <h4 class="page-title">ツイート</h4>
+  <h4 class="page-title mt-3">つぶやき</h4>
   <div class="row ml-3">
     <div class="col">
       <table class="table table-borderless">
@@ -20,12 +20,12 @@
           <td><%= @tweet.created_at.strftime('%Y/%m/%d') %></td>
         </tr>
         <tr>
-          <th>ツイート</th>
+          <th>つぶやき</th>
           <td colspan="3"><%= render_tweet_with_hashtags(@tweet.tweet_content) %></td>
         </tr>
         <tr>
           <th></th>
-          <td><%= link_to "ツイートを削除する", admin_tweet_path(@tweet.id), method: :delete, "data-confirm" => "ツイートを削除しますか？", class: "btn btn-danger" %> </td>
+          <td><%= link_to "つぶやきを削除する", admin_tweet_path(@tweet.id), method: :delete, "data-confirm" => "つぶやきを削除しますか？", class: "btn btn-danger" %> </td>
         </tr>
       </table>
     </div>

@@ -11,8 +11,10 @@ class Public::ReviewCommentsController < ApplicationController
     @tweet_comments.each do |comment|
       @tweet = comment.tweet
     end
-    @comments = @review_comments + @tweet_comments
-    @comments = @comments.sort_by { |comment| comment.created_at }.reverse
+    comment_sum = @review_comments + @tweet_comments
+    comment_sum = comment_sum.sort_by { |comment| comment.created_at }.reverse
+    @comments = Kaminari.paginate_array(comment_sum).page(params[:page]).per(10)
+
   end
 
   def create

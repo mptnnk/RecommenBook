@@ -38,7 +38,7 @@ main {
  font-family: 'Sawarabi Gothic', sans-serif;
  /*margin: 110px 0;*/
  margin: 80px 0;
- padding-bottom: 70px;
+ padding-bottom: 80px;
  /*overflow: hidden;*/
 }
 
@@ -51,6 +51,10 @@ footer{
   bottom: 0;
   overflow: hidden;
   border-top: 1px double #d3d3d3;
+}
+
+.field_with_errors {
+  display: contents;
 }
 
 .login-name{
@@ -106,10 +110,11 @@ footer{
 }
 
 .lists {
-  border: 2px dotted #dcdcdc;
-  border-radius: 20px;
+  border-bottom: 2px dotted #dcdcdc;
+  /*border-radius: 20px;*/
   border-collapse: separate;
   padding-bottom: 10px;
+  margin: 10px;
 }
 
 th {
@@ -140,6 +145,11 @@ th {
 
 .user-image {
   width: 30%;
+  height: auto;
+}
+
+.follow-user-image{
+  width: 100%;
   height: auto;
 }
 
@@ -190,6 +200,10 @@ th {
     font-family: 'DotGothic16', sans-serif;
     background-color: white;
     font-size: 10px;
+  }
+  
+  .table-sm{
+    font-size: 12px;
   }
 
   .page-title{

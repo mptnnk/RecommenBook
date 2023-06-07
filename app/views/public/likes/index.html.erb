@@ -1,24 +1,25 @@
 <!--いいね一覧-->
 <!--条件分岐確認OK-->
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-md-3">
+  <div class="row flex-row">
+    <div class="col-lg-3 d-none d-lg-block">
       <%= render 'public/partial/userinfo', user: @user, book: @book, reading_lists: @reading_lists, readed_lists_count: @readed_lists_count, recommenbook: @recommenbook, in_release_reviews: @in_release_reviews %>
     </div>
     
-    <div class="col-md-8 offset-md-1">
+    <div class="col-lg-8 offset-md-1 col-md-12 col-sm-12">
       <h4 class="page-title">
         <% if @user == current_user %>
-          Your Likes
+          あなたがいいねした投稿
         <% else %>
-          <%= @user.name %>'s Likes
+          <%= @user.name %>さんがいいねした投稿
         <% end %>
       </h4>
       
       <% if @combined_records.present? %>
         <%= render 'public/partial/lists', objects: @combined_records %>
+        <%= paginate @combined_records, theme: "twitter-bootstrap-4" %>
       <% else %>
-        <h5 class="ml-2">No Like</h5>
+        <p class="ml-2">いいねがありません</p>
       <% end %>
     </div> <!--col-md-8 end-->
   </div> <!--row end-->
