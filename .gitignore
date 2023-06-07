@@ -41,3 +41,5 @@ yarn-debug.log*
 
 /db/seeds.rb
 /config/initializers/rakuten.rb
+
+/.env
