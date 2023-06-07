@@ -35,9 +35,6 @@ class Public::ReviewsController < ApplicationController
   end
 
   def show
-    if @review.blank?
-      redirect_to reviews_path, alert: 'レビューを削除しました'
-    end
     @book = search_book(@review.isbn)
     @book_favorites = book_favorites(@book.isbn)
     @review_comment = ReviewComment.new

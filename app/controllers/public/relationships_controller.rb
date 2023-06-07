@@ -15,11 +15,11 @@ class Public::RelationshipsController < ApplicationController
   end
   
   def followings
-    @followings = @user.followings.where(is_active: true).page(params[:page]).per(10)
+    @followings = @user.followings.where(is_active: true).order(created_at: :DESC).page(params[:page]).per(10)
   end
   
   def followers
-    @followers = @user.followers.where(is_active: true).page(params[:page]).per(10)
+    @followers = @user.followers.where(is_active: true).order(created_at: :DESC).page(params[:page]).per(10)
   end
     
 end

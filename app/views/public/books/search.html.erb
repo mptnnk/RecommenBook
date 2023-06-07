@@ -1,6 +1,7 @@
 <!--検索画面（検索結果一覧表示もあり）-->
 <div class="container-fluid">
   <h4 class="page-title">本をさがす<i class="fas fa-search-plus"></i></h4>
+  <p class="text-info">記号（/、＊など）を含むワードは検索できないことがあります<i class="fas fa-sad-tear"></i></p>
   <div class="row">
     <div class="col search-box">
       <%= form_with url: books_search_path, method: :get do |book| %>
