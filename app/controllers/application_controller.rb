@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
     if @user.present?
       @in_release_reviews = Review.where(user_id: @user.id, in_release: true).where.not(content: [nil, ''])
       if @user == current_user
-        followings = current_user.followings.all
+        followings = current_user.followings.where(is_active: true)
         @tweets = []
         @reviews = []
         followings.each do |follow|
