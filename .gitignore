@@ -39,7 +39,4 @@
 yarn-debug.log*
 .yarn-integrity
 
-/db/seeds.rb
-/config/initializers/rakuten.rb
-
 /.env
