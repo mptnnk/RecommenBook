@@ -97,7 +97,7 @@ class Public::ReviewsController < ApplicationController
   end
   
   def readed_lists(user_id)
-    find_readed_review = Review.where(user_id: user_id).group_by(&:isbn).transform_values { |v| v.max_by(&:created_at) }.values.sort_by(&:created_at).reverse
+    find_readed_review = Review.where(user_id: user_id).group_by(&:isbn).transform_values { |v| v.max_by { |review| review.readed_at || Time.at(0) } }.values.sort_by { |review| review.created_at }.reverse
     Kaminari.paginate_array(find_readed_review).page(params[:page]).per(10)
   end
   
