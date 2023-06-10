@@ -26,7 +26,8 @@ header {
   /*height: 100px;*/
   height: 80px;
   position: fixed;
-
+  display: flex;
+  justify-content: space-between;
   top: 0;
   z-index: 99;
   background-color: white;
@@ -73,7 +74,7 @@ footer{
 .navbar-toggler {
   font-size: inherit !important;
   background-color: white;
-  justify-content: flex-end;
+  /*justify-content: flex-end;*/
 }
 
 .nav-link{
@@ -210,4 +211,11 @@ th {
     font-weight: 450;
     font-size: 23px;
   }
+  
+  .navbar-toggler {
+    position: absolute;
+    /*top: 0;*/
+    right: 1rem;
+  }
+
 }
