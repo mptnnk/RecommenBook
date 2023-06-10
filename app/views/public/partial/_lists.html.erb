@@ -22,7 +22,7 @@
         
         <% if obj.is_a?(Review)  && obj.user.is_active %>
           <%= link_to mypage_path(name: obj.user.name) do %>
-            　@<%= obj.user.name %>
+            @<%= obj.user.name %>
           <% end %>
         <% elsif obj.is_a?(Tweet) && obj.user.is_active %>
           <%= link_to mypage_path(name: obj.user.name) do %>

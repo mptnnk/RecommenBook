@@ -32,7 +32,7 @@
   <h5 class="page-title mt-5">新着レビュー</h5>
   <% if @reviews.present? %>
     <div class="row">
-      <div class="col mt-3 table-responsive">
+      <div class="col table-responsive">
         <%= render 'public/partial/lists', objects: @reviews %>
         <div class="text-right">
           <%= link_to "この本のレビューをみる", reviews_path(book_id: @book.isbn), style:"color: #ff7f50" %>
@@ -48,7 +48,7 @@
   <h5 class="page-title mt-5">新着つぶやき</h5>
   <% if @tweets.present? %>
     <div class="row">
-      <div class="col mt-3">
+      <div class="col">
         <%= render 'public/partial/lists', objects: @tweets %>
         <div class="text-right">
           <%= link_to "この本のつぶやきを見る", tweets_path(book_id: @book.isbn), style:"color: #ff7f50" %>
