@@ -74,7 +74,7 @@ footer{
 .navbar-toggler {
   font-size: inherit !important;
   background-color: white;
-  /*justify-content: flex-end;*/
+  justify-content: flex-end;
 }
 
 .nav-link{
@@ -214,8 +214,23 @@ th {
   
   .navbar-toggler {
     position: absolute;
-    /*top: 0;*/
     right: 1rem;
   }
+  
+  .navbar-collapse {
+    position: fixed;
+    top: 100%;
+    right: 0;
+    background-color: white;
+    z-index: 9999;
+    padding: 1rem;
+    overflow-y: auto;
+    display: none; /* 修正: 初期状態では非表示にする */
+  }
 
+  .navbar-collapse.show {
+    display: block; /* 修正: トグルがクリックされたときに表示する */
+    position: absolute; /* 修正: ボタンとメニューを重ねるために絶対位置指定 */
+  }
+  
 }
