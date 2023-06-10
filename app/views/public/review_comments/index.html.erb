@@ -51,7 +51,7 @@
                 <td>
                   <% if comment.tweet.user.is_active %>
                     <%= link_to mypage_path(comment.tweet.user.name) do %>
-                      <%= comment.tweet.user.name %>
+                      @<%= comment.tweet.user.name %>
                     <% end %>
                   <% else %>
                     @退会したユーザー
