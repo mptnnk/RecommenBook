@@ -42,7 +42,7 @@
 - 次に読む本を気になるジャンルなどから探したいとき
 
 ## ER図
-![RecommenBook_ER図【加筆修正】](https://github.com/mptnnk/RecommenBook/assets/121846198/d0008117-ab2c-4ee9-83d3-f768e1e4e56f)
+![AWS構成図](https://github.com/mptnnk/RecommenBook/assets/121846198/376e8e88-5b45-40fe-b104-fc94b456d8cf)
 
 ## 開発環境
 - OS：Linux(CentOS)
