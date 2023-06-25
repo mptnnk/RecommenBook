@@ -89,7 +89,7 @@ class Public::ReviewsController < ApplicationController
   end
   
   def get_reviews(condition)
-    Review.where(condition).where.not(content: [nil, '']).page(params[:page]).per(10)
+    Review.where(condition).where.not(content: [nil, '']).page(params[:page]).per(10).order(created_at: :DESC)
   end
   
   def book_favorites(isbn)
