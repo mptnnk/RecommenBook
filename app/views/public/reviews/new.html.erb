@@ -16,6 +16,28 @@
       <%= form_with model: @review, url: book_reviews_path(@book.isbn) do |review| %>
         <%= review.hidden_field :isbn, value: @book['isbn'] %>
         <%= review.text_area :content, rows: "5", style: "width: 100%", maxlength: "500" %><br>
+        
+        <div class="form-group" id="star">
+          <%= review.label :rate, "5段階評価" %>
+          <%= review.hidden_field :rate, id: :review_star, class: 'form-control' %>
+          <div id="post_raty"></div>
+        </div>
+        <script>
+          $(document).on('turbolinks:load', function() {
+            let elem = document.querySelector('#post_raty');
+            if (elem == null) return;
+      
+            elem.innerHTML = ""
+            let opt = {  
+              starOn: "<%= asset_path('star-on.png') %>",
+              starOff: "<%= asset_path('star-off.png') %>",
+              starHalf: "<%= asset_path('star-half.png') %>",
+              scoreName: 'review[rate]',
+            };
+            raty(elem, opt);
+          });
+        </script>
+        
         <%= review.label :"読み終わった日" %>
         <%= review.date_field :readed_at %><br>
         

@@ -21,6 +21,32 @@
           <td colspan="3"><%= review.text_area :content, rows: "5", style: "width: 100%", maxlength: "500" %></td>
         </tr>
         <tr>
+          <th>5段階評価</th>
+          <td>
+            <div class="form-group" id="star">
+              <%= review.label :rate, "5段階評価" %>
+              <%= review.hidden_field :rate, id: :review_star, class: 'form-control' %>
+              <div id="post_raty"></div>
+            </div>
+            <script>
+              $(document).on('turbolinks:load', function() {
+                let elem = document.querySelector('#post_raty');
+                if (elem == null) return;
+          
+                elem.innerHTML = ""
+                let opt = {  
+                  starOn: "<%= asset_path('star-on.png') %>",
+                  starOff: "<%= asset_path('star-off.png') %>",
+                  starHalf: "<%= asset_path('star-half.png') %>",
+                  score: "<%= @review.rate %>",
+                  scoreName: 'review[rate]',
+                };
+                raty(elem, opt);
+              });
+            </script>
+          </td>
+        </tr>
+        <tr>
           <th>公開ステータス</th>
           <td>
             <%= review.radio_button :in_release, true %>

@@ -22,6 +22,7 @@
       <% end %>
     </div>
   </div>
+  
   <div class="row flex-row ml-1">
     <div class="col-11">
       <span style="color: green;">読み終わった日　</span>
@@ -32,9 +33,11 @@
         <% end %>
     </div>
   </div>
+  
   <div class="row flex-row ml-1 mt-2">
     <div class="col-11">
       <%= render_review_with_hashtags(@review.content) %>
+      <%= render "static_rate",review: @review %>
     </div>
   </div>
   <div class="row flex-row ml-1 mt-2">
@@ -54,6 +57,7 @@
       </span>
     </div>
   </div>
+  
   <div class="row flex-row ml-1 mt-5">
     <div class="col-12">
       <p id="reviewCommentCount">コメント（<%= @comments.count %>件）</h3>
