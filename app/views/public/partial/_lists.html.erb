@@ -43,7 +43,8 @@
         <% if obj.is_a?(Review) %>
           <% if obj.spoiler == false %>
             <%= render_review_with_hashtags(obj.content, 130) %>
-            <%= link_to "（詳細を見る）", review_path(obj.id), style: "color: #ff7f50" %>
+            <%= link_to "（詳細を見る）", review_path(obj.id), style: "color: #ff7f50" %><br>
+            <%= render "public/reviews/static_rate", review: obj %>
           <% else %>
             <%= link_to review_path(obj.id) do %>
               <p class="spoiler-large"><i class="fas fa-exclamation-circle"></i>ネタバレあり<i class="fas fa-exclamation-circle"></i><span class="spoiler-small">詳細を見る</span></p>
