@@ -42,7 +42,7 @@
 - 次に読む本を気になるジャンルなどから探したいとき
 
 ## ER図
-![RecommenBook_ER図【加筆修正】](https://github.com/mptnnk/RecommenBook/assets/121846198/d0008117-ab2c-4ee9-83d3-f768e1e4e56f)
+![RecommenBook_ER図【加筆修正】](https://github.com/mptnnk/Bookers2-debug/assets/121846198/8a48ddf8-4e62-4825-98d6-3dd9266f03e0)
 
 ## サーバー構成図
 ![AWS構成図](https://github.com/mptnnk/RecommenBook/assets/121846198/376e8e88-5b45-40fe-b104-fc94b456d8cf)
