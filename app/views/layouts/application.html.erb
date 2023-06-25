@@ -28,15 +28,20 @@
             <span class="navbar-toggler-icon"></span>
           </button>
   
-          <div class="collapse navbar-collapse ml-auto" id="navbarNavDropdown">
+          <div class="collapse navbar-collapse ml-auto flex-column" id="navbarNavDropdown">
             <%= render 'layouts/navlist', user: @user %>
             
-            <!--<div class="search-form ml-auto mr-2">-->
-            <!--  <form class="form-inline">-->
-            <!--    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">-->
-            <!--    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">サイト内検索</button>-->
-            <!--  </form>-->
-            <!--</div>-->
+            <div class="search-form ml-auto">
+              <%= form_tag(search_path, method: :get) do %>
+                <%= text_field_tag "search[keyword]", "", :placeholder => "サイト内検索", size: '28x1' %>
+                <%= select_tag "search[model]", options_for_select({ "ハッシュタグ" => "hashtag", "ユーザー" => "user", "レビュー" => "review", "つぶやき" => "tweet" }) %>
+                <%= submit_tag '検索', class: 'btn btn-success' %>
+              <% end %>
+              <!--<form class="form-inline">-->
+              <!--  <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">-->
+              <!--  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">サイト内検索</button>-->
+              <!--</form>-->
+            </div>
             
           </div> <!--navbar-collapse end-->
         </div> <!--container-fluid end-->

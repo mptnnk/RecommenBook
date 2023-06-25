@@ -20,8 +20,8 @@ Rails.application.routes.draw do
   
   scope module: :public do
     root to:'homes#top'
+    get '/search' => 'homes#search', as:"search"
     get '/about' => 'homes#about', as:"about"
-    # get '/search' => 'homes#search', as:"search"
 
     get 'users/unsubscribe' => 'users#unsubscribe'
     patch 'users/withdraw' => 'users#withdraw'
