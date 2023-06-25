@@ -33,7 +33,7 @@
             
             <div class="search-form ml-auto">
               <%= form_tag(search_path, method: :get) do %>
-                <%= text_field_tag "search[keyword]", "", :placeholder => "サイト内検索", size: '28x1' %>
+                <%= text_field_tag "search[keyword]", "", :placeholder => "サイト内検索", class: "input-form" %>
                 <%= select_tag "search[model]", options_for_select({ "ハッシュタグ" => "hashtag", "ユーザー" => "user", "レビュー" => "review", "つぶやき" => "tweet" }) %>
                 <%= submit_tag '検索', class: 'btn btn-success' %>
               <% end %>
