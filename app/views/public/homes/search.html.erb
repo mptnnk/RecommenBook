@@ -1,0 +1,25 @@
+<div class="container-fluid">
+  <div class="row flex-row">
+    <% if @results.present? %>
+      <div class="col">
+        <h4>検索結果<i class="fas fa-smile"></i></h4>
+        <% if @model == 'hashtag' %>
+          <%= render 'public/partial/lists', objects: @results %>
+          
+        <% elsif @model == 'user' %>
+          <%= render 'public/relationships/follows', users: @results %>
+          
+        <% elsif @model == 'review' %>
+          <%= render 'public/partial/lists', objects: @results %>
+          
+        <% elsif @model == 'tweet' %>
+          <%= render 'public/partial/lists', objects: @results %>
+          
+        <% end %>
+        <%= paginate @results, theme: "twitter-bootstrap-4" %>
+      </div>
+    <% else %>
+      <h4>検索結果がありませんでした<i class="fas fa-sad-tear"></i></h4>
+    <% end %>
+  </div>
+</div>

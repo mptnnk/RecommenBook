@@ -14,7 +14,7 @@
       </h4>
       
       <% if @user.followers.exists? %>
-        <%= render 'follows', users: @followers, book: @book %>
+        <%= render 'follows', users: @followers %>
         <%= paginate @followers, theme: "twitter-bootstrap-4" %>
       <% else %>
         <p class="ml-2">フォロワーはいません</p>

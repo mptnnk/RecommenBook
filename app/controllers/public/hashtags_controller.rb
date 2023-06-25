@@ -3,7 +3,7 @@ class Public::HashtagsController < ApplicationController
   
   def index
     @tag = Hashtag.find_by(hashname: params[:hashname])
-    @reviews = Review.joins(:hashtags).where("LOWER(hashtags.hashname) =  ?", params[:hashname].downcase)
+    @reviews = Review.joins(:hashtags).where("LOWER(hashtags.hashname) =  ?", params[:hashname].downcase).where(in_release: true)
     @tweets = Tweet.joins(:hashtags).where("LOWER(hashtags.hashname) = ?", params[:hashname].downcase)
     # joinsでテーブルを内部結合し、条件一致するレコードの複数取得を可能にする。
     # データベースから取得したhashtags.hashnameをLOWERで小文字に変換。whereメソッドの？はプレースホルダーと呼ばれ、第二引数に指定した値に置き換わる。

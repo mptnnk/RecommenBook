@@ -23,8 +23,8 @@
 header {
   font-family: 'Sawarabi Gothic', sans-serif;
   width: 100%;
-  /*height: 100px;*/
-  height: 80px;
+  height: 100px;
+  /*height: 80px;*/
   position: fixed;
   top: 0;
   z-index: 99;
@@ -35,7 +35,7 @@ header {
 main {
  font-family: 'Sawarabi Gothic', sans-serif;
  /*margin: 110px 0;*/
- margin: 80px 0;
+ margin: 110px 0;
  padding-bottom: 80px;
  /*overflow: hidden;*/
 }
@@ -194,6 +194,14 @@ th {
 }
 @media screen and (max-width: 480px) {
 	/* 480px以下に適用されるCSS（スマホ用） */
+	header{
+	  height: 80px;
+	}
+	
+	main {
+	  margin: 80px 0;
+	}
+	
   footer{
     font-family: 'DotGothic16', sans-serif;
     background-color: white;

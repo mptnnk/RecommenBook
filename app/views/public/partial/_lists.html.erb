@@ -49,6 +49,7 @@
             <%= link_to review_path(obj.id) do %>
               <p class="spoiler-large"><i class="fas fa-exclamation-circle"></i>ネタバレあり<i class="fas fa-exclamation-circle"></i><span class="spoiler-small">詳細を見る</span></p>
             <% end %>
+            <%= render "public/reviews/static_rate", review: obj %>
           <% end %>
           
         <% elsif obj.is_a?(Tweet) %>
