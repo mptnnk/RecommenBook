@@ -6,8 +6,8 @@
     <div class="col search-box">
       <%= form_with url: books_search_path, method: :get do |book| %>
         <div class="form-group ml-2">
-          <%= book.text_field :title, :placeholder =>"タイトルでさがす", class:"mt-2 mb-2", size: "26x1" %>
-          <%= book.text_field :author, :placeholder =>"作者でさがす", class:"mb-2", size: "26x1" %>
+          <%= book.text_field :title, :placeholder =>"タイトルでさがす", class:"mt-2 mb-2", class: "booksearch-form" %>
+          <%= book.text_field :author, :placeholder =>"作者でさがす", class:"mb-2", class: "booksearch-form" %>
           <%= book.collection_select(:book_genre_id, Genre.all, :book_genre_id, :name, include_blank: "ジャンルを選ぶ") %>
           <%= book.submit '検索', class:"btn btn-success btn-sm" %>
         </div>
