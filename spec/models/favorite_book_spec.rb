@@ -15,11 +15,20 @@ RSpec.describe 'FavoriteBookモデルのテスト', type: :model do
         isbn = Faker::Code.isbn
         favorite_book1 = create(:favorite_book, user_id: user.id, isbn: isbn )
         expect(favorite_book1).to be_valid
-        # favorite_book1で生成するデータはcreateで保存しておかないとfavorite_book2のバリデーションチェック
+        # favorite_book1で生成するデータはcreateで保存しておかないとfavorite_book2のバリデーションチェックに使えない
         
         favorite_book2 = build(:favorite_book, user_id: user.id, isbn: isbn )
         expect(favorite_book2).to be_invalid
       end
     end
   end
+  
+  describe 'アソシエーションのテスト' do
+    context 'Userモデル絵との関係' do
+      it 'N:1となっている' do
+        expect(FavoriteBook.reflect_on_association(:user).macro).to eq :belongs_to
+      end
+    end
+  end
+  
 end

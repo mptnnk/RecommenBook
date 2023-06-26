@@ -3,11 +3,18 @@ require 'rails_helper'
 
 RSpec.describe 'FavoriteGenreモデルのテスト', type: :model do
   
-  describe 'バリデーションのテスト' do
-    subject { favorite_genre.valid? }
+  describe 'アソシエーションのテスト' do
+    context 'Userモデルとの関係' do
+      it 'N:1となっている' do
+        expect(FavoriteGenre.reflect_on_association(:user).macro).to eq :belongs_to
+      end
+    end
     
-    let(:user) { crate(:user) }
-    let(:genre) { create(:genre) }
-    let!(:favorite_genre) { FactoryBot.build(:favorite_genre, user_id: user.id, genre_id: genre.id) }
+    context 'Genreモデルとの関係' do
+      it 'N:1となっている' do
+        expect(FavoriteGenre.reflect_on_association(:genre).macro).to eq :belongs_to
+      end
+    end
   end
+  
 end
