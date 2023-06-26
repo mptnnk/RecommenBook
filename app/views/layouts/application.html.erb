@@ -35,7 +35,7 @@
               <%= form_tag(search_path, method: :get) do %>
                 <%= text_field_tag "search[keyword]", "", :placeholder => "サイト内検索", class: "input-form" %>
                 <%= select_tag "search[model]", options_for_select({ "ハッシュタグ" => "hashtag", "ユーザー" => "user", "レビュー" => "review", "つぶやき" => "tweet" }) %>
-                <%= submit_tag '検索', class: 'btn btn-success' %>
+                <%= submit_tag '検索', class: 'btn btn-success btn-sm' %>
               <% end %>
               <!--<form class="form-inline">-->
               <!--  <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">-->
