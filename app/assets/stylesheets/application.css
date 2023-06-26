@@ -188,6 +188,11 @@ th {
   margin-top :20px;
 }
 
+.booksearch-form{
+  width: 230px;
+  margin-bottom: 10px;
+}
+
 
 @media screen and (max-width: 959px) {
 	/* 959px以下に適用されるCSS（タブレット用） */
