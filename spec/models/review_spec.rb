@@ -5,13 +5,16 @@ RSpec.describe 'Reviewモデルのテスト', type: :model do
   
   describe 'バリデーションのテスト' do
     subject { review.valid? }
-    let!(:review) { build(:review) }
+    
+    let(:user) { create(:user) }
+    let!(:review) { build(:review, user_id: user.id) }
+    
     context 'contentカラム' do
-      it '500文字以下であること: 500文字は○' do
+      it '500文字以下であること: 500文字はOK' do
         review.content = Faker::Lorem.characters(number: 500)
         is_expected.to eq true
       end
-      it '500文字以下であること: 501文字は×' do
+      it '500文字以下であること: 501文字はNG' do
         review.content = Faker::Lorem.characters(number: 501)
         is_expected.to eq false
       end
