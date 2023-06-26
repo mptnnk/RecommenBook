@@ -7,22 +7,22 @@
       
       <div class="row form-group mt-4">
         <%= f.label:"ユーザーネーム", class:"col-lg-4 font-weight-bold" %>
-        <%= f.text_field :name, class: "col-lg-3" %>
+        <%= f.text_field :name, class: "col-lg-3", id: 'new_name_input' %>
       </div>
       
       <div class="row form-group">
         <%= f.label :"メールアドレス", class:"col-lg-4 font-weight-bold" %>
-        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "col-lg-3" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "col-lg-3", id: 'new_email_input' %>
       </div>
       
       <div class="row form-group">
         <%= f.label :"パスワード（6文字以上）", class:"col-lg-4 font-weight-bold" %>
-        <%= f.password_field :password, autocomplete: "new-password", class: "col-lg-3" %>
+        <%= f.password_field :password, autocomplete: "new-password", class: "col-lg-3", id: 'new_password_input' %>
       </div>
       
       <div class="row form-group">
         <%= f.label :"パスワード（確認）", class:"col-lg-4 font-weight-bold" %>
-        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "col-lg-3" %>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "col-lg-3", id: 'new_password_confirmation_input' %>
       </div>
       
       <div class="row">
