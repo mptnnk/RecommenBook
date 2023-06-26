@@ -95,7 +95,5 @@ RSpec.describe 'Userモデルのテスト', type: :model do
         expect(User.reflect_on_association(:followers).options[:source]).to eq :follower
       end
     end
-    
-    
   end
 end
