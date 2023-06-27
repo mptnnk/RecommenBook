@@ -28,8 +28,10 @@ class Public::ReviewCommentsController < ApplicationController
   def destroy
     review = Review.find(params[:review_id])
     @comment = ReviewComment.find(params[:id])
-    @comment.destroy
-    @comments = review.review_comments.all
+    if @comment.user == current_user
+      @comment.destroy
+      @comments = review.review_comments.all
+    end
   end
   
   private

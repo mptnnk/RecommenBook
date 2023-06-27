@@ -1,5 +1,5 @@
 class Public::ReviewsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create, :edit, :destroy, :delete_readed]
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy, :delete_readed]
   before_action :find_review, only: [:show, :edit, :update,:destroy]
   before_action :set_userinfo, only: [:index, :readed_list], if: -> { params[:user_name].present? } # application_controller
   
@@ -65,7 +65,7 @@ class Public::ReviewsController < ApplicationController
   end
   
   def destroy
-    if @review.destroy
+    if @review.user == current_user && @review.destroy
       if request.referer&.match(/\/reviews\/\d+/)
         redirect_to reviews_path, alert: 'レビューを削除しました'
       elsif request.referer&.match(/\/reviews\/\d+\/edit/)

@@ -4,21 +4,15 @@ class Public::TweetsController < ApplicationController
   before_action :set_userinfo, only: [:index], if: -> { params[:user_name].present? } # application_controller
   
   def index
-    if params[:user_name]
-      if @user == current_user
-        @my_tweets = get_tweets(user_id: current_user.id)
-      elsif @user != current_user
-        @user_tweets = get_tweets(user_id: @user.id)
-      end
-    end
-    
-    if params[:book_id]
-      @book = search_book(params[:book_id])
-    end
-    @book_tweets = get_tweets(isbn: params[:book_id])
-    
-    if params[:user_name].blank? && params[:book_id].blank?
-      @tweets = Tweet.page(params[:page]).per(10).order(created_at: :DESC)
+    if params[:user_name] && @user == current_user
+      @context = { tweets: get_tweets(user_id: @user.id), title: "あなたのつぶやき" }
+    elsif params[:user_name] && @user != current_user
+      @context = { tweets: get_tweets(user_id: @user.id), title: "#{@user.name}さんのつぶやき" }
+    elsif params[:book_id]
+      book = search_book(params[:book_id])
+      @context = { tweets: get_tweets(isbn: params[:book_id]), title: "#{book['title'].truncate(20)}のつぶやき" }
+    else
+      @context = { tweets: Tweet.page(params[:page]).per(10).order(created_at: :DESC), title: 'つぶやき' }
     end
   end
 
@@ -68,7 +62,7 @@ class Public::TweetsController < ApplicationController
   end
   
   def destroy
-    if @tweet.destroy
+    if @tweet.user == current_user && @tweet.destroy
       if request.referer&.match(/\/tweets\/\d+/)
         redirect_to tweets_path, alert: 'つぶやきを削除しました'
       else
