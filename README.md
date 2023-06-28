@@ -58,3 +58,4 @@
 ## 使用素材
 - 外部のAPIを使用させていただきます。<br>
 - 楽天ブックス書籍検索API https://webservice.rakuten.co.jp/documentation/books-book-search
+- 楽天ブックスジャンル検索API https://webservice.rakuten.co.jp/documentation/books-genre-search
