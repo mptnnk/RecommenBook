@@ -55,7 +55,7 @@ class ApplicationController < ActionController::Base
       redirect_back(fallback_location: root_path)
     end
 
-    def data_not_found
+    def page_not_found
       flash[:alert] = "ページが見つかりません"
       redirect_back(fallback_location: root_path)
     end
