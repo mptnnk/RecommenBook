@@ -61,8 +61,12 @@ class Public::ReviewsController < ApplicationController
   end
   
   def update
-    @book = search_book(@review.isbn)
-    @review.update(review_params) ? (redirect_to book_path(@book.isbn), notice: '更新しました') : (render :edit)
+    if @review.user == current_user
+      @book = search_book(@review.isbn)
+      @review.update(review_params) ? (redirect_to book_path(@book.isbn), notice: '更新しました') : (render :edit)
+    else
+      redirect_to request.referer, alert: "編集できません"
+    end
   end
   
   def destroy
