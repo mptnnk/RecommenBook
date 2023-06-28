@@ -1,20 +1,18 @@
 class Public::ReviewsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create, :edit, :destroy, :delete_readed]
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy, :delete_readed]
   before_action :find_review, only: [:show, :edit, :update,:destroy]
   before_action :set_userinfo, only: [:index, :readed_list], if: -> { params[:user_name].present? } # application_controller
   
   def index
-    if params[:user_name]
-      if @user == current_user
-        @my_reviews = get_reviews(user_id: current_user.id)
-      elsif @user != current_user
-        @user_reviews = get_reviews(user_id: @user.id, in_release: true)
-      end
+    if params[:user_name] && @user == current_user
+      @context = { reviews: get_reviews(user_id: @user.id), title: "あなたのレビュー" }
+    elsif params[:user_name] && @user != current_user
+      @context = { reviews: get_reviews(user_id: @user.id, in_release: true), title: "#{@user.name}さんのレビュー"}
     elsif params[:book_id]
-      @book = search_book(params[:book_id])
-      @book_reviews = get_reviews(isbn: params[:book_id], in_release: true)
-    elsif params[:user_name].blank? && params[:book_id].blank?
-      @reviews = get_reviews(in_release: true)
+      book = search_book(params[:book_id])
+      @context = { reviews: get_reviews(isbn: params[:book_id], in_release: true), title: "#{book['title'].truncate(20)}のレビュー"}
+    else
+      @context = { reviews: get_reviews(in_release: true), title: "レビュー"}
     end
   end
   
@@ -57,6 +55,9 @@ class Public::ReviewsController < ApplicationController
   def edit
     @book = search_book(@review.isbn)
     @book_favorites = book_favorites(@book.isbn)
+    if @review.user != current_user
+      redirect_to review_path(@review), alert: '編集できないレビューです'
+    end
   end
   
   def update
@@ -65,7 +66,7 @@ class Public::ReviewsController < ApplicationController
   end
   
   def destroy
-    if @review.destroy
+    if @review.user == current_user && @review.destroy
       if request.referer&.match(/\/reviews\/\d+/)
         redirect_to reviews_path, alert: 'レビューを削除しました'
       elsif request.referer&.match(/\/reviews\/\d+\/edit/)

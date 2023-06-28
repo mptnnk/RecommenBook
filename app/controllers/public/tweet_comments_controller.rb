@@ -11,8 +11,10 @@ class Public::TweetCommentsController < ApplicationController
   
   def destroy
     @comment = TweetComment.find(params[:id])
-    @comment.destroy
-    @comments = @tweet.tweet_comments.all
+    if @comment.user == current_user
+      @comment.destroy
+      @comments = @tweet.tweet_comments.all
+    end
   end
   
   private

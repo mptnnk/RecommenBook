@@ -23,8 +23,12 @@ RSpec.describe 'ユーザー登録に関するテスト', type: :system do
         fill_in 'new_password_confirmation_input', with: 'password'
       end
       
-      it '正しく登録され、マイページに遷移する' do
+      it '正しく新規登録される' do
         expect { click_button '会員登録' }.to change(User.all, :count).by(1)
+      end
+      
+      it '新規登録後のリダイレクト先がユーザーのマイページになっている' do
+        click_button '会員登録'
         expect(current_path).to eq "/users/#{user_name}"
       end
       
