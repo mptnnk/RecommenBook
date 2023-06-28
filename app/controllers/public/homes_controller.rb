@@ -23,6 +23,7 @@ class Public::HomesController < ApplicationController
         tweets = Tweet.joins(:hashtags).where("LOWER(hashtags.hashname) LIKE ?", "%#{keyword.downcase}%")
         posts = (reviews + tweets).uniq.sort_by(&:created_at).reverse
         posts = Kaminari.paginate_array(posts).page(params[:page]).per(10)
+        posts
       elsif model == "user"
         User.where("name LIKE ?", "%#{keyword}%").where(is_active: true).page(params[:page]).per(20)
       elsif model == "review"

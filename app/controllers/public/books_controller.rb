@@ -86,6 +86,7 @@ class Public::BooksController < ApplicationController
         favorite_isbns = current_user.favorite_books.pluck(:isbn)
         related_books = related_books.reject { |book| favorite_isbns.include?(book.isbn) }
         random_books = related_books.sample(3)
+        random_books
       end
     end
 end
