@@ -1,6 +1,6 @@
 class Public::HashtagsController < ApplicationController
   before_action :set_userinfo
-  
+
   def index
     @tag = Hashtag.find_by(hashname: params[:hashname])
     @reviews = Review.joins(:hashtags).where("LOWER(hashtags.hashname) =  ?", params[:hashname].downcase).where(in_release: true)

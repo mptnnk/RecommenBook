@@ -1,5 +1,4 @@
 module ApplicationHelper
-  
   def search_book(isbn)
     retry_count = 0
     # APIのリクエスト回数のカウント用
@@ -25,5 +24,4 @@ module ApplicationHelper
       puts "An error occurred: #{e.message}"
     end
   end
-
 end
