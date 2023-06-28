@@ -1,6 +1,6 @@
 class Admin::HomesController < ApplicationController
   before_action :authenticate_admin!
-  
+
   def top
     if params[:user_id]
       @user = User.find(params[:user_id])
@@ -10,5 +10,4 @@ class Admin::HomesController < ApplicationController
     end
     @reviews = @reviews.order(created_at: :DESC).page(params[:page]).per(10)
   end
-
 end

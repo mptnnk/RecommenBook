@@ -4,7 +4,7 @@ class CreateFavoriteBooks < ActiveRecord::Migration[6.1]
       t.integer :user_id, null: false
       t.string :isbn, null: false
       t.boolean :recommenbook, default: false
-      
+
       # t.string :title, null: false
       # t.string :author
       # t.string :url

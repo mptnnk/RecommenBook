@@ -38,20 +38,19 @@ class Public::RegistrationsController < Devise::RegistrationsController
   # def cancel
   #   super
   # end
-  
+
   def after_sign_up_path_for(resource)
     mypage_path(resource)
   end
-  
+
   def after_sign_out_path_for(resource)
     new_user_session_path
   end
 
   protected
-  
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up,keys: [:email, :name, :is_active])
-  end
+    def configure_permitted_parameters
+      devise_parameter_sanitizer.permit(:sign_up, keys: [:email, :name, :is_active])
+    end
 
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_sign_up_params

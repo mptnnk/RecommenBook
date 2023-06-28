@@ -2,7 +2,7 @@ class Public::TweetsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :destroy]
   before_action :find_tweet, only: [:show, :destroy]
   before_action :set_userinfo, only: [:index], if: -> { params[:user_name].present? } # application_controller
-  
+
   def index
     if params[:user_name] && @user == current_user
       @context = { tweets: get_tweets(user_id: @user.id), title: "あなたのつぶやき" }
@@ -12,7 +12,7 @@ class Public::TweetsController < ApplicationController
       book = search_book(params[:book_id])
       @context = { tweets: get_tweets(isbn: params[:book_id]), title: "#{book['title'].truncate(20)}のつぶやき" }
     else
-      @context = { tweets: Tweet.page(params[:page]).per(10).order(created_at: :DESC), title: 'つぶやき' }
+      @context = { tweets: Tweet.page(params[:page]).per(10).order(created_at: :DESC), title: "つぶやき" }
     end
   end
 
@@ -34,7 +34,7 @@ class Public::TweetsController < ApplicationController
     else
       @tweet = Tweet.new
     end
-  end  
+  end
 
   def create
     if params[:book_id].present?
@@ -60,35 +60,33 @@ class Public::TweetsController < ApplicationController
       end
     end
   end
-  
+
   def destroy
     if @tweet.user == current_user && @tweet.destroy
       if request.referer&.match(/\/tweets\/\d+/)
-        redirect_to tweets_path, alert: 'つぶやきを削除しました'
+        redirect_to tweets_path, alert: "つぶやきを削除しました"
       else
-        redirect_to request.referer, alert: 'つぶやきを削除しました'
+        redirect_to request.referer, alert: "つぶやきを削除しました"
       end
     else
-      redirect_to request.referer, alert: '削除できませんでした'
+      redirect_to request.referer, alert: "削除できませんでした"
     end
   end
-  
+
   private
-  
-  def tweet_params
-    params.require(:tweet).permit(:isbn, :tweet_content).merge(user_id:current_user.id)
-  end
-  
-  def get_tweets(condition)
-    Tweet.where(condition).page(params[:page]).per(10).order(created_at: :DESC)
-  end
-  
-  def find_tweet
-    @tweet = Tweet.find(params[:id])
-  end
-  
-  def book_favorites(isbn)
-    FavoriteBook.where(isbn: @book.isbn)
-  end
-  
+    def tweet_params
+      params.require(:tweet).permit(:isbn, :tweet_content).merge(user_id: current_user.id)
+    end
+
+    def get_tweets(condition)
+      Tweet.where(condition).page(params[:page]).per(10).order(created_at: :DESC)
+    end
+
+    def find_tweet
+      @tweet = Tweet.find(params[:id])
+    end
+
+    def book_favorites(isbn)
+      FavoriteBook.where(isbn: @book.isbn)
+    end
 end

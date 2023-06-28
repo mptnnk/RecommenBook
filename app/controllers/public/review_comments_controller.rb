@@ -1,7 +1,7 @@
 class Public::ReviewCommentsController < ApplicationController
   before_action :authenticate_user!, only: [:create, :destroy]
   before_action :set_userinfo, only: [:index] # application_controller
-  
+
   def index
     @review_comments = ReviewComment.where(user_id: @user.id)
     @review_comments.each do |comment|
@@ -14,7 +14,6 @@ class Public::ReviewCommentsController < ApplicationController
     comment_sum = @review_comments + @tweet_comments
     comment_sum = comment_sum.sort_by { |comment| comment.created_at }.reverse
     @comments = Kaminari.paginate_array(comment_sum).page(params[:page]).per(10)
-
   end
 
   def create
@@ -24,7 +23,7 @@ class Public::ReviewCommentsController < ApplicationController
     @comment.save
     @comments = review.review_comments.all
   end
-  
+
   def destroy
     review = Review.find(params[:review_id])
     @comment = ReviewComment.find(params[:id])
@@ -33,11 +32,9 @@ class Public::ReviewCommentsController < ApplicationController
       @comments = review.review_comments.all
     end
   end
-  
+
   private
-  
-  def review_comment_params
-    params.require(:review_comment).permit(:comment)
-  end
-  
+    def review_comment_params
+      params.require(:review_comment).permit(:comment)
+    end
 end

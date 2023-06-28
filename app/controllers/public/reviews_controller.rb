@@ -1,21 +1,21 @@
 class Public::ReviewsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy, :delete_readed]
-  before_action :find_review, only: [:show, :edit, :update,:destroy]
+  before_action :find_review, only: [:show, :edit, :update, :destroy]
   before_action :set_userinfo, only: [:index, :readed_list], if: -> { params[:user_name].present? } # application_controller
-  
+
   def index
     if params[:user_name] && @user == current_user
       @context = { reviews: get_reviews(user_id: @user.id), title: "あなたのレビュー" }
     elsif params[:user_name] && @user != current_user
-      @context = { reviews: get_reviews(user_id: @user.id, in_release: true), title: "#{@user.name}さんのレビュー"}
+      @context = { reviews: get_reviews(user_id: @user.id, in_release: true), title: "#{@user.name}さんのレビュー" }
     elsif params[:book_id]
       book = search_book(params[:book_id])
-      @context = { reviews: get_reviews(isbn: params[:book_id], in_release: true), title: "#{book['title'].truncate(20)}のレビュー"}
+      @context = { reviews: get_reviews(isbn: params[:book_id], in_release: true), title: "#{book['title'].truncate(20)}のレビュー" }
     else
-      @context = { reviews: get_reviews(in_release: true), title: "レビュー"}
+      @context = { reviews: get_reviews(in_release: true), title: "レビュー" }
     end
   end
-  
+
   def readed_list
     @user = User.find_by(name: params[:user_name])
     if @user == current_user
@@ -24,7 +24,7 @@ class Public::ReviewsController < ApplicationController
       @readed_lists = readed_lists(@user.id)
     end
   end
-  
+
   def delete_readed
     readed = Review.find(params[:readed_id])
     readed.destroy
@@ -41,69 +41,67 @@ class Public::ReviewsController < ApplicationController
 
   def new
     @book = search_book(params[:book_id])
-    @readed = Review.where(user_id: current_user.id,isbn: @book.isbn)
+    @readed = Review.where(user_id: current_user.id, isbn: @book.isbn)
     @book_favorites = book_favorites(@book.isbn)
     @review = Review.new
-  end  
+  end
 
   def create
     @book = search_book(params[:book_id])
     @review = Review.new(review_params)
-    @review.save ? (redirect_to book_path(@book.isbn), notice: '登録しました') : (render :new)
+    @review.save ? (redirect_to book_path(@book.isbn), notice: "登録しました") : (render :new)
   end
-  
+
   def edit
     @book = search_book(@review.isbn)
     @book_favorites = book_favorites(@book.isbn)
     if @review.user != current_user
-      redirect_to review_path(@review), alert: '編集できないレビューです'
+      redirect_to review_path(@review), alert: "編集できないレビューです"
     end
   end
-  
+
   def update
     @book = search_book(@review.isbn)
     if @review.user == current_user
-      @review.update(review_params) ? (redirect_to book_path(@book.isbn), notice: '更新しました') : (render :edit)
+      @review.update(review_params) ? (redirect_to book_path(@book.isbn), notice: "更新しました") : (render :edit)
     else
       redirect_to review_path(@review), alert: "編集できないレビューです"
     end
   end
-  
+
   def destroy
     if @review.user == current_user && @review.destroy
       if request.referer&.match(/\/reviews\/\d+/)
-        redirect_to reviews_path, alert: 'レビューを削除しました'
+        redirect_to reviews_path, alert: "レビューを削除しました"
       elsif request.referer&.match(/\/reviews\/\d+\/edit/)
-        redirect_to reviews_path, alert: 'レビューを削除しました'
+        redirect_to reviews_path, alert: "レビューを削除しました"
       else
-        redirect_to request.referer, alert: 'レビューを削除しました'
+        redirect_to request.referer, alert: "レビューを削除しました"
       end
     else
-      redirect_to request.referer, alert: '削除できませんでした'
+      redirect_to request.referer, alert: "削除できませんでした"
     end
   end
-  
+
   private
-  
-  def review_params
-    params.require(:review).permit(:isbn, :content, :readed_at, :in_release, :spoiler, :rate).merge(user_id:current_user.id)
-  end
-  
-  def find_review
-    @review = Review.find(params[:id])
-  end
-  
-  def get_reviews(condition)
-    Review.where(condition).where.not(content: [nil, '']).page(params[:page]).per(10).order(created_at: :DESC)
-  end
-  
-  def book_favorites(isbn)
-    FavoriteBook.where(isbn: @book.isbn)
-  end
-  
-  def readed_lists(user_id)
-    find_readed_review = Review.where(user_id: user_id).group_by(&:isbn).transform_values { |v| v.max_by { |review| review.readed_at || Time.at(0) } }.values.sort_by { |review| review.created_at }.reverse
-    Kaminari.paginate_array(find_readed_review).page(params[:page]).per(10)
-  end
-  
+    def review_params
+      params.require(:review).permit(:isbn, :content, :readed_at, :in_release, :spoiler, :rate).merge(user_id: current_user.id)
+    end
+
+    def find_review
+      @review = Review.find(params[:id])
+    end
+
+    def get_reviews(condition)
+      Review.where(condition).where.not(content: [nil, ""]).page(params[:page]).per(10).order(created_at: :DESC)
+    end
+
+    def book_favorites(isbn)
+      FavoriteBook.where(isbn: @book.isbn)
+    end
+
+    def readed_lists(user_id)
+      find_readed_review = Review.where(user_id: user_id).group_by(&:isbn).transform_values { |v| v.max_by { |review| review.readed_at || Time.at(0) } }.values.sort_by { |review| review.created_at }.reverse
+      Kaminari.paginate_array(find_readed_review).page(params[:page]).per(10)
+    end
 end
