@@ -60,10 +60,8 @@ class Public::BooksController < ApplicationController
     end
 
     def search_results
-      if @books.present? && @books.count > 0
-
-      else
-        flash.now[:alert] = "条件にあう本がなかったよ ;("
+      unless @books.count > 0
+        flash.now[:alert] = "条件に合う本がありません"
       end
     end
 
