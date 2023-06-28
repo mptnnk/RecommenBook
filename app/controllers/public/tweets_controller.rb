@@ -90,4 +90,5 @@ class Public::TweetsController < ApplicationController
   def book_favorites(isbn)
     FavoriteBook.where(isbn: @book.isbn)
   end
+  
 end
