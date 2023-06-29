@@ -27,7 +27,7 @@ class Public::FavoriteBooksController < ApplicationController
   end
 
   def destroy
-    if @favorite_book.present?
+    if @favorite_book.present? && @favorite_book.user == current_user
       @favorite_book.destroy
       redirect_to request.referer, alert: "お気に入りから削除しました"
     else
