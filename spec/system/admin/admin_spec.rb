@@ -3,8 +3,9 @@
 require "rails_helper"
 
 RSpec.describe "管理者ログインテスト", type: :system do
+  let(:admin) { create(:admin) }
+  
   describe "管理者ログイン" do
-    let(:admin) { create(:admin) }
     before do
       visit root_path
     end
@@ -33,6 +34,21 @@ RSpec.describe "管理者ログインテスト", type: :system do
         click_button "ログイン"
         expect(current_path).to eq '/admin/sign_in'
         expect(page).to have_content 'Emailまたはパスワードが違います。'
+      end
+    end
+  end
+  
+  describe "管理者ログアウト" do
+    context "管理者ログアウトテスト" do
+      before do
+        visit new_admin_session_path
+        fill_in "admin_email_input", with: admin.email
+        fill_in "admin_password_input", with: admin.password
+        click_button "ログイン"
+      end
+      it "ヘッダーからログアウトし、管理者ログイン画面に遷移する" do
+        click_on "ログアウト"
+        expect(current_path).to eq '/admin/sign_in'
       end
     end
   end
