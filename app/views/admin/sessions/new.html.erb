@@ -7,7 +7,7 @@
         
           <div class="form-group mt-4 ml-2">
             <%= f.label:"メールアドレス", class:"col-lg-3 font-weight-bold" %>
-            <%= f.email_field :email, class:"col-lg-3", placeholder:"sample@example.com" %>
+            <%= f.email_field :email, class:"col-lg-3", placeholder:"sample@example.com", id: 'admin_email_input' %>
           </div>
           
           <!--<div class="field">-->
@@ -17,7 +17,7 @@
           
           <div class="form-group ml-2">
             <%= f.label:"パスワード", class:"col-lg-3 font-weight-bold" %>
-            <%= f.password_field:password, class:"col-lg-3" %>
+            <%= f.password_field:password, class:"col-lg-3", id: 'admin_password_input' %>
           </div>
           
           <!--<div class="field">-->

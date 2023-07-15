@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "ユーザー登録に関するテスト", type: :system do
+RSpec.describe "ユーザー登録テスト", type: :system do
   describe "ユーザー新規登録" do
     before do
       visit root_path
@@ -40,7 +40,7 @@ RSpec.describe "ユーザー登録に関するテスト", type: :system do
       visit root_path
     end
     
-    context "ログイン" do
+    context "ログイン成功テスト" do
       it "ヘッダーからログイン画面に遷移できる" do
         click_on "ログイン", match: :first
         expect(current_path).to eq "/users/sign_in"
