@@ -6,11 +6,11 @@
       <%= form_with model: @user, url: users_information_path, method: :patch, local: true do |user| %>
         <div class="form-group">
           <%= user.label :name, "ユーザーネーム", class: "form-title" %>
-          <%= user.text_field :name, class: "form-control" %>
+          <%= user.text_field :name, class: "form-control", id: 'edit_name_input' %>
         </div>
         <div class="form-group">
           <%= user.label :email, "メールアドレス", class: "form-title" %>
-          <%= user.email_field :email, class: "form-control" %>
+          <%= user.email_field :email, class: "form-control", id: 'edit_email_input' %>
         </div>
         <div class="form-group">
           <%= user.label :profile_image, "プロフィール写真", class: "form-title" %><br>

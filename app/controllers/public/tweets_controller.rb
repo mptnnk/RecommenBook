@@ -63,7 +63,7 @@ class Public::TweetsController < ApplicationController
 
   def destroy
     if @tweet.user == current_user && @tweet.destroy
-      if request.referer&.match(/\/tweets\/\d+/)
+      if request.referer&.match(/\/tweets\/\d+/) # request.refererでリクエストされるURLが「/tweets/1つ以上の数字」という正規表現にマッチする場合
         redirect_to tweets_path, alert: "つぶやきを削除しました"
       else
         redirect_to request.referer, alert: "つぶやきを削除しました"
